@@ -1,0 +1,1 @@
+export const HEXAGON_WIDTH = 120
