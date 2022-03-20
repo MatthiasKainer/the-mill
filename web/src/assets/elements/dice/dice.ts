@@ -1,4 +1,4 @@
-import { html } from "lit-element";
+import { html } from "lit";
 import { pureLit } from "pure-lit";
 import { styles } from "./dice.style";
 

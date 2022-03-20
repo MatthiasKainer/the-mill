@@ -1,13 +1,20 @@
+import { Tile, World } from "."
 import { generateUUID } from "../../math/guid"
 import { SpriteSet } from "./sprite"
-import { Asset } from "./types"
+import { Asset, isResourceGeneratingAsset, ResourceGeneratingBuilding, ResourceGenerator, Team } from "./types"
 
-export const Mill: SpriteSet = {
+export const Mill: SpriteSet & BuildingAsset & ResourceGeneratingBuilding = {
     id: "building-mill",
+    name: "Mill",
     occurences: {
         min: 1
+    },
+    resources: {
+        grain: {hay: 100, generatedResource: 50},
+        hay: { generatedResource: 50 }
     }
 }
+
 
 type DistributedSpriteSet = SpriteSet & {
     min: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9,
@@ -50,10 +57,39 @@ export const getBuildingsForMap = (props: Props) => {
                 : lazyRandom(arrayForBuildings.length)
             arrayForBuildings[position] = [
                 ...(arrayForBuildings[position] ?? []),
-                { name: building.id, id: generateUUID() }
+                { ...building, name: building.id, id: generateUUID() }
             ]
             buildings--
         }
     })
     return arrayForBuildings;
+}
+
+export const getResourceGeneratingBuildings = (world: World, team: Team): ResourceGeneratingBuilding[] => 
+    world?.map?.reduce((into: ResourceGeneratingBuilding[], row: Tile[]) => 
+        [
+            ...into,
+            ...row.reduce((into, col) => [
+                ...into, 
+                ...col.elements
+                    .filter(isResourceGeneratingAsset)
+                    .filter((building: Asset) => building.team === team)
+            ], [] as ResourceGeneratingBuilding[])
+        ]
+    , [] as ResourceGeneratingBuilding[])
+
+
+export const generateResources = (...buildings: (BuildingAsset & ResourceGeneratingBuilding)[]) => {
+    return buildings.reduce((result, building) => {
+        result.push(...Object.entries(building.resources).map(([resource, {generatedResource, ...resources}]) => {
+            let resourceGenerator: ResourceGenerator = {};
+            (resourceGenerator as any)[resource] = {...resources, generatedResource};
+            const result: ResourceGeneratingBuilding = {
+                ...building,
+                resources: resourceGenerator
+            } as ResourceGeneratingBuilding;
+            return result;
+        }));
+        return result;
+    }, [] as ResourceGeneratingBuilding[]).filter(Boolean);
 }

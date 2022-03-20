@@ -1,11 +1,9 @@
-import { html } from 'lit-element';
+import { html } from 'lit';
 import { releaseHormone, useReceptor } from 'organismus';
-import { useOnce } from "lit-element-effect"
-import { LitElementWithProps, pureLit } from 'pure-lit';
+import { LitElementWithProps, pureLit, useOnce, useState } from 'pure-lit';
 import { MoveModeActivate, MoveModeEnd, HexagonUpdated, HexagonUpdatedPayload, ItemSelected, MoveModeData, MoveModeTargetHovered, BattleModeActive, BattleModeDeactivate, MoveModeDeactivate, BattleModeData } from '../../game/world/events';
 import { Sprite } from '../../game/world/sprite';
 import { spriteFactory } from '../sprites';
-import { useState } from 'lit-element-state-decoupler';
 import { Asset, SimpleCoords } from '../../game';
 import * as movement from './Hexagon.movement';
 import * as battle from './Hexagon.battle';

@@ -1,163 +1,42 @@
-var t=Object.freeze({__proto__:null,get knight(){return eo},get wagon(){return ro}}),e=Object.freeze({__proto__:null,get mill(){return xo},get castleSmall(){return Oo}});
+var t=Object.freeze({__proto__:null,get knight(){return Ho},get wagon(){return Po}}),e=Object.freeze({__proto__:null,get mill(){return Ko},get castleSmall(){return tr}});
 /**
  * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-const o="undefined"!=typeof window&&null!=window.customElements&&void 0!==window.customElements.polyfillWrapFlushCallback,n=(t,e,o=null)=>{for(;e!==o;){const o=e.nextSibling;t.removeChild(e),e=o}},r=`{{lit-${String(Math.random()).slice(2)}}}`,i=`\x3c!--${r}--\x3e`,s=new RegExp(`${r}|${i}`);class a{constructor(t,e){this.parts=[],this.element=e;const o=[],n=[],i=document.createTreeWalker(e.content,133,null,!1);let a=0,c=-1,h=0;const{strings:p,values:{length:g}}=t;for(;h<g;){const t=i.nextNode();if(null!==t){if(c++,1===t.nodeType){if(t.hasAttributes()){const e=t.attributes,{length:o}=e;let n=0;for(let t=0;t<o;t++)l(e[t].name,"$lit$")&&n++;for(;n-- >0;){const e=p[h],o=u.exec(e)[2],n=o.toLowerCase()+"$lit$",r=t.getAttribute(n);t.removeAttribute(n);const i=r.split(s);this.parts.push({type:"attribute",index:c,name:o,strings:i}),h+=i.length-1}}"TEMPLATE"===t.tagName&&(n.push(t),i.currentNode=t.content)}else if(3===t.nodeType){const e=t.data;if(e.indexOf(r)>=0){const n=t.parentNode,r=e.split(s),i=r.length-1;for(let e=0;e<i;e++){let o,i=r[e];if(""===i)o=d();else{const t=u.exec(i);null!==t&&l(t[2],"$lit$")&&(i=i.slice(0,t.index)+t[1]+t[2].slice(0,-"$lit$".length)+t[3]),o=document.createTextNode(i)}n.insertBefore(o,t),this.parts.push({type:"node",index:++c})}""===r[i]?(n.insertBefore(d(),t),o.push(t)):t.data=r[i],h+=i}}else if(8===t.nodeType)if(t.data===r){const e=t.parentNode;null!==t.previousSibling&&c!==a||(c++,e.insertBefore(d(),t)),a=c,this.parts.push({type:"node",index:c}),null===t.nextSibling?t.data="":(o.push(t),c--),h++}else{let e=-1;for(;-1!==(e=t.data.indexOf(r,e+1));)this.parts.push({type:"node",index:-1}),h++}}else i.currentNode=n.pop()}for(const t of o)t.parentNode.removeChild(t)}}const l=(t,e)=>{const o=t.length-e.length;return o>=0&&t.slice(o)===e},c=t=>-1!==t.index,d=()=>document.createComment(""),u=/([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;function h(t,e){const{element:{content:o},parts:n}=t,r=document.createTreeWalker(o,133,null,!1);let i=g(n),s=n[i],a=-1,l=0;const c=[];let d=null;for(;r.nextNode();){a++;const t=r.currentNode;for(t.previousSibling===d&&(d=null),e.has(t)&&(c.push(t),null===d&&(d=t)),null!==d&&l++;void 0!==s&&s.index===a;)s.index=null!==d?-1:s.index-l,i=g(n,i),s=n[i]}c.forEach((t=>t.parentNode.removeChild(t)))}const p=t=>{let e=11===t.nodeType?0:1;const o=document.createTreeWalker(t,133,null,!1);for(;o.nextNode();)e++;return e},g=(t,e=-1)=>{for(let o=e+1;o<t.length;o++){const e=t[o];if(c(e))return o}return-1};
+const o=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,r=Symbol(),i=new Map;class n{constructor(t,e){if(this._$cssResult$=!0,e!==r)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t}get styleSheet(){let t=i.get(this.cssText);return o&&void 0===t&&(i.set(this.cssText,t=new CSSStyleSheet),t.replaceSync(this.cssText)),t}toString(){return this.cssText}}const s=(t,...e)=>{const o=1===t.length?t[0]:e.reduce(((e,o,r)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(o)+t[r+1]),t[0]);return new n(o,r)},a=o?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const o of t.cssRules)e+=o.cssText;return(t=>new n("string"==typeof t?t:t+"",r))(e)})(t):t
 /**
  * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */;var l;const c=window.trustedTypes,d=c?c.emptyScript:"",u=window.reactiveElementPolyfillSupport,h={toAttribute(t,e){switch(e){case Boolean:t=t?d:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let o=t;switch(e){case Boolean:o=null!==t;break;case Number:o=null===t?null:Number(t);break;case Object:case Array:try{o=JSON.parse(t)}catch(t){o=null}}return o}},v=(t,e)=>e!==t&&(e==e||t==t),g={attribute:!0,type:String,converter:h,reflect:!1,hasChanged:v};class p extends HTMLElement{constructor(){super(),this._$Et=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Ei=null,this.o()}static addInitializer(t){var e;null!==(e=this.l)&&void 0!==e||(this.l=[]),this.l.push(t)}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((e,o)=>{const r=this._$Eh(o,e);void 0!==r&&(this._$Eu.set(r,o),t.push(r))})),t}static createProperty(t,e=g){if(e.state&&(e.attribute=!1),this.finalize(),this.elementProperties.set(t,e),!e.noAccessor&&!this.prototype.hasOwnProperty(t)){const o="symbol"==typeof t?Symbol():"__"+t,r=this.getPropertyDescriptor(t,o,e);void 0!==r&&Object.defineProperty(this.prototype,t,r)}}static getPropertyDescriptor(t,e,o){return{get(){return this[e]},set(r){const i=this[t];this[e]=r,this.requestUpdate(t,i,o)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||g}static finalize(){if(this.hasOwnProperty("finalized"))return!1;this.finalized=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),this.elementProperties=new Map(t.elementProperties),this._$Eu=new Map,this.hasOwnProperty("properties")){const t=this.properties,e=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const o of e)this.createProperty(o,t[o])}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const o=new Set(t.flat(1/0).reverse());for(const t of o)e.unshift(a(t))}else void 0!==t&&e.push(a(t));return e}static _$Eh(t,e){const o=e.attribute;return!1===o?void 0:"string"==typeof o?o:"string"==typeof t?t.toLowerCase():void 0}o(){var t;this._$Ep=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Em(),this.requestUpdate(),null===(t=this.constructor.l)||void 0===t||t.forEach((t=>t(this)))}addController(t){var e,o;(null!==(e=this._$Eg)&&void 0!==e?e:this._$Eg=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(o=t.hostConnected)||void 0===o||o.call(t))}removeController(t){var e;null===(e=this._$Eg)||void 0===e||e.splice(this._$Eg.indexOf(t)>>>0,1)}_$Em(){this.constructor.elementProperties.forEach(((t,e)=>{this.hasOwnProperty(e)&&(this._$Et.set(e,this[e]),delete this[e])}))}createRenderRoot(){var t;const e=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return((t,e)=>{o?t.adoptedStyleSheets=e.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):e.forEach((e=>{const o=document.createElement("style"),r=window.litNonce;void 0!==r&&o.setAttribute("nonce",r),o.textContent=e.cssText,t.appendChild(o)}))})(e,this.constructor.elementStyles),e}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostConnected)||void 0===e?void 0:e.call(t)}))}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostDisconnected)||void 0===e?void 0:e.call(t)}))}attributeChangedCallback(t,e,o){this._$AK(t,o)}_$ES(t,e,o=g){var r,i;const n=this.constructor._$Eh(t,o);if(void 0!==n&&!0===o.reflect){const s=(null!==(i=null===(r=o.converter)||void 0===r?void 0:r.toAttribute)&&void 0!==i?i:h.toAttribute)(e,o.type);this._$Ei=t,null==s?this.removeAttribute(n):this.setAttribute(n,s),this._$Ei=null}}_$AK(t,e){var o,r,i;const n=this.constructor,s=n._$Eu.get(t);if(void 0!==s&&this._$Ei!==s){const t=n.getPropertyOptions(s),a=t.converter,l=null!==(i=null!==(r=null===(o=a)||void 0===o?void 0:o.fromAttribute)&&void 0!==r?r:"function"==typeof a?a:null)&&void 0!==i?i:h.fromAttribute;this._$Ei=s,this[s]=l(e,t.type),this._$Ei=null}}requestUpdate(t,e,o){let r=!0;void 0!==t&&(((o=o||this.constructor.getPropertyOptions(t)).hasChanged||v)(this[t],e)?(this._$AL.has(t)||this._$AL.set(t,e),!0===o.reflect&&this._$Ei!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,o))):r=!1),!this.isUpdatePending&&r&&(this._$Ep=this._$E_())}async _$E_(){this.isUpdatePending=!0;try{await this._$Ep}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Et&&(this._$Et.forEach(((t,e)=>this[e]=t)),this._$Et=void 0);let e=!1;const o=this._$AL;try{e=this.shouldUpdate(o),e?(this.willUpdate(o),null===(t=this._$Eg)||void 0===t||t.forEach((t=>{var e;return null===(e=t.hostUpdate)||void 0===e?void 0:e.call(t)})),this.update(o)):this._$EU()}catch(t){throw e=!1,this._$EU(),t}e&&this._$AE(o)}willUpdate(t){}_$AE(t){var e;null===(e=this._$Eg)||void 0===e||e.forEach((t=>{var e;return null===(e=t.hostUpdated)||void 0===e?void 0:e.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EU(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$Ep}shouldUpdate(t){return!0}update(t){void 0!==this._$EC&&(this._$EC.forEach(((t,e)=>this._$ES(e,this[e],t))),this._$EC=void 0),this._$EU()}updated(t){}firstUpdated(t){}}
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-const m=new WeakMap,f=t=>"function"==typeof t&&m.has(t),v={},b={};
+var m;p.finalized=!0,p.elementProperties=new Map,p.elementStyles=[],p.shadowRootOptions={mode:"open"},null==u||u({ReactiveElement:p}),(null!==(l=globalThis.reactiveElementVersions)&&void 0!==l?l:globalThis.reactiveElementVersions=[]).push("1.3.1");const f=globalThis.trustedTypes,b=f?f.createPolicy("lit-html",{createHTML:t=>t}):void 0,w=`lit$${(Math.random()+"").slice(9)}$`,y="?"+w,$=`<${y}>`,k=document,x=(t="")=>k.createComment(t),O=t=>null===t||"object"!=typeof t&&"function"!=typeof t,j=Array.isArray,_=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,S=/-->/g,M=/>/g,E=/>|[ 	\n\r](?:([^\s"'>=/]+)([ 	\n\r]*=[ 	\n\r]*(?:[^ 	\n\r"'`<>=]|("|')|))|$)/g,A=/'/g,C=/"/g,z=/^(?:script|style|textarea|title)$/i,T=(t=>(e,...o)=>({_$litType$:t,strings:e,values:o}))(1),R=Symbol.for("lit-noChange"),H=Symbol.for("lit-nothing"),U=new WeakMap,N=k.createTreeWalker(k,129,null,!1);class P{constructor({strings:t,_$litType$:e},o){let r;this.parts=[];let i=0,n=0;const s=t.length-1,a=this.parts,[l,c]=((t,e)=>{const o=t.length-1,r=[];let i,n=2===e?"<svg>":"",s=_;for(let e=0;e<o;e++){const o=t[e];let a,l,c=-1,d=0;for(;d<o.length&&(s.lastIndex=d,l=s.exec(o),null!==l);)d=s.lastIndex,s===_?"!--"===l[1]?s=S:void 0!==l[1]?s=M:void 0!==l[2]?(z.test(l[2])&&(i=RegExp("</"+l[2],"g")),s=E):void 0!==l[3]&&(s=E):s===E?">"===l[0]?(s=null!=i?i:_,c=-1):void 0===l[1]?c=-2:(c=s.lastIndex-l[2].length,a=l[1],s=void 0===l[3]?E:'"'===l[3]?C:A):s===C||s===A?s=E:s===S||s===M?s=_:(s=E,i=void 0);const u=s===E&&t[e+1].startsWith("/>")?" ":"";n+=s===_?o+$:c>=0?(r.push(a),o.slice(0,c)+"$lit$"+o.slice(c)+w+u):o+w+(-2===c?(r.push(void 0),e):u)}const a=n+(t[o]||"<?>")+(2===e?"</svg>":"");if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return[void 0!==b?b.createHTML(a):a,r]})(t,e);if(this.el=P.createElement(l,o),N.currentNode=this.el.content,2===e){const t=this.el.content,e=t.firstChild;e.remove(),t.append(...e.childNodes)}for(;null!==(r=N.nextNode())&&a.length<s;){if(1===r.nodeType){if(r.hasAttributes()){const t=[];for(const e of r.getAttributeNames())if(e.endsWith("$lit$")||e.startsWith(w)){const o=c[n++];if(t.push(e),void 0!==o){const t=r.getAttribute(o.toLowerCase()+"$lit$").split(w),e=/([.?@])?(.*)/.exec(o);a.push({type:1,index:i,name:e[2],strings:t,ctor:"."===e[1]?W:"?"===e[1]?q:"@"===e[1]?I:L})}else a.push({type:6,index:i})}for(const e of t)r.removeAttribute(e)}if(z.test(r.tagName)){const t=r.textContent.split(w),e=t.length-1;if(e>0){r.textContent=f?f.emptyScript:"";for(let o=0;o<e;o++)r.append(t[o],x()),N.nextNode(),a.push({type:2,index:++i});r.append(t[e],x())}}}else if(8===r.nodeType)if(r.data===y)a.push({type:2,index:i});else{let t=-1;for(;-1!==(t=r.data.indexOf(w,t+1));)a.push({type:7,index:i}),t+=w.length-1}i++}}static createElement(t,e){const o=k.createElement("template");return o.innerHTML=t,o}}function D(t,e,o=t,r){var i,n,s,a;if(e===R)return e;let l=void 0!==r?null===(i=o._$Cl)||void 0===i?void 0:i[r]:o._$Cu;const c=O(e)?void 0:e._$litDirective$;return(null==l?void 0:l.constructor)!==c&&(null===(n=null==l?void 0:l._$AO)||void 0===n||n.call(l,!1),void 0===c?l=void 0:(l=new c(t),l._$AT(t,o,r)),void 0!==r?(null!==(s=(a=o)._$Cl)&&void 0!==s?s:a._$Cl=[])[r]=l:o._$Cu=l),void 0!==l&&(e=D(t,l._$AS(t,e.values),l,r)),e}class Z{constructor(t,e){this.v=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}p(t){var e;const{el:{content:o},parts:r}=this._$AD,i=(null!==(e=null==t?void 0:t.creationScope)&&void 0!==e?e:k).importNode(o,!0);N.currentNode=i;let n=N.nextNode(),s=0,a=0,l=r[0];for(;void 0!==l;){if(s===l.index){let e;2===l.type?e=new Y(n,n.nextSibling,this,t):1===l.type?e=new l.ctor(n,l.name,l.strings,this,t):6===l.type&&(e=new B(n,this,t)),this.v.push(e),l=r[++a]}s!==(null==l?void 0:l.index)&&(n=N.nextNode(),s++)}return i}m(t){let e=0;for(const o of this.v)void 0!==o&&(void 0!==o.strings?(o._$AI(t,o,e),e+=o.strings.length-2):o._$AI(t[e])),e++}}class Y{constructor(t,e,o,r){var i;this.type=2,this._$AH=H,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=o,this.options=r,this._$Cg=null===(i=null==r?void 0:r.isConnected)||void 0===i||i}get _$AU(){var t,e;return null!==(e=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==e?e:this._$Cg}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=D(this,t,e),O(t)?t===H||null==t||""===t?(this._$AH!==H&&this._$AR(),this._$AH=H):t!==this._$AH&&t!==R&&this.$(t):void 0!==t._$litType$?this.T(t):void 0!==t.nodeType?this.k(t):(t=>{var e;return j(t)||"function"==typeof(null===(e=t)||void 0===e?void 0:e[Symbol.iterator])})(t)?this.S(t):this.$(t)}A(t,e=this._$AB){return this._$AA.parentNode.insertBefore(t,e)}k(t){this._$AH!==t&&(this._$AR(),this._$AH=this.A(t))}$(t){this._$AH!==H&&O(this._$AH)?this._$AA.nextSibling.data=t:this.k(k.createTextNode(t)),this._$AH=t}T(t){var e;const{values:o,_$litType$:r}=t,i="number"==typeof r?this._$AC(t):(void 0===r.el&&(r.el=P.createElement(r.h,this.options)),r);if((null===(e=this._$AH)||void 0===e?void 0:e._$AD)===i)this._$AH.m(o);else{const t=new Z(i,this),e=t.p(this.options);t.m(o),this.k(e),this._$AH=t}}_$AC(t){let e=U.get(t.strings);return void 0===e&&U.set(t.strings,e=new P(t)),e}S(t){j(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let o,r=0;for(const i of t)r===e.length?e.push(o=new Y(this.A(x()),this.A(x()),this,this.options)):o=e[r],o._$AI(i),r++;r<e.length&&(this._$AR(o&&o._$AB.nextSibling,r),e.length=r)}_$AR(t=this._$AA.nextSibling,e){var o;for(null===(o=this._$AP)||void 0===o||o.call(this,!1,!0,e);t&&t!==this._$AB;){const e=t.nextSibling;t.remove(),t=e}}setConnected(t){var e;void 0===this._$AM&&(this._$Cg=t,null===(e=this._$AP)||void 0===e||e.call(this,t))}}class L{constructor(t,e,o,r,i){this.type=1,this._$AH=H,this._$AN=void 0,this.element=t,this.name=e,this._$AM=r,this.options=i,o.length>2||""!==o[0]||""!==o[1]?(this._$AH=Array(o.length-1).fill(new String),this.strings=o):this._$AH=H}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,e=this,o,r){const i=this.strings;let n=!1;if(void 0===i)t=D(this,t,e,0),n=!O(t)||t!==this._$AH&&t!==R,n&&(this._$AH=t);else{const r=t;let s,a;for(t=i[0],s=0;s<i.length-1;s++)a=D(this,r[o+s],e,s),a===R&&(a=this._$AH[s]),n||(n=!O(a)||a!==this._$AH[s]),a===H?t=H:t!==H&&(t+=(null!=a?a:"")+i[s+1]),this._$AH[s]=a}n&&!r&&this.C(t)}C(t){t===H?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"")}}class W extends L{constructor(){super(...arguments),this.type=3}C(t){this.element[this.name]=t===H?void 0:t}}const X=f?f.emptyScript:"";class q extends L{constructor(){super(...arguments),this.type=4}C(t){t&&t!==H?this.element.setAttribute(this.name,X):this.element.removeAttribute(this.name)}}class I extends L{constructor(t,e,o,r,i){super(t,e,o,r,i),this.type=5}_$AI(t,e=this){var o;if((t=null!==(o=D(this,t,e,0))&&void 0!==o?o:H)===R)return;const r=this._$AH,i=t===H&&r!==H||t.capture!==r.capture||t.once!==r.once||t.passive!==r.passive,n=t!==H&&(r===H||i);i&&this.element.removeEventListener(this.name,this,r),n&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){var e,o;"function"==typeof this._$AH?this._$AH.call(null!==(o=null===(e=this.options)||void 0===e?void 0:e.host)&&void 0!==o?o:this.element,t):this._$AH.handleEvent(t)}}class B{constructor(t,e,o){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=o}get _$AU(){return this._$AM._$AU}_$AI(t){D(this,t)}}const F=window.litHtmlPolyfillSupport;
 /**
  * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-class w{constructor(t,e,o){this.t=[],this.template=t,this.processor=e,this.options=o}update(t){let e=0;for(const o of this.t)void 0!==o&&o.setValue(t[e]),e++;for(const t of this.t)void 0!==t&&t.commit()}_clone(){const t=o?this.template.element.content.cloneNode(!0):document.importNode(this.template.element.content,!0),e=[],n=this.template.parts,r=document.createTreeWalker(t,133,null,!1);let i,s=0,a=0,l=r.nextNode();for(;s<n.length;)if(i=n[s],c(i)){for(;a<i.index;)a++,"TEMPLATE"===l.nodeName&&(e.push(l),r.currentNode=l.content),null===(l=r.nextNode())&&(r.currentNode=e.pop(),l=r.nextNode());if("node"===i.type){const t=this.processor.handleTextExpression(this.options);t.insertAfterNode(l.previousSibling),this.t.push(t)}else this.t.push(...this.processor.handleAttributeExpressions(l,i.name,i.strings,this.options));s++}else this.t.push(void 0),s++;return o&&(document.adoptNode(t),customElements.upgrade(t)),t}}
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */const y=window.trustedTypes&&trustedTypes.createPolicy("lit-html",{createHTML:t=>t}),x=` ${r} `;class k{constructor(t,e,o,n){this.strings=t,this.values=e,this.type=o,this.processor=n}getHTML(){const t=this.strings.length-1;let e="",o=!1;for(let n=0;n<t;n++){const t=this.strings[n],s=t.lastIndexOf("\x3c!--");o=(s>-1||o)&&-1===t.indexOf("--\x3e",s+1);const a=u.exec(t);e+=null===a?t+(o?x:i):t.substr(0,a.index)+a[1]+a[2]+"$lit$"+a[3]+r}return e+=this.strings[t],e}getTemplateElement(){const t=document.createElement("template");let e=this.getHTML();return void 0!==y&&(e=y.createHTML(e)),t.innerHTML=e,t}}
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */const $=t=>null===t||!("object"==typeof t||"function"==typeof t),O=t=>Array.isArray(t)||!(!t||!t[Symbol.iterator]);class j{constructor(t,e,o){this.dirty=!0,this.element=t,this.name=e,this.strings=o,this.parts=[];for(let t=0;t<o.length-1;t++)this.parts[t]=this._createPart()}_createPart(){return new _(this)}_getValue(){const t=this.strings,e=t.length-1,o=this.parts;if(1===e&&""===t[0]&&""===t[1]){const t=o[0].value;if("symbol"==typeof t)return String(t);if("string"==typeof t||!O(t))return t}let n="";for(let r=0;r<e;r++){n+=t[r];const e=o[r];if(void 0!==e){const t=e.value;if($(t)||!O(t))n+="string"==typeof t?t:String(t);else for(const e of t)n+="string"==typeof e?e:String(e)}}return n+=t[e],n}commit(){this.dirty&&(this.dirty=!1,this.element.setAttribute(this.name,this._getValue()))}}class _{constructor(t){this.value=void 0,this.committer=t}setValue(t){t===v||$(t)&&t===this.value||(this.value=t,f(t)||(this.committer.dirty=!0))}commit(){for(;f(this.value);){const t=this.value;this.value=v,t(this)}this.value!==v&&this.committer.commit()}}class S{constructor(t){this.value=void 0,this.o=void 0,this.options=t}appendInto(t){this.startNode=t.appendChild(d()),this.endNode=t.appendChild(d())}insertAfterNode(t){this.startNode=t,this.endNode=t.nextSibling}appendIntoPart(t){t.i(this.startNode=d()),t.i(this.endNode=d())}insertAfterPart(t){t.i(this.startNode=d()),this.endNode=t.endNode,t.endNode=this.startNode}setValue(t){this.o=t}commit(){if(null===this.startNode.parentNode)return;for(;f(this.o);){const t=this.o;this.o=v,t(this)}const t=this.o;t!==v&&($(t)?t!==this.value&&this.l(t):t instanceof k?this.u(t):t instanceof Node?this.h(t):O(t)?this.p(t):t===b?(this.value=b,this.clear()):this.l(t))}i(t){this.endNode.parentNode.insertBefore(t,this.endNode)}h(t){this.value!==t&&(this.clear(),this.i(t),this.value=t)}l(t){const e=this.startNode.nextSibling,o="string"==typeof(t=null==t?"":t)?t:String(t);e===this.endNode.previousSibling&&3===e.nodeType?e.data=o:this.h(document.createTextNode(o)),this.value=t}u(t){const e=this.options.templateFactory(t);if(this.value instanceof w&&this.value.template===e)this.value.update(t.values);else{const o=new w(e,t.processor,this.options),n=o._clone();o.update(t.values),this.h(n),this.value=o}}p(t){Array.isArray(this.value)||(this.value=[],this.clear());const e=this.value;let o,n=0;for(const r of t)o=e[n],void 0===o&&(o=new S(this.options),e.push(o),0===n?o.appendIntoPart(this):o.insertAfterPart(e[n-1])),o.setValue(r),o.commit(),n++;n<e.length&&(e.length=n,this.clear(o&&o.endNode))}clear(t=this.startNode){n(this.startNode.parentNode,t.nextSibling,this.endNode)}}class M{constructor(t,e,o){if(this.value=void 0,this.o=void 0,2!==o.length||""!==o[0]||""!==o[1])throw new Error("Boolean attributes can only contain a single expression");this.element=t,this.name=e,this.strings=o}setValue(t){this.o=t}commit(){for(;f(this.o);){const t=this.o;this.o=v,t(this)}if(this.o===v)return;const t=!!this.o;this.value!==t&&(t?this.element.setAttribute(this.name,""):this.element.removeAttribute(this.name),this.value=t),this.o=v}}class E extends j{constructor(t,e,o){super(t,e,o),this.single=2===o.length&&""===o[0]&&""===o[1]}_createPart(){return new C(this)}_getValue(){return this.single?this.parts[0].value:super._getValue()}commit(){this.dirty&&(this.dirty=!1,this.element[this.name]=this._getValue())}}class C extends _{}let z=!1;(()=>{try{const t={get capture(){return z=!0,!1}};window.addEventListener("test",t,t),window.removeEventListener("test",t,t)}catch(t){}})();class A{constructor(t,e,o){this.value=void 0,this.o=void 0,this.element=t,this.eventName=e,this.eventContext=o,this.g=t=>this.handleEvent(t)}setValue(t){this.o=t}commit(){for(;f(this.o);){const t=this.o;this.o=v,t(this)}if(this.o===v)return;const t=this.o,e=this.value,o=null==t||null!=e&&(t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive),n=null!=t&&(null==e||o);o&&this.element.removeEventListener(this.eventName,this.g,this.m),n&&(this.m=T(t),this.element.addEventListener(this.eventName,this.g,this.m)),this.value=t,this.o=v}handleEvent(t){"function"==typeof this.value?this.value.call(this.eventContext||this.element,t):this.value.handleEvent(t)}}const T=t=>t&&(z?{capture:t.capture,passive:t.passive,once:t.once}:t.capture)
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */;function H(t){let e=N.get(t.type);void 0===e&&(e={stringsArray:new WeakMap,keyString:new Map},N.set(t.type,e));let o=e.stringsArray.get(t.strings);if(void 0!==o)return o;const n=t.strings.join(r);return o=e.keyString.get(n),void 0===o&&(o=new a(t,t.getTemplateElement()),e.keyString.set(n,o)),e.stringsArray.set(t.strings,o),o}const N=new Map,P=new WeakMap;
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */const R=new
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-class{handleAttributeExpressions(t,e,o,n){const r=e[0];if("."===r){return new E(t,e.slice(1),o).parts}if("@"===r)return[new A(t,e.slice(1),n.eventContext)];if("?"===r)return[new M(t,e.slice(1),o)];return new j(t,e,o).parts}handleTextExpression(t){return new S(t)}};
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */"undefined"!=typeof window&&(window.litHtmlVersions||(window.litHtmlVersions=[])).push("1.3.0");const U=(t,...e)=>new k(t,e,"html",R)
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */,W=(t,e)=>`${t}--${e}`;let q=!0;void 0===window.ShadyCSS?q=!1:void 0===window.ShadyCSS.prepareTemplateDom&&(console.warn("Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."),q=!1);const D=t=>e=>{const o=W(e.type,t);let n=N.get(o);void 0===n&&(n={stringsArray:new WeakMap,keyString:new Map},N.set(o,n));let i=n.stringsArray.get(e.strings);if(void 0!==i)return i;const s=e.strings.join(r);if(i=n.keyString.get(s),void 0===i){const o=e.getTemplateElement();q&&window.ShadyCSS.prepareTemplateDom(o,t),i=new a(e,o),n.keyString.set(s,i)}return n.stringsArray.set(e.strings,i),i},L=["html","svg"],F=new Set,I=(t,e,o)=>{F.add(t);const n=o?o.element:document.createElement("template"),r=e.querySelectorAll("style"),{length:i}=r;if(0===i)return void window.ShadyCSS.prepareTemplateStyles(n,t);const s=document.createElement("style");for(let t=0;t<i;t++){const e=r[t];e.parentNode.removeChild(e),s.textContent+=e.textContent}(t=>{L.forEach((e=>{const o=N.get(W(e,t));void 0!==o&&o.keyString.forEach((t=>{const{element:{content:e}}=t,o=new Set;Array.from(e.querySelectorAll("style")).forEach((t=>{o.add(t)})),h(t,o)}))}))})(t);const a=n.content;o?function(t,e,o=null){const{element:{content:n},parts:r}=t;if(null==o)return void n.appendChild(e);const i=document.createTreeWalker(n,133,null,!1);let s=g(r),a=0,l=-1;for(;i.nextNode();)for(l++,i.currentNode===o&&(a=p(e),o.parentNode.insertBefore(e,o));-1!==s&&r[s].index===l;){if(a>0){for(;-1!==s;)r[s].index+=a,s=g(r,s);return}s=g(r,s)}}(o,s,a.firstChild):a.insertBefore(s,a.firstChild),window.ShadyCSS.prepareTemplateStyles(n,t);const l=a.querySelector("style");if(window.ShadyCSS.nativeShadow&&null!==l)e.insertBefore(l.cloneNode(!0),e.firstChild);else if(o){a.insertBefore(s,a.firstChild);const t=new Set;t.add(s),h(o,t)}};window.JSCompiler_renameProperty=(t,e)=>t;const X={toAttribute(t,e){switch(e){case Boolean:return t?"":null;case Object:case Array:return null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){switch(e){case Boolean:return null!==t;case Number:return null===t?null:Number(t);case Object:case Array:return JSON.parse(t)}return t}},Y=(t,e)=>e!==t&&(e==e||t==t),V={attribute:!0,type:String,converter:X,reflect:!1,hasChanged:Y};class Z extends HTMLElement{constructor(){super(),this.initialize()}static get observedAttributes(){this.finalize();const t=[];return this._classProperties.forEach(((e,o)=>{const n=this._attributeNameForProperty(o,e);void 0!==n&&(this._attributeToPropertyMap.set(n,o),t.push(n))})),t}static _ensureClassProperties(){if(!this.hasOwnProperty(JSCompiler_renameProperty("_classProperties",this))){this._classProperties=new Map;const t=Object.getPrototypeOf(this)._classProperties;void 0!==t&&t.forEach(((t,e)=>this._classProperties.set(e,t)))}}static createProperty(t,e=V){if(this._ensureClassProperties(),this._classProperties.set(t,e),e.noAccessor||this.prototype.hasOwnProperty(t))return;const o="symbol"==typeof t?Symbol():`__${t}`,n=this.getPropertyDescriptor(t,o,e);void 0!==n&&Object.defineProperty(this.prototype,t,n)}static getPropertyDescriptor(t,e,o){return{get(){return this[e]},set(n){const r=this[t];this[e]=n,this.requestUpdateInternal(t,r,o)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this._classProperties&&this._classProperties.get(t)||V}static finalize(){const t=Object.getPrototypeOf(this);if(t.hasOwnProperty("finalized")||t.finalize(),this.finalized=!0,this._ensureClassProperties(),this._attributeToPropertyMap=new Map,this.hasOwnProperty(JSCompiler_renameProperty("properties",this))){const t=this.properties,e=[...Object.getOwnPropertyNames(t),..."function"==typeof Object.getOwnPropertySymbols?Object.getOwnPropertySymbols(t):[]];for(const o of e)this.createProperty(o,t[o])}}static _attributeNameForProperty(t,e){const o=e.attribute;return!1===o?void 0:"string"==typeof o?o:"string"==typeof t?t.toLowerCase():void 0}static _valueHasChanged(t,e,o=Y){return o(t,e)}static _propertyValueFromAttribute(t,e){const o=e.type,n=e.converter||X,r="function"==typeof n?n:n.fromAttribute;return r?r(t,o):t}static _propertyValueToAttribute(t,e){if(void 0===e.reflect)return;const o=e.type,n=e.converter;return(n&&n.toAttribute||X.toAttribute)(t,o)}initialize(){this._updateState=0,this._updatePromise=new Promise((t=>this._enableUpdatingResolver=t)),this._changedProperties=new Map,this._saveInstanceProperties(),this.requestUpdateInternal()}_saveInstanceProperties(){this.constructor._classProperties.forEach(((t,e)=>{if(this.hasOwnProperty(e)){const t=this[e];delete this[e],this._instanceProperties||(this._instanceProperties=new Map),this._instanceProperties.set(e,t)}}))}_applyInstanceProperties(){this._instanceProperties.forEach(((t,e)=>this[e]=t)),this._instanceProperties=void 0}connectedCallback(){this.enableUpdating()}enableUpdating(){void 0!==this._enableUpdatingResolver&&(this._enableUpdatingResolver(),this._enableUpdatingResolver=void 0)}disconnectedCallback(){}attributeChangedCallback(t,e,o){e!==o&&this._attributeToProperty(t,o)}_propertyToAttribute(t,e,o=V){const n=this.constructor,r=n._attributeNameForProperty(t,o);if(void 0!==r){const t=n._propertyValueToAttribute(e,o);if(void 0===t)return;this._updateState=8|this._updateState,null==t?this.removeAttribute(r):this.setAttribute(r,t),this._updateState=-9&this._updateState}}_attributeToProperty(t,e){if(8&this._updateState)return;const o=this.constructor,n=o._attributeToPropertyMap.get(t);if(void 0!==n){const t=o.getPropertyOptions(n);this._updateState=16|this._updateState,this[n]=o._propertyValueFromAttribute(e,t),this._updateState=-17&this._updateState}}requestUpdateInternal(t,e,o){let n=!0;if(void 0!==t){const r=this.constructor;o=o||r.getPropertyOptions(t),r._valueHasChanged(this[t],e,o.hasChanged)?(this._changedProperties.has(t)||this._changedProperties.set(t,e),!0!==o.reflect||16&this._updateState||(void 0===this._reflectingProperties&&(this._reflectingProperties=new Map),this._reflectingProperties.set(t,o))):n=!1}!this._hasRequestedUpdate&&n&&(this._updatePromise=this._enqueueUpdate())}requestUpdate(t,e){return this.requestUpdateInternal(t,e),this.updateComplete}async _enqueueUpdate(){this._updateState=4|this._updateState;try{await this._updatePromise}catch(t){}const t=this.performUpdate();return null!=t&&await t,!this._hasRequestedUpdate}get _hasRequestedUpdate(){return 4&this._updateState}get hasUpdated(){return 1&this._updateState}performUpdate(){if(!this._hasRequestedUpdate)return;this._instanceProperties&&this._applyInstanceProperties();let t=!1;const e=this._changedProperties;try{t=this.shouldUpdate(e),t?this.update(e):this._markUpdated()}catch(e){throw t=!1,this._markUpdated(),e}t&&(1&this._updateState||(this._updateState=1|this._updateState,this.firstUpdated(e)),this.updated(e))}_markUpdated(){this._changedProperties=new Map,this._updateState=-5&this._updateState}get updateComplete(){return this._getUpdateComplete()}_getUpdateComplete(){return this._updatePromise}shouldUpdate(t){return!0}update(t){void 0!==this._reflectingProperties&&this._reflectingProperties.size>0&&(this._reflectingProperties.forEach(((t,e)=>this._propertyToAttribute(e,this[e],t))),this._reflectingProperties=void 0),this._markUpdated()}updated(t){}firstUpdated(t){}}Z.finalized=!0;
-/**
-@license
-Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at
-http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
-http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
-found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
-part of the polymer project is also subject to an additional IP rights grant
-found at http://polymer.github.io/PATENTS.txt
-*/
-const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,J=Symbol();class G{constructor(t,e){if(e!==J)throw new Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t}get styleSheet(){return void 0===this._styleSheet&&(B?(this._styleSheet=new CSSStyleSheet,this._styleSheet.replaceSync(this.cssText)):this._styleSheet=null),this._styleSheet}toString(){return this.cssText}}const K=(t,...e)=>{const o=e.reduce(((e,o,n)=>e+(t=>{if(t instanceof G)return t.cssText;if("number"==typeof t)return t;throw new Error(`Value passed to 'css' function must be a 'css' function result: ${t}. Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security.`)})(o)+t[n+1]),t[0]);return new G(o,J)};
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-(window.litElementVersions||(window.litElementVersions=[])).push("2.4.0");const Q={};class tt extends Z{static getStyles(){return this.styles}static _getUniqueStyles(){if(this.hasOwnProperty(JSCompiler_renameProperty("_styles",this)))return;const t=this.getStyles();if(Array.isArray(t)){const e=(t,o)=>t.reduceRight(((t,o)=>Array.isArray(o)?e(o,t):(t.add(o),t)),o),o=e(t,new Set),n=[];o.forEach((t=>n.unshift(t))),this._styles=n}else this._styles=void 0===t?[]:[t];this._styles=this._styles.map((t=>{if(t instanceof CSSStyleSheet&&!B){const e=Array.prototype.slice.call(t.cssRules).reduce(((t,e)=>t+e.cssText),"");return new G(String(e),J)}return t}))}initialize(){super.initialize(),this.constructor._getUniqueStyles(),this.renderRoot=this.createRenderRoot(),window.ShadowRoot&&this.renderRoot instanceof window.ShadowRoot&&this.adoptStyles()}createRenderRoot(){return this.attachShadow({mode:"open"})}adoptStyles(){const t=this.constructor._styles;0!==t.length&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShadow?B?this.renderRoot.adoptedStyleSheets=t.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):this._needsShimAdoptedStyleSheets=!0:window.ShadyCSS.ScopingShim.prepareAdoptedCssText(t.map((t=>t.cssText)),this.localName))}connectedCallback(){super.connectedCallback(),this.hasUpdated&&void 0!==window.ShadyCSS&&window.ShadyCSS.styleElement(this)}update(t){const e=this.render();super.update(t),e!==Q&&this.constructor.render(e,this.renderRoot,{scopeName:this.localName,eventContext:this}),this._needsShimAdoptedStyleSheets&&(this._needsShimAdoptedStyleSheets=!1,this.constructor._styles.forEach((t=>{const e=document.createElement("style");e.textContent=t.cssText,this.renderRoot.appendChild(e)})))}render(){return Q}}tt.finalized=!0,tt.render=(t,e,o)=>{if(!o||"object"!=typeof o||!o.scopeName)throw new Error("The `scopeName` option is required.");const r=o.scopeName,i=P.has(e),s=q&&11===e.nodeType&&!!e.host,a=s&&!F.has(r),l=a?document.createDocumentFragment():e;if(((t,e,o)=>{let r=P.get(e);void 0===r&&(n(e,e.firstChild),P.set(e,r=new S(Object.assign({templateFactory:H},o))),r.appendInto(e)),r.setValue(t),r.commit()})(t,l,Object.assign({templateFactory:D(r)},o)),a){const t=P.get(l);P.delete(l);const o=t.value instanceof w?t.value.template:void 0;I(r,l,o),n(e,e.firstChild),e.appendChild(l),P.set(e,t)}!i&&s&&window.ShadyCSS.styleElement(e.host)};const et={};var ot;!function(t){t[t.SILENT=0]="SILENT",t[t.ERROR=1]="ERROR",t[t.INFO=80]="INFO",t[t.DEBUG=90]="DEBUG",t[t.TRACE=100]="TRACE"}(ot||(ot={}));let nt=ot.SILENT;const rt=t=>nt=t;let it=[];const st=(t,e,...o)=>{it.forEach((n=>n(ot.ERROR,t,e,...o))),nt>=ot.ERROR&&console.error(e,t,...o)},at=(t,e,...o)=>{it.forEach((n=>n(ot.INFO,t,e,...o))),nt>=ot.INFO&&(nt===ot.TRACE?console.trace:console.log)(e,t,...o)},lt=(t,e,...o)=>{it.forEach((n=>n(ot.DEBUG,t,e,...o))),nt>=ot.DEBUG&&(nt===ot.TRACE?console.trace:console.log)(e,t,...o)},ct={queue:{},list:{}};function dt(t){return t.reduce(((t,e)=>`${t};${e.name};`),"")}const ut=new class{constructor(){this.actionDictionary={}}on(t,e){if(Array.isArray(t)){const o=dt(t);if(ct.list[o])throw st("Hypothalamus.on",new Error("Cannot register the same list of hormones twice"),o),new Error("Cannot register the same list of hormones twice");at("[Hypothalamus.on] Adding new action when all in a list of hormones are released",o,t),ct.list[o]={hormones:[...t],callback:e}}else at("Hypothalamus.on","Adding new action when a hormone is released",t.name),this.actionDictionary[t.name]=this.actionDictionary[t.name]||[],this.actionDictionary[t.name].push(e)}drop(t){Array.isArray(t)?(lt("Hypothalamus.drop","Dropping a list of hormones",dt(t),t),delete ct.queue[dt(t)],delete ct.list[dt(t)]):(lt("Hypothalamus.drop","Dropping a hormone",t.name),this.actionDictionary[t.name]=[])}dropAll(){lt("Hypothalamus.dropAll","Dropping all hormones"),this.actionDictionary={},ct.queue={},ct.list={}}orchestrate(t,e){this.actionDictionary[t.name]&&this.actionDictionary[t.name].forEach((t=>t(e)));const o=Object.keys(ct.queue).filter((e=>e.indexOf(`;${t.name};`)>-1)),n=Object.keys(ct.list).filter((e=>e.indexOf(`;${t.name};`)>-1&&o.every((t=>t!==e))));n.forEach((t=>{ct.queue[t]={hormones:[...ct.list[t].hormones],values:{},callback:ct.list[t].callback}}));const r=[...new Set([...o,...n])];for(let o=0;o<r.length;o++){const n=r[o];ct.queue[n].hormones=ct.queue[n].hormones.filter((e=>e.name!==t.name)),ct.queue[n].values[t.name]=e,ct.queue[n].hormones.length<1&&(ct.queue[n].callback(ct.queue[n].values),delete ct.queue[n])}}};function ht(t,e={}){return pt(t,Object.assign(Object.assign({},e),{readOnce:!0}))}function pt(t,e={}){if(et[t]&&!e.loadIfExists)throw st("hormone.defineHormone",new Error("Hormone already created"),t),new Error("Hormone already created");if(et[t]&&e.loadIfExists)return lt("hormone.defineHormone","Hormone already created, reusing existing",t),{name:t};const{defaultValue:o,transformation:n,readOnce:r}=e;return et[t]={name:t,value:o,defaultValue:o,transformation:n,receptors:[],readOnce:null!=r&&r},{name:t}}async function gt(t,e){if(!t)throw st("hormone.releaseHormone",new Error("Hormone cannot be undefined")),new Error("Hormone cannot be undefined");const{name:o}=t;if(!et[o])throw st("hormone.releaseHormone",new Error("Hormone does not exist"),o),new Error("Hormone does not exist");var n;n=e,et[o].value=(void 0===n||n instanceof Function)&&e?e(et[o].value):e,at("hormone.releaseHormone","Releasing passed hormone",o,et[o].value);const{receptors:r,transformation:i}=et[o];i&&i(et[o].value);const s=et[o].value;return ut.orchestrate({name:o},s),await Promise.all(r.filter((t=>{const e=void 0===t.onlyIf||t.onlyIf(s);return lt("hormone.releaseHormone",e?"Keeping receptor because condition matched or no condition":"Filtered receptor from the triggers because condition not matched",t),e})).map((t=>(null==t?void 0:t.onTriggered)?null==t?void 0:t.onTriggered(s):s))),et[o].readOnce&&(lt("hormone.releaseHormone","Resetting hormone because it is readOnce",o),et[o].value=et[o].defaultValue),Object.assign({},et[o])}function mt(t,{name:e},o,n){const r=null!=n?n:o,i=n?o:void 0;if(!et[e])throw st("receptor.useReceptor",new Error("Hormone is not defined"),e),new Error(`Hormone "${e}" is not defined`);((t,e,o)=>{const n=(null==o?void 0:o.toString())||e;return!et[e].receptors.some((e=>e.parent===t&&e.key===n))})(t,e,i)?(at("receptor.useReceptor","Pushing new receptor to hormone",e,{parent:t}),et[e].receptors.push({key:(null==i?void 0:i.toString())||e,parent:t,onlyIf:i,onTriggered:r}),void 0!==et[e].value?r(et[e].value):void 0!==et[e].defaultValue&&r(et[e].defaultValue)):((t,e,...o)=>{it.forEach((n=>n(ot.TRACE,t,e,...o))),nt===ot.TRACE&&console.trace(e,t,...o)})("receptor.useReceptor","Receptor not pushed because already subscribed",e,{parent:t})}const ft=t=>Object.entries(t).reduce(((t,[e,o])=>(t[e]=function(t){return"boolean"==typeof t?{type:Boolean}:Array.isArray(t)?{type:Array}:"object"==typeof t?{type:Object}:{}}(o),t)),{}),vt=t=>{return(t=>void 0!==t&&void 0!==t.props)(t)?(t.props||[]).reduce(((t,e)=>(Object.entries(e).forEach((([e,o])=>t[e]=o)),t)),{}):(e=null==t?void 0:t.defaults,ft(e||{}));var e},bt={},wt=(t,e,o)=>{if(bt[t])return bt[t];customElements.define(t,class extends tt{static get properties(){return vt(o)}static get styles(){return null==o?void 0:o.styles}constructor(){super(),(t=>void 0!==t&&void 0!==t.defaults)(o)&&Object.entries(o.defaults).forEach((([t,e])=>{this[t]=e}))}render(){return e(this)}});const n=document.createElement(t);return bt[t]=n,n};function yt(t,e){return Array.from({length:e-t+1},((t,e)=>e))}class xt{constructor(t,e,o,n=1){this.x=t,this.y=e,this.z=o,this.costs=n}equals(t){return null!==t&&this.x===t.x&&this.y===t.y&&this.z===t.z}add(t){const{x:e,y:o,z:n}=this;return new xt(e+t.x,o+t.y,n+t.z)}remove(t){const{x:e,y:o,z:n}=this;return new xt(e-t.x,o-t.y,n-t.z)}vector(t){return new xt(t.x-this.x,t.y-this.y,t.z-this.z)}distance(t){return Math.max(Math.abs(this.x-t.x),Math.abs(this.y-t.y),Math.abs(this.z-t.z))}heuristic(t){return Math.abs(this.x-t.x)+Math.abs(this.y-t.y)+Math.abs(this.z-t.z)}range(t){const e=[];for(let o=-t;o<=t;o++)for(let n=Math.max(-t,-o-t);n<=Math.min(t,-o+t);n++)e.push(this.add(new xt(o,n,-o-n)));return e}direction(t){return kt[t]}directionTo(t){const e=yt(0,5).find((e=>this.neighbor(e).equals(t)));return void 0!==e&&e>=0?this.direction(e):null}neighbor(t){return this.add(this.direction(t))}neighbors(t){return yt(0,5).map((t=>this.neighbor(t))).filter((e=>t.some((t=>t.equals(e)))))}ring(t){const e=[],o=-1*t;for(const n of yt(o,t))for(const r of yt(Math.max(o,-1*n-o),Math.min(t,-1*n+t))){const t=-n-r;e.push(this.add(new xt(n,r,t)))}return e}cost(){return this.costs}toPosition(){const t=this.x+(this.z+(1&this.z))/2,e=this.z;return new jt(e,t)}toCoords(){return this.toPosition().toCoords()}toString(){return`${this.x}:${this.y}:${this.z}`}}const kt=[new xt(1,-1,0),new xt(1,0,-1),new xt(0,1,-1),new xt(-1,1,0),new xt(-1,0,1),new xt(0,-1,1)];const $t={manhattan:[{row:0,col:-1},{row:1,col:0},{row:0,col:1},{row:-1,col:0}],euclid:[{row:1,col:-1},{row:-1,col:1},{row:1,col:0},{row:0,col:1},{row:-1,col:0},{row:0,col:-1},{row:-1,col:-1},{row:1,col:1}]},Ot=(t,e)=>t.col.toString()===e.col.toString()&&t.row.toString()===e.row.toString();class jt{constructor(t,e,o="manhattan"){this.row=t,this.col=e,this.system=o}vector(t){return new jt(t.row-this.row,t.col-this.col)}toCube(){const t=this.col-(this.row+(1&this.row))/2,e=this.row;return new xt(t,-t-e,e)}toCoords(){const{row:t,col:e}=this;return{col:e,row:t}}neighbor(t){const e=_t($t[this.system][t]);return e.system=this.system,this.add(e)}neighbors(){return yt(0,$t[this.system].length-1).map((t=>this.neighbor(t)))}distance(t){return function(t,e){return Math.sqrt(Math.pow(e.col-t.col,2)+Math.pow(e.row-t.row,2))}(this,t)}manhattanDistance(t){return function(t,e){return Math.abs(Math.abs(t.col-e.col)+Math.abs(t.row-e.row))}(this,t)}add(t){const{col:e,row:o}=this;return new jt(o+t.row,e+t.col,this.system)}remove(t){const{col:e,row:o}=this;return new jt(o-t.row,e-t.col,this.system)}equals(t){return null!=t&&t.col.toString()===this.col.toString()&&t.row.toString()===this.row.toString()}toString(){return`${this.col}:${this.row}`}toEuclidPosition(){return new jt(this.row,this.col,"euclid")}toManhattanPosition(){return new jt(this.row,this.col,"manhattan")}static fromString(t){if(!t)return null;const[e,o]=t.split(":").map((t=>parseInt(t,10)));return new jt(o,e)}}const _t=({row:t,col:e})=>new jt(t,e);function St(){var t=(new Date).getTime(),e=performance&&performance.now&&1e3*performance.now()||0;return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,(function(o){var n=16*Math.random();return t>0?(n=(t+n)%16|0,t=Math.floor(t/16)):(n=(e+n)%16|0,e=Math.floor(e/16)),("x"===o?n:3&n|8).toString(16)}))}const Mt={id:"building-castle-small",occurences:{min:1}},Et={green:t=>Math.max(.75*t.length,Math.round(Math.random()*(t.length-1))),red:t=>Math.min(.25*t.length,Math.round(Math.random()*(t.length-1)))},Ct={id:"building-mill",occurences:{min:1}};function zt(t){return void 0!==t&&t.max>0}const At=[Object.assign(Object.assign({},Ct),{min:0,max:2}),Object.assign(Object.assign({},Ct),{min:8,max:10})],Tt=({min:t,max:e},o,n)=>{const r=t=>o*n*(t/10);return Math.floor(Math.random()*(r(e)-r(t))+r(t))},Ht={gras:{sprite:{file:"hexagonTerrain_sheet",x:414,y:1906},movementCosts:1,defense:0},desert:{sprite:{file:"hexagonTerrain_sheet",x:902,y:627},movementCosts:4,defense:0},mud:{sprite:{file:"hexagonTerrain_sheet",x:658,y:912},movementCosts:4,defense:1},muddyHills:{sprite:{file:"hexagonTerrain_sheet",x:780,y:627},movementCosts:8,defense:3},forest:{sprite:{file:"hexagonTerrain_sheet",x:536,y:912},movementCosts:8,defense:3},mountain:{sprite:{file:"hexagonTerrain_sheet",x:414,y:1052},movementCosts:10,defense:9}},Nt=()=>{const t=Object.keys(Ht);return Ht[t[Math.floor(Math.random()*(t.length-1))]]},Pt=pt("game/world/worldLoaded"),Rt=pt("game/start"),Ut=pt("game/load/sidebar"),Wt=(t,{rows:e,cols:o})=>((t,e)=>{const o=new Array(e.rows*e.cols).map((()=>[]));return[Mt].forEach((e=>{var n;let r=e.occurences.factor?Math.max(e.occurences.min,o.length/e.occurences.factor):e.occurences.min;for(;r>0;){const i=Et[t](o);o[i]=[...null!==(n=o[i])&&void 0!==n?n:[],{name:e.id,team:t,id:St()}],r--}})),o})(t,{rows:e,cols:o}),qt=(t,e,o)=>{var n;return(null!==(n=t.pop())&&void 0!==n?n:[]).map((t=>Object.assign(Object.assign({},t),{row:e,col:o})))},Dt=async({rows:t,cols:e})=>{const o=(({rows:t,cols:e})=>(t=>{const e=new Array(t.rows*t.cols).map((()=>[]));return At.forEach((o=>{var n;let r=o.occurences.factor?Math.max(o.occurences.min,e.length/o.occurences.factor):o.occurences.min;for(;r>0;){const s=zt(o)?Tt(o,t.rows,t.cols):(i=e.length,Math.round(Math.random()*(i-1)));e[s]=[...null!==(n=e[s])&&void 0!==n?n:[],{name:o.id,id:St()}],r--}var i})),e})({rows:t,cols:e}))({rows:t,cols:e}),n=Wt("green",{rows:t,cols:e}),r=Wt("red",{rows:t,cols:e}),i=yt(0,t-1).map((t=>yt(0,e-1).map((e=>({position:new jt(t,e),terrain:Nt(),elements:[...qt(o,t,e),...qt(n,t,e),...qt(r,t,e)]})))));return await gt(Pt,{map:i,teams:["red","green"]}),i};function Lt(t){var e,o;return void 0!==t&&(null===(e=t)||void 0===e?void 0:e.row)>=0&&(null===(o=t)||void 0===o?void 0:o.col)>=0}function Ft(t){var e,o;return t&&(null===(o=null===(e=t)||void 0===e?void 0:e.actions)||void 0===o?void 0:o.max)>0}function It(t){var e,o;return t&&(null===(o=null===(e=t)||void 0===e?void 0:e.dices)||void 0===o?void 0:o.length)>0}class Xt{constructor(t=4086,e=Uint32Array){this.capacity=t,this.capacity=t,this._keys=[],this._priorities=new e(t+1),this.length=0}clear(){this.length=0}bubbleUp(t){const e=this._keys[t],o=this._priorities[t];for(;t>1;){const e=t>>>1;if(this._priorities[e]<=o)break;this._keys[t]=this._keys[e],this._priorities[t]=this._priorities[e],t=e}this._keys[t]=e,this._priorities[t]=o}bubbleDown(t){const e=this._keys[t],o=this._priorities[t],n=1+(this.length>>>1),r=this.length+1;for(;t<n;){const e=t<<1;if(e>=r)break;let n=this._priorities[e],i=this._keys[e],s=e;const a=e+1;if(a<r){const t=this._priorities[a];t<n&&(n=t,i=this._keys[a],s=a)}if(n>=o)break;this._keys[t]=i,this._priorities[t]=n,t=s}this._keys[t]=e,this._priorities[t]=o}push(t,e=0){if(this.length===this.capacity)throw new Error("Heap has reached capacity, can't push new items");const o=this.length+1;this._keys[o]=t,this._priorities[o]=e,this.bubbleUp(o),this.length++}pop(){const t=this._keys[1];return this.length--,this.length>0&&(this._keys[1]=this._keys[this.length+1],this._priorities[1]=this._priorities[this.length+1],this.bubbleDown(1)),t}peekPriority(){return this._priorities[1]}peek(){return this._keys[1]}toString(){if(0===this.length)return"(empty queue)";const t=Array(this.length-1);for(let e=0;e<this.length;e++)t[e]=this._priorities[e+1];return`[${t.join(" ")}]`}get[Symbol.toStringTag](){return"Heapify"}*[Symbol.iterator](){for(let t=0;t<this.length;t++){const e=this._priorities[t+1],o=this._keys[t+1];yield[o,e]}}*keys(){for(let t=0;t<this.length;t++)yield this._keys[t+1]}*priorities(){for(let t=0;t<this.length;t++)yield this._priorities[t+1]}}const Yt=t=>t.toPosition().toString(),Vt=ht("action/abort"),Zt=pt("player/update"),Bt=ht("player/request/select"),Jt=pt("player/buildings/item/selected"),Gt=pt("player/item/moved"),Kt=pt("player/knights/created"),Qt=pt("player/wagon/created"),te=pt("player/assets/loaded"),ee=pt("turn/player/actions/hasLeft"),oe=ht("turn/player/actions/none"),ne=ht("map/hexagon/updated",{readOnce:!0}),re=pt("modes/move/activate"),ie=pt("modes/move/deactivate"),se=pt("modes/move/hovered-target"),ae=pt("modes/move/end"),le=pt("modes/battle/activate"),ce=pt("modes/battle/active"),de=pt("modes/battle/end"),ue=pt("modes/battle/deactivate"),he=pt("battle/started"),pe=pt("battle/dice/thrown"),ge=pt("battle/player/attacked"),me=pt("mill/takeover"),fe=pt("modal/battle/open"),ve=pt("modal/dice-result/open"),be=pt("turn/world/started"),we=pt("turn/world/accepted"),ye=pt("turn/player/complete"),xe=pt("turn/world/complete");function ke(t){return t.reduce(((t,e)=>t+function(t){return t.sides[Math.floor(Math.random()*t.sides.length)].value}(e)),0)}const $e=()=>({grain:100,iron:200,hay:0,log:0,stone:0});function Oe(t,e){if(!t||!t.map)return[];const o=t=>e===t.team,n=[];for(const e of t.map)for(const t of e)n.push(...t.elements.filter(o));return n}function je(t){var e,o,n,r,i;if(!t)return;return[...null!==(i=null===(r=null===(n=null===(o=null===(e=null===document||void 0===document?void 0:document.querySelector("the-mill"))||void 0===e?void 0:e.shadowRoot)||void 0===o?void 0:o.querySelector("world-map"))||void 0===n?void 0:n.shadowRoot)||void 0===r?void 0:r.querySelectorAll("hexagon-element"))&&void 0!==i?i:[]].find((e=>{var o,n;return null===(n=null===(o=e.shadowRoot)||void 0===o?void 0:o.querySelector("sprite-set"))||void 0===n?void 0:n.querySelector(`[id="${t.id}"]`)}))}document.deepQuerySelector=je;const _e=()=>({grain:50,iron:0,hay:0,log:50,stone:0});let Se,Me={},Ee=[],Ce=[],ze={};const Ae=()=>ze[Se],Te=t=>t.actions.current>0,He=({team:t})=>t===Se;ut.on(Pt,(t=>{Ee=[],t.map.forEach(((t,e)=>{t.forEach(((t,o)=>{const n=new jt(e,o).toCube();t.terrain.movementCosts&&(n.costs=t.terrain.movementCosts),Ee.push(n)}))})),Me=t,["green","red"].forEach((t=>{ze[t]={resources:{hay:100,grain:200,iron:200,log:100,stone:100}}})),gt(Rt)})),ut.on(Vt,(async t=>{t&&(gt(ie),gt(ue))})),ut.on([Rt,Ut],(()=>{gt(be)})),ut.on(be,(()=>{Ce=[...Me.teams],Se=Ce.pop(),gt(we,Se)})),ut.on(we,(t=>{const e=Oe(Me,t);gt(te,e);const o=null==e?void 0:e.find((t=>t.name===ko));Lt(o)&&gt(Bt,{item:ko,row:o.row,col:o.col,payload:o}),setTimeout((()=>{var t;null===(t=je(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2),gt(Zt,(t=>Object.assign({},ze[t]))(t))})),ut.on(Bt,(async t=>{await gt(Jt,Object.assign({},t)),await gt(Jt,Object.assign(Object.assign({},t),{item:"hexagon"}))})),ut.on(ye,(()=>{Se=Ce.pop(),void 0===Se?gt(xe):gt(we,Se)})),ut.on(xe,(()=>{Me.map.forEach((t=>{t.forEach((({elements:t})=>{((...t)=>{t.forEach((t=>{t.actions.current=t.actions.max}))})(...t.filter(Ft))}))})),gt(be)}));const Ne=(t,e)=>{const o=Object.assign({},ze[t].resources);for(const[t,n]of Object.entries(e)){if(o[t]<n)return!1;o[t]-=n}return ze[t].resources=o,!0};ut.on(Kt,(({row:t,col:e,team:o})=>{if(!He({team:o}))return;if(!Ne(o,{grain:100,iron:200,hay:0,log:0,stone:0}))return;const n=(({team:t,row:e,col:o})=>({id:St(),name:Qe,team:t,row:e,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10},dices:[{name:"Standardwaffe",story:"Eine faire, ausgewogene Waffe die jeder Ritter haben sollte",sides:[{value:3},{value:3},{value:3},{value:4},{value:5},{value:6}]},{name:"Mächtiger Schlag des Betrugs",story:"Eine Waffe, die bis zu 12 Schaden verursachen kann, doch auch eine hohe Wahrscheinlichkeit hat gar keinen Schaden zu verursachen, oder sogar den Ritter selbst zu verletzen!",sides:[{value:-3},{value:0},{value:0},{value:6},{value:12}]}]}))({row:t,col:e,team:o});Me.map[t][e].elements.push(n),gt(ne,{row:t,col:e,elements:[...Me.map[t][e].elements]}),gt(te,Oe(Me,o)),gt(Zt,Ae())})),ut.on(Qt,(({row:t,col:e,team:o})=>{if(!He({team:o}))return;if(!Ne(o,{grain:50,iron:0,hay:0,log:50,stone:0}))return;const n=(({team:t,row:e,col:o})=>({id:St(),name:oo,team:t,row:e,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10}}))({row:t,col:e,team:o});Me.map[t][e].elements.push(n),gt(ne,{row:t,col:e,elements:[...Me.map[t][e].elements]}),gt(te,Oe(Me,o)),gt(Zt,Ae())})),ut.on(ee,(()=>{void 0===((t,e)=>{for(const o of t.map)for(const t of o){const o=t.elements.filter((t=>It(t))).map((t=>t)).find((t=>t.team===e&&t.actions.current>0));if(o)return o}})(Me,Se)&&gt(oe,!0)}));const Pe=t=>Number.parseInt(t.toString(),10);let Re,Ue;ut.on(re,(async t=>{Ue&&await gt(ue),He(t.asset)&&(Re=t)})),ut.on(ie,(()=>{Re=void 0})),ut.on(se,(async t=>{var e,o;if(!Re)return;const n=new jt(Pe(Re.start.row),Pe(Re.start.col)).toCube(),r=new jt(Pe(t.row),Pe(t.col)).toCube(),i=t=>{const{row:e,col:o}=t.toCoords();return Me.map[e][o].elements.filter((t=>t.team!==(null==Re?void 0:Re.asset.name))).some((t=>It(t)))},s=((t,e,o,n,r)=>{const i=new Xt;i.push(t,0);const s={},a={},l=[];let c=!1;if(s[Yt(t)]=Yt(t),a[Yt(t)]=0,t.equals(e))return{path:[]};if(n(e))return{path:[]};for(;i.length>0;){const t=i.pop();if(t.equals(e)){c=!0;break}if(i.length>1e3)throw new Error("No what kinda path are you searching for?!");l.push(t.toPosition().toString());for(const c of t.neighbors(o).filter((t=>!s[Yt(t)])).map((t=>{var e;return null!==(e=o.find((e=>e.equals(t))))&&void 0!==e?e:t}))){if(n(c))continue;l.some((t=>t===Yt(c)))||l.push(Yt(c));const o=a[Yt(t)]+c.cost();r<o||(!a[Yt(c)]||o<a[Yt(c)])&&(a[Yt(c)]=o,i.push(c,o+e.heuristic(c)),s[Yt(c)]=t.toPosition().toString())}}const d=t.toPosition();if(!c)return{path:[],visited:l};let u=e.toPosition();const h=[];do{h.push(u),u=jt.fromString(s[u.toString()])}while(null!==u&&!u.equals(d));return{path:h.reverse(),visited:l}})(n,r,Ee,i,Re.asset.movement.points).path;let a=t;i(r)&&(a=null!==(o=null===(e=[...s].pop())||void 0===e?void 0:e.toCoords())&&void 0!==o?o:Re.start),console.log("MoveModeTargetHovered",Object.assign(Object.assign({},Re),{trail:s,end:a})),await gt(re,Object.assign(Object.assign({},Re),{trail:s,end:a}))})),ut.on(ae,(async t=>{var e,o;if(!Re)return;if((null!==(o=null===(e=Re.trail)||void 0===e?void 0:e.length)&&void 0!==o?o:0)<1)return;const{start:n,asset:r}=Re;if(!He(r))return;if(void 0===r.actions&&console.error("asset.actions undefined",r),!Te(r))return;if(Ot(Re.start,t))return void gt(ie);r.actions.current-=1;const i=[...Me.map[n.row][n.col].elements];Me.map[n.row][n.col].elements=[],i.forEach((e=>{e.id!==r.id?Me.map[n.row][n.col].elements.push(Object.assign(Object.assign({},e),{row:n.row,col:n.col})):Me.map[t.row][t.col].elements.push(Object.assign(Object.assign({},e),{row:t.row,col:t.col}))})),await gt(ne,{row:n.row,col:n.col,elements:[...Me.map[n.row][n.col].elements]}),await gt(ne,{row:t.row,col:t.col,elements:[...Me.map[t.row][t.col].elements]}),await gt(ie),await gt(Gt,{asset:r,location:t}),await gt(ee)})),ut.on(le,(async t=>{He(t.asset)&&(Re&&await gt(ie),Ue=Object.assign(Object.assign({},t),{range:new jt(t.start.row,t.start.col).toCube().range(1).map((t=>t.toPosition().toCoords()))}),gt(ce,Ue))})),ut.on(de,(async t=>{if(!Ue||!He(Ue.asset))return;if(Ot(Ue.start,t))return void gt(ue);const{row:e,col:o}=t,{asset:n}=Ue,r=[...Me.map[e][o].elements].filter((t=>It(t)&&t.team!==n.team));Te(n)&&r.length>0&&(n.actions.current-=1,await gt(he,{location:t,attacker:[n],defender:[...r]})),gt(te,Oe(Me,n.team)),gt(ue),await gt(ee)})),ut.on(ue,(()=>Ue=void 0)),ut.on(Gt,(async({asset:t,location:e})=>{if(!He(t))return;const{row:o,col:n}=e,r=[...Me.map[o][n].elements].filter((e=>e.id!==t.id)).filter((e=>e.name===wo&&e.team!==t.team));if(r.length>0&&It(t)){const o={asset:r[0],transfered:{from:r[0].team,to:t.team},location:e,by:t,team:t.team};await gt(me,o)}else gt(te,Oe(Me,t.team)),await gt(ee)})),ut.on(me,(({location:t,team:e,asset:o})=>{if(!He({team:e}))return;const{row:n,col:r}=t,i=[...Me.map[n][r].elements];Me.map[n][r].elements=[],i.forEach((t=>{t.id!==o.id?Me.map[n][r].elements.push(t):Me.map[n][r].elements.push(Object.assign(Object.assign({},t),{team:e}))})),gt(te,Oe(Me,e))})),ut.on(he,(t=>{gt(fe,t)})),ut.on(pe,(t=>{if(!He(t.attacker.asset))return;const e=ke(t.attacker.dices);gt(ge,{attacker:t.attacker.asset,defender:t.defender,damage:e,location:t.location})})),ut.on(ge,(t=>{const{defender:e,damage:o,attacker:n}=t;o<0?n.health.current+=o:e.health.current-=o;const{row:r,col:i}=t.location,s=[...Me.map[r][i].elements];Me.map[r][i].elements=[],s.forEach((t=>{t.id===e.id?e.health.current>0&&Me.map[r][i].elements.push(e):t.id===n.id?n.health.current>0&&Me.map[r][i].elements.push(n):Me.map[r][i].elements.push(t)})),gt(ne,{row:r,col:i,elements:[...Me.map[r][i].elements]}),gt(fe,void 0),gt(ve,{attacker:[n],defender:[e],location:t.location,result:o})})),window.location.hash.indexOf("log")>=0&&rt(ot.INFO),window.location.hash.indexOf("trace")>=0&&rt(ot.TRACE);const We=K`
+var G,J;null==F||F(P,Y),(null!==(m=globalThis.litHtmlVersions)&&void 0!==m?m:globalThis.litHtmlVersions=[]).push("2.2.1");class K extends p{constructor(){super(...arguments),this.renderOptions={host:this},this._$Dt=void 0}createRenderRoot(){var t,e;const o=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=o.firstChild),o}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Dt=((t,e,o)=>{var r,i;const n=null!==(r=null==o?void 0:o.renderBefore)&&void 0!==r?r:e;let s=n._$litPart$;if(void 0===s){const t=null!==(i=null==o?void 0:o.renderBefore)&&void 0!==i?i:null;n._$litPart$=s=new Y(e.insertBefore(x(),t),t,void 0,null!=o?o:{})}return s._$AI(t),s})(e,this.renderRoot,this.renderOptions)}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!0)}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Dt)||void 0===t||t.setConnected(!1)}render(){return R}}K.finalized=!0,K._$litElement$=!0,null===(G=globalThis.litElementHydrateSupport)||void 0===G||G.call(globalThis,{LitElement:K});const V=globalThis.litElementPolyfillSupport;null==V||V({LitElement:K}),(null!==(J=globalThis.litElementVersions)&&void 0!==J?J:globalThis.litElementVersions=[]).push("3.2.0");const Q={};var tt;!function(t){t[t.SILENT=0]="SILENT",t[t.ERROR=1]="ERROR",t[t.INFO=80]="INFO",t[t.DEBUG=90]="DEBUG",t[t.TRACE=100]="TRACE"}(tt||(tt={}));let et=tt.SILENT;const ot=t=>et=t;let rt=[];const it=(t,e,...o)=>{rt.forEach((r=>r(tt.ERROR,t,e,...o))),et>=tt.ERROR&&console.error(e,t,...o)},nt=(t,e,...o)=>{rt.forEach((r=>r(tt.INFO,t,e,...o))),et>=tt.INFO&&(et===tt.TRACE?console.trace:console.log)(e,t,...o)},st=(t,e,...o)=>{rt.forEach((r=>r(tt.DEBUG,t,e,...o))),et>=tt.DEBUG&&(et===tt.TRACE?console.trace:console.log)(e,t,...o)},at={queue:{},list:{}};function lt(t){return t.reduce(((t,e)=>`${t};${e.name};`),"")}const ct=new class{constructor(){this.actionDictionary={}}on(t,e){if(Array.isArray(t)){const o=lt(t);if(at.list[o])throw it("Hypothalamus.on",new Error("Cannot register the same list of hormones twice"),o),new Error("Cannot register the same list of hormones twice");nt("[Hypothalamus.on] Adding new action when all in a list of hormones are released",o,t),at.list[o]={hormones:[...t],callback:e}}else nt("Hypothalamus.on","Adding new action when a hormone is released",t.name),this.actionDictionary[t.name]=this.actionDictionary[t.name]||[],this.actionDictionary[t.name].push(e)}drop(t){Array.isArray(t)?(st("Hypothalamus.drop","Dropping a list of hormones",lt(t),t),delete at.queue[lt(t)],delete at.list[lt(t)]):(st("Hypothalamus.drop","Dropping a hormone",t.name),this.actionDictionary[t.name]=[])}dropAll(){st("Hypothalamus.dropAll","Dropping all hormones"),this.actionDictionary={},at.queue={},at.list={}}collect(t,e,o){const r=`collect;;${t.name};${e.name};`;if(at.list[r])throw it("Hypothalamus.collect",new Error("Cannot register the same list of hormones twice"),r),new Error("Cannot register the same list of hormones twice");nt("[Hypothalamus.collect] Adding new action when collected hormones are released",r,t,e),at.list[r]={hormones:[e],callback:o}}orchestrate(t,e){this.actionDictionary[t.name]&&this.actionDictionary[t.name].forEach((t=>t(e)));const o=Object.keys(at.queue).filter((e=>e.includes(`;${t.name};`))),r=Object.keys(at.list).filter((e=>e.indexOf(`;${t.name};`)>-1&&o.every((t=>t!==e))));r.forEach((t=>{at.queue[t]={hormones:[...at.list[t].hormones],values:{},callback:at.list[t].callback}}));const i=[...new Set([...o,...r])];for(let o=0;o<i.length;o++){const r=i[o];if(r.startsWith("collect;;")){const[o]=r.replace("collect;;","").split(";");t.name===o?at.queue[r].values[t.name]=[...at.queue[r].values[t.name]||[],e]:(at.queue[r].values[t.name]=e,at.queue[r].callback(at.queue[r].values),delete at.queue[r])}else at.queue[r].hormones=at.queue[r].hormones.filter((e=>e.name!==t.name)),at.queue[r].values[t.name]=e,at.queue[r].hormones.length<1&&(at.queue[r].callback(at.queue[r].values),delete at.queue[r])}}};function dt(t,e={}){return ut(t,Object.assign(Object.assign({},e),{readOnce:!0}))}function ut(t,e={}){return ht(Q)(t,e)}const ht=t=>(e,o={})=>{if(t[e]&&!o.loadIfExists)throw it("hormone.defineHormone",new Error("Hormone already created"),e),new Error("Hormone already created");if(t[e]&&o.loadIfExists)return st("hormone.defineHormone","Hormone already created, reusing existing",e),{name:e};const{defaultValue:r,transformation:i,readOnce:n}=o;return t[e]={name:e,value:r,defaultValue:r,transformation:i,receptors:[],readOnce:null!=n&&n},{name:e}};async function vt(t,e){return gt(Q)(t,e)}const gt=t=>async(e,o)=>{if(!e)throw it("hormone.releaseHormone",new Error("Hormone cannot be undefined")),new Error("Hormone cannot be undefined");const{name:r}=e;if(!t[r])throw it("hormone.releaseHormone",new Error("Hormone does not exist"),r),new Error("Hormone does not exist");var i;i=o,t[r].value=(void 0===i||i instanceof Function)&&o?o(t[r].value):o,nt("hormone.releaseHormone","Releasing passed hormone",r,t[r].value);const{receptors:n,transformation:s}=t[r];s&&s(t[r].value);const a=t[r].value;return ct.orchestrate({name:r},a),await Promise.all(n.filter((t=>{const e=void 0===t.onlyIf||t.onlyIf(a);return st("hormone.releaseHormone",e?"Keeping receptor because condition matched or no condition":"Filtered receptor from the triggers because condition not matched",t),e})).map((t=>(null==t?void 0:t.onTriggered)?null==t?void 0:t.onTriggered(a):a))),t[r].readOnce&&(st("hormone.releaseHormone","Resetting hormone because it is readOnce",r),t[r].value=t[r].defaultValue),Object.assign({},t[r])};function pt(t,{name:e},o,r){return mt(Q)(t,{name:e},o,r)}const mt=t=>(e,{name:o},r,i)=>{const n=null!=i?i:r,s=i?r:void 0;if(!t[o])throw it("receptor.useReceptor",new Error("Hormone is not defined"),o),new Error(`Hormone "${o}" is not defined`);((t,e,o,r)=>{const i=(null==r?void 0:r.toString())||o;return!t[o].receptors.some((t=>t.parent===e&&t.key===i))})(t,e,o,s)?(nt("receptor.useReceptor","Pushing new receptor to hormone",o,{parent:e}),t[o].receptors.push({key:(null==s?void 0:s.toString())||o,parent:e,onlyIf:s,onTriggered:n}),void 0!==t[o].value?n(t[o].value):void 0!==t[o].defaultValue&&n(t[o].defaultValue)):((t,e,...o)=>{rt.forEach((r=>r(tt.TRACE,t,e,...o))),et===tt.TRACE&&console.trace(e,t,...o)})("receptor.useReceptor","Receptor not pushed because already subscribed",o,{parent:e})};function ft(t,[e,o]){return e.toLowerCase()!==e?t[e]=Object.assign(Object.assign({},o),{attribute:e.replace(/[A-Z]/g,"-$&").toLowerCase()}):t[e]=o,t}function bt(t){return"boolean"==typeof t?{type:Boolean}:Array.isArray(t)?{type:Array}:"object"==typeof t?{type:Object}:{}}const wt=t=>(t=>void 0!==t&&void 0!==t.props)(t)?(t.props||[]).reduce(((t,e)=>(Object.entries(e).forEach((e=>t=ft(t,e))),t)),{}):(t=>{return e=t||{},Object.entries(e).reduce(((t,[e,o])=>ft(t,[e,bt(o)])),{});var e})(null==t?void 0:t.defaults),yt={},$t=(t,e,o)=>{if(yt[t])return yt[t];customElements.define(t,class extends K{constructor(){super(),this.content=T``,(t=>void 0!==t&&void 0!==t.defaults)(o)&&Object.entries(o.defaults).forEach((([t,e])=>{this[t]=e}))}static get properties(){return wt(o)}static get styles(){return null==o?void 0:o.styles}async performUpdate(){return this.content=await Promise.resolve(e(this)).catch((t=>T`<slot name="error">${t}</slot>`)),super.performUpdate()}render(){return this.content}});const r=document.createElement(t);return yt[t]=r,r};var kt="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},xt={},Ot={},jt={};Object.defineProperty(jt,"t",{value:!0}),jt.shallowClone=void 0,jt.shallowClone=function(t){return"object"!=typeof t||!t||t instanceof Date||t instanceof RegExp?t:Array.isArray(t)?[...t]:Object.assign({},t)};var _t={};function St(t){if(!t.dispatchEvent||!t.requestUpdate)throw new Error("Element missing required functions (dispatchEvent/requestUpdate)");return t}Object.defineProperty(_t,"t",{value:!0}),_t.withWorkflow=_t.withReducer=_t.withState=_t.decorate=_t.asUpdateableLitElement=void 0,_t.asUpdateableLitElement=St;const Mt="__registered_states";function Et(t){const e=t;if(e[Mt])return e;const o=St(t),r=o.updated;return e[Mt]={index:0,count:0,states:[],reducers:[],workflows:[]},o.updated=t=>(e[Mt].index=0,r(t)),e}_t.decorate=Et,_t.withState=function(t,e,o={}){const r=Et(t),{index:i,count:n}=r[Mt];return i===n?(r[Mt].index++,r[Mt].count++,r[Mt].states.push(e),e):(r[Mt].index++,o.updateDefault&&r[Mt].states[i].inject(e.get()),r[Mt].states[i])},_t.withReducer=function(t,e){const o=Et(t),{index:r,count:i,reducers:n}=o[Mt];return r!==i||n[r-1]?o[Mt].reducers[r-1]:(o[Mt].reducers[r-1]=e,e)},_t.withWorkflow=function(t,e){const o=Et(t),{index:r,count:i,workflows:n}=o[Mt];return r!==i||n[r-1]?o[Mt].workflows[r-1]:(o[Mt].workflows[r-1]=e,e)};var At=kt&&kt.o||function(t,e,o,r){return new(o||(o=Promise))((function(i,n){function s(t){try{l(r.next(t))}catch(t){n(t)}}function a(t){try{l(r.throw(t))}catch(t){n(t)}}function l(t){var e;t.done?i(t.value):(e=t.value,e instanceof o?e:new o((function(t){t(e)}))).then(s,a)}l((r=r.apply(t,e||[])).next())}))};Object.defineProperty(Ot,"t",{value:!0}),Ot.useState=void 0;const Ct=jt,zt=_t;Ot.useState=(t,e,o={})=>{let r=(0,Ct.shallowClone)(e);const i=[()=>At(void 0,void 0,void 0,(function*(){return t.requestUpdate(),yield t.updateComplete}))],n=t=>At(void 0,void 0,void 0,(function*(){r!==t&&(r=(0,Ct.shallowClone)(t),yield Promise.all(i.map((t=>t(r)))))}));return(0,zt.withState)(t,new class{set value(t){n(t)}get value(){return r}publish(t){n(t)}set(t){return At(this,void 0,void 0,(function*(){yield n(t)}))}subscribe(t){i.push(t)}inject(t){r=t}get(){return r}getState(){return r}},o)};var Tt={},Rt=kt&&kt.o||function(t,e,o,r){return new(o||(o=Promise))((function(i,n){function s(t){try{l(r.next(t))}catch(t){n(t)}}function a(t){try{l(r.throw(t))}catch(t){n(t)}}function l(t){var e;t.done?i(t.value):(e=t.value,e instanceof o?e:new o((function(t){t(e)}))).then(s,a)}l((r=r.apply(t,e||[])).next())}))};Object.defineProperty(Tt,"t",{value:!0}),Tt.useReducer=void 0;const Ht=Ot,Ut=_t;Tt.useReducer=(t,e,o,r={})=>{const{get:i,set:n}=(0,Ht.useState)(t,o,r),s=[],a=(o,a)=>Rt(void 0,void 0,void 0,(function*(){const l=e(i());return l[o]&&(yield n(yield l[o](a)),s.forEach((t=>t(o,i()))),r.dispatchEvent&&t.dispatchEvent(new CustomEvent(o,{detail:i()}))),i()}));return(0,Ut.withReducer)(t,{get:i,subscribe:t=>s.push(t),when:(t,e)=>s.push(((o,r)=>o===t&&e(r))),set:a,dispatch:a})};var Nt={},Pt=kt&&kt.o||function(t,e,o,r){return new(o||(o=Promise))((function(i,n){function s(t){try{l(r.next(t))}catch(t){n(t)}}function a(t){try{l(r.throw(t))}catch(t){n(t)}}function l(t){var e;t.done?i(t.value):(e=t.value,e instanceof o?e:new o((function(t){t(e)}))).then(s,a)}l((r=r.apply(t,e||[])).next())}))};Object.defineProperty(Nt,"t",{value:!0}),Nt.useWorkflow=void 0;const Dt=xt,Zt=_t;Nt.useWorkflow=(t,e)=>{const o=Object.entries(e).reduce(((e,[o,{reducer:r,initialState:i}])=>(e[o]=(0,Dt.useReducer)(t,r,i),e)),{}),r={},i={},n=[],s=t=>(n.push({type:"projections",args:[t]}),o[t]?o[t].get():void 0);return(0,Zt.withWorkflow)(t,{addActivity:(t,e)=>Pt(void 0,void 0,void 0,(function*(){var i,s;n.push({type:"addActivity",args:[t,e]}),yield Promise.all(null!==(s=null===(i=r[t])||void 0===i?void 0:i.map((t=>t(e))))&&void 0!==s?s:[]);for(const r of Object.values(o))yield r.dispatch(t,e)})),addSideeffect:(t,e)=>{n.push({type:"addSideeffect",args:[t,e]}),r[t]=[...r[t]||[],e]},projections:s,addCompensation:(t,e)=>{n.push({type:"addCompensation",args:[t,e]}),i[t]=[...i[t]||[],e]},compensate:()=>Pt(void 0,void 0,void 0,(function*(){n.push({type:"compensate",args:[]});for(const[t,e]of Object.entries(i))for(const r of e)for(const e of Object.values(o))yield e.dispatch(t,r)})),after:(t,e,o)=>{n.push({type:"after",args:[t,e,o]});const r=()=>Pt(void 0,void 0,void 0,(function*(){n.some((t=>((t,e)=>{if(t.type!==e.type)return!1;for(let o=0;o<e.args.length;o++)if(t.args[o]!==e.args[o])return!1;return!0})(t,e)))||(new Date(Date.now())>t?yield o():setTimeout(r,100))}));r()},plan:t=>Pt(void 0,void 0,void 0,(function*(){for(const[o,r]of Object.entries(t))if(e[o]&&JSON.stringify(s(o))===JSON.stringify(e[o].initialState))return yield r();return t[""]?yield t[""]():Promise.resolve(null)})),history:()=>[...n]})},function(t){Object.defineProperty(t,"t",{value:!0}),t.useWorkflow=t.useReducer=t.useState=void 0;var e=Ot;Object.defineProperty(t,"useState",{enumerable:!0,get:function(){return e.useState}});var o=Tt;Object.defineProperty(t,"useReducer",{enumerable:!0,get:function(){return o.useReducer}});var r=Nt;Object.defineProperty(t,"useWorkflow",{enumerable:!0,get:function(){return r.useWorkflow}})}(xt);var Yt={},Lt={},Wt={};function Xt(t){if(!t.dispatchEvent||!t.requestUpdate)throw new Error("Element missing required functions (dispatchEvent/requestUpdate)");return t}Object.defineProperty(Wt,"t",{value:!0}),Wt.withEffect=Wt.decorate=Wt.asUpdateableLitElement=void 0,Wt.asUpdateableLitElement=Xt;const qt="__registered_effects";function It(t){const e=t;if(e[qt])return e;const o=Xt(t),r=o.updated;return e[qt]={index:0,count:0,effects:[]},o.updated=t=>(e[qt].index=0,r(t)),e}Wt.decorate=It,Wt.withEffect=function(t,e){const o=It(t),{index:r,count:i}=o[qt];return r===i?(o[qt].index++,o[qt].count++,o[qt].effects.push(e),e):(o[qt].index++,o[qt].effects[r])},Object.defineProperty(Lt,"t",{value:!0}),Lt.useOnce=Lt.useEffect=void 0;const Bt=Wt;function Ft(t,e,o){const r=(0,Bt.withEffect)(t,{on:e,observe:["__initial__dirty"]});r.observe.some(((t,e)=>o[e]!==t))&&r.on(),r.observe=o}Lt.useEffect=Ft,Lt.useOnce=(t,e)=>Ft(t,e,[]),function(t){Object.defineProperty(t,"t",{value:!0}),t.useOnce=t.useEffect=void 0;var e=Lt;Object.defineProperty(t,"useEffect",{enumerable:!0,get:function(){return e.useEffect}}),Object.defineProperty(t,"useOnce",{enumerable:!0,get:function(){return e.useOnce}})}(Yt);var Gt=Yt.useOnce,Jt=xt.useState;function Kt(t,e){return Array.from({length:e-t+1},((t,e)=>e))}class Vt{constructor(t,e,o,r=1){this.x=t,this.y=e,this.z=o,this.costs=r}equals(t){return null!==t&&this.x===t.x&&this.y===t.y&&this.z===t.z}add(t){const{x:e,y:o,z:r}=this;return new Vt(e+t.x,o+t.y,r+t.z)}remove(t){const{x:e,y:o,z:r}=this;return new Vt(e-t.x,o-t.y,r-t.z)}vector(t){return new Vt(t.x-this.x,t.y-this.y,t.z-this.z)}distance(t){return Math.max(Math.abs(this.x-t.x),Math.abs(this.y-t.y),Math.abs(this.z-t.z))}heuristic(t){return Math.abs(this.x-t.x)+Math.abs(this.y-t.y)+Math.abs(this.z-t.z)}range(t){const e=[];for(let o=-t;o<=t;o++)for(let r=Math.max(-t,-o-t);r<=Math.min(t,-o+t);r++)e.push(this.add(new Vt(o,r,-o-r)));return e}direction(t){return Qt[t]}directionTo(t){const e=Kt(0,5).find((e=>this.neighbor(e).equals(t)));return void 0!==e&&e>=0?this.direction(e):null}neighbor(t){return this.add(this.direction(t))}neighbors(t){return Kt(0,5).map((t=>this.neighbor(t))).filter((e=>t.some((t=>t.equals(e)))))}ring(t){const e=[],o=-1*t;for(const r of Kt(o,t))for(const i of Kt(Math.max(o,-1*r-o),Math.min(t,-1*r+t))){const t=-r-i;e.push(this.add(new Vt(r,i,t)))}return e}cost(){return this.costs}toPosition(){const t=this.x+(this.z+(1&this.z))/2,e=this.z;return new oe(e,t)}toCoords(){return this.toPosition().toCoords()}toString(){return`${this.x}:${this.y}:${this.z}`}}const Qt=[new Vt(1,-1,0),new Vt(1,0,-1),new Vt(0,1,-1),new Vt(-1,1,0),new Vt(-1,0,1),new Vt(0,-1,1)];const te={manhattan:[{row:0,col:-1},{row:1,col:0},{row:0,col:1},{row:-1,col:0}],euclid:[{row:1,col:-1},{row:-1,col:1},{row:1,col:0},{row:0,col:1},{row:-1,col:0},{row:0,col:-1},{row:-1,col:-1},{row:1,col:1}]},ee=(t,e)=>t.col.toString()===e.col.toString()&&t.row.toString()===e.row.toString();class oe{constructor(t,e,o="manhattan"){this.row=t,this.col=e,this.system=o}vector(t){return new oe(t.row-this.row,t.col-this.col)}toCube(){const t=this.col-(this.row+(1&this.row))/2,e=this.row;return new Vt(t,-t-e,e)}toCoords(){const{row:t,col:e}=this;return{col:e,row:t}}neighbor(t){const e=re(te[this.system][t]);return e.system=this.system,this.add(e)}neighbors(){return Kt(0,te[this.system].length-1).map((t=>this.neighbor(t)))}distance(t){return function(t,e){return Math.sqrt(Math.pow(e.col-t.col,2)+Math.pow(e.row-t.row,2))}(this,t)}manhattanDistance(t){return function(t,e){return Math.abs(Math.abs(t.col-e.col)+Math.abs(t.row-e.row))}(this,t)}add(t){const{col:e,row:o}=this;return new oe(o+t.row,e+t.col,this.system)}remove(t){const{col:e,row:o}=this;return new oe(o-t.row,e-t.col,this.system)}equals(t){return null!=t&&t.col.toString()===this.col.toString()&&t.row.toString()===this.row.toString()}toString(){return`${this.col}:${this.row}`}toEuclidPosition(){return new oe(this.row,this.col,"euclid")}toManhattanPosition(){return new oe(this.row,this.col,"manhattan")}static fromString(t){if(!t)return null;const[e,o]=t.split(":").map((t=>parseInt(t,10)));return new oe(o,e)}}const re=({row:t,col:e})=>new oe(t,e);function ie(){var t=(new Date).getTime(),e=performance&&performance.now&&1e3*performance.now()||0;return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,(function(o){var r=16*Math.random();return t>0?(r=(t+r)%16|0,t=Math.floor(t/16)):(r=(e+r)%16|0,e=Math.floor(e/16)),("x"===o?r:3&r|8).toString(16)}))}const ne={id:"building-castle-small",name:"Small Castle",occurences:{min:1},resources:{grain:{generatedResource:10},hay:{generatedResource:10},stone:{generatedResource:10},iron:{generatedResource:10}}},se={green:t=>Math.max(.75*t.length,Math.round(Math.random()*(t.length-1))),red:t=>Math.min(.25*t.length,Math.round(Math.random()*(t.length-1)))};
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+function ae(t,e){var o={};for(var r in t)Object.prototype.hasOwnProperty.call(t,r)&&e.indexOf(r)<0&&(o[r]=t[r]);if(null!=t&&"function"==typeof Object.getOwnPropertySymbols){var i=0;for(r=Object.getOwnPropertySymbols(t);i<r.length;i++)e.indexOf(r[i])<0&&Object.prototype.propertyIsEnumerable.call(t,r[i])&&(o[r[i]]=t[r[i]])}return o}const le=["hay","grain","iron","wood","stone"];function ce(t){var e;return void 0!==t&&void 0!==(null===(e=t)||void 0===e?void 0:e.resources)}function de(t){var e,o;return void 0!==t&&(null===(e=t)||void 0===e?void 0:e.row)>=0&&(null===(o=t)||void 0===o?void 0:o.col)>=0}function ue(t){var e,o;return t&&(null===(o=null===(e=t)||void 0===e?void 0:e.actions)||void 0===o?void 0:o.max)>0}function he(t){var e,o;return t&&(null===(o=null===(e=t)||void 0===e?void 0:e.dices)||void 0===o?void 0:o.length)>0}const ve={id:"building-mill",name:"Mill",occurences:{min:1},resources:{grain:{hay:100,generatedResource:50},hay:{generatedResource:50}}};function ge(t){return void 0!==t&&t.max>0}const pe=[Object.assign(Object.assign({},ve),{min:0,max:2}),Object.assign(Object.assign({},ve),{min:8,max:10})],me=({min:t,max:e},o,r)=>{const i=t=>o*r*(t/10);return Math.floor(Math.random()*(i(e)-i(t))+i(t))},fe=(...t)=>t.reduce(((t,e)=>(t.push(...Object.entries(e.resources).map((t=>{var[o,r]=t,{generatedResource:i}=r,n=ae(r,["generatedResource"]);let s={};s[o]=Object.assign(Object.assign({},n),{generatedResource:i});return Object.assign(Object.assign({},e),{resources:s})}))),t)),[]).filter(Boolean),be={gras:{sprite:{file:"hexagonTerrain_sheet",x:414,y:1906},movementCosts:1,defense:0},desert:{sprite:{file:"hexagonTerrain_sheet",x:902,y:627},movementCosts:4,defense:0},mud:{sprite:{file:"hexagonTerrain_sheet",x:658,y:912},movementCosts:4,defense:1},muddyHills:{sprite:{file:"hexagonTerrain_sheet",x:780,y:627},movementCosts:8,defense:3},forest:{sprite:{file:"hexagonTerrain_sheet",x:536,y:912},movementCosts:8,defense:3},mountain:{sprite:{file:"hexagonTerrain_sheet",x:414,y:1052},movementCosts:10,defense:9}},we=()=>{const t=Object.keys(be);return be[t[Math.floor(Math.random()*(t.length-1))]]},ye=ut("game/world/worldLoaded"),$e=ut("game/start"),ke=ut("game/load/sidebar"),xe=({rows:t,cols:e})=>(t=>{const e=new Array(t.rows*t.cols).map((()=>[]));return pe.forEach((o=>{var r;let i=o.occurences.factor?Math.max(o.occurences.min,e.length/o.occurences.factor):o.occurences.min;for(;i>0;){const s=ge(o)?me(o,t.rows,t.cols):(n=e.length,Math.round(Math.random()*(n-1)));e[s]=[...null!==(r=e[s])&&void 0!==r?r:[],Object.assign(Object.assign({},o),{name:o.id,id:ie()})],i--}var n})),e})({rows:t,cols:e}),Oe=(t,{rows:e,cols:o})=>((t,e)=>{const o=new Array(e.rows*e.cols).map((()=>[]));return[ne].forEach((e=>{var r;let i=e.occurences.factor?Math.max(e.occurences.min,o.length/e.occurences.factor):e.occurences.min;for(;i>0;){const n=se[t](o);o[n]=[...null!==(r=o[n])&&void 0!==r?r:[],{name:e.id,team:t,id:ie(),resources:e.resources}],i--}})),o})(t,{rows:e,cols:o}),je=(t,e,o)=>{var r;return(null!==(r=t.pop())&&void 0!==r?r:[]).map((t=>Object.assign(Object.assign({},t),{row:e,col:o})))};class _e{constructor(t=4086,e=Uint32Array){this.capacity=t,this.capacity=t,this._keys=[],this._priorities=new e(t+1),this.length=0}clear(){this.length=0}bubbleUp(t){const e=this._keys[t],o=this._priorities[t];for(;t>1;){const e=t>>>1;if(this._priorities[e]<=o)break;this._keys[t]=this._keys[e],this._priorities[t]=this._priorities[e],t=e}this._keys[t]=e,this._priorities[t]=o}bubbleDown(t){const e=this._keys[t],o=this._priorities[t],r=1+(this.length>>>1),i=this.length+1;for(;t<r;){const e=t<<1;if(e>=i)break;let r=this._priorities[e],n=this._keys[e],s=e;const a=e+1;if(a<i){const t=this._priorities[a];t<r&&(r=t,n=this._keys[a],s=a)}if(r>=o)break;this._keys[t]=n,this._priorities[t]=r,t=s}this._keys[t]=e,this._priorities[t]=o}push(t,e=0){if(this.length===this.capacity)throw new Error("Heap has reached capacity, can't push new items");const o=this.length+1;this._keys[o]=t,this._priorities[o]=e,this.bubbleUp(o),this.length++}pop(){const t=this._keys[1];return this.length--,this.length>0&&(this._keys[1]=this._keys[this.length+1],this._priorities[1]=this._priorities[this.length+1],this.bubbleDown(1)),t}peekPriority(){return this._priorities[1]}peek(){return this._keys[1]}toString(){if(0===this.length)return"(empty queue)";const t=Array(this.length-1);for(let e=0;e<this.length;e++)t[e]=this._priorities[e+1];return`[${t.join(" ")}]`}get[Symbol.toStringTag](){return"Heapify"}*[Symbol.iterator](){for(let t=0;t<this.length;t++){const e=this._priorities[t+1],o=this._keys[t+1];yield[o,e]}}*keys(){for(let t=0;t<this.length;t++)yield this._keys[t+1]}*priorities(){for(let t=0;t<this.length;t++)yield this._priorities[t+1]}}const Se=t=>t.toPosition().toString(),Me=dt("action/abort"),Ee=ut("player/update"),Ae=dt("player/request/select"),Ce=ut("player/buildings/item/selected"),ze=ut("player/item/moved"),Te=ut("player/knights/created"),Re=ut("player/wagon/created"),He=ut("player/assets/loaded"),Ue=ut("turn/player/actions/hasLeft"),Ne=dt("turn/player/actions/none"),Pe=dt("map/hexagon/updated",{readOnce:!0}),De=ut("modes/move/activate"),Ze=ut("modes/move/deactivate"),Ye=ut("modes/move/hovered-target"),Le=ut("modes/move/end"),We=ut("modes/battle/activate"),Xe=ut("modes/battle/active"),qe=ut("modes/battle/end"),Ie=ut("modes/battle/deactivate"),Be=ut("battle/started"),Fe=ut("battle/dice/thrown"),Ge=ut("battle/player/attacked"),Je=ut("mill/takeover"),Ke=ut("modal/battle/open"),Ve=ut("modal/dice-result/open"),Qe=ut("turn/world/started"),to=ut("turn/world/accepted"),eo=ut("turn/player/complete"),oo=ut("turn/world/complete"),ro=ut("resources/generated"),io=ut("resources/generation/complete"),no=ut("resources/summary"),so=ut("resources/distribute");function ao(t){return t.reduce(((t,e)=>t+function(t){return t.sides[Math.floor(Math.random()*t.sides.length)].value}(e)),0)}const lo=()=>({grain:100,iron:200,hay:0,wood:0,stone:0});function co(t,e){if(!t||!t.map)return[];const o=t=>e===t.team,r=[];for(const e of t.map)for(const t of e)r.push(...t.elements.filter(o));return r}function uo(t){var e,o,r,i,n;if(!t)return;return[...null!==(n=null===(i=null===(r=null===(o=null===(e=null===document||void 0===document?void 0:document.querySelector("the-mill"))||void 0===e?void 0:e.shadowRoot)||void 0===o?void 0:o.querySelector("world-map"))||void 0===r?void 0:r.shadowRoot)||void 0===i?void 0:i.querySelectorAll("hexagon-element"))&&void 0!==n?n:[]].find((e=>{var o,r;return null===(r=null===(o=e.shadowRoot)||void 0===o?void 0:o.querySelector("sprite-set"))||void 0===r?void 0:r.querySelector(`[id="${t.id}"]`)}))}document.deepQuerySelector=uo;const ho=()=>({grain:50,iron:0,hay:0,wood:50,stone:0});let vo,go={},po=[],mo=[],fo={};const bo=t=>Object.assign({},fo[t]),wo=()=>fo[vo],yo=t=>t.actions.current>0,$o=({team:t})=>t===vo;ct.on(ye,(t=>{po=[],t.map.forEach(((t,e)=>{t.forEach(((t,o)=>{const r=new oe(e,o).toCube();t.terrain.movementCosts&&(r.costs=t.terrain.movementCosts),po.push(r)}))})),go=t,["green","red"].forEach((t=>{fo[t]={resources:{hay:100,grain:200,iron:200,wood:100,stone:100}}})),vt($e)})),ct.on(Me,(async t=>{t&&(vt(Ze),vt(Ie))})),ct.on([$e,ke],(()=>{vt(Qe)})),ct.on(Qe,(()=>{mo=[...go.teams],vo=mo.pop(),vt(to,vo)})),ct.on(so,(async({team:t,resourcesToGenerate:e})=>{var o;if(null===(o=bo(t))||void 0===o?void 0:o.resources){const o=Object.assign({},bo(t).resources);fo[t].resources=function(t,e){let o=Object.assign({},t),r=[...e],i=!0;for(;i;)i=!1,r=r.map((t=>{let e=t;return Object.entries(t.resources).forEach((r=>{var[n,s]=r,{generatedResource:a}=s,l=ae(s,["generatedResource"]);Object.entries(l).every((([t,e])=>o[t]<=e))&&(i=!0,e=void 0,Object.entries(l).forEach((([t,e])=>{o[t]-=e})),o[n]+=a,vt(ro,t))})),e})).filter(Boolean);return o}(fo[t].resources,e),vt(io,{team:t,before:o,after:fo[t].resources})}})),ct.collect(ro,io,(t=>{var e;vt(no,null===(e=t[ro.name])||void 0===e?void 0:e.map((t=>({name:t.name,from:Object.values(t.resources).map((t=>{var e=ae(t,["generatedResource"]);return Object.assign({},e)})),to:Object.keys(t.resources)}))))})),ct.on(to,(async t=>{const e=co(go,t);await vt(He,e);const o=null==e?void 0:e.find((t=>t.name===Vo));de(o)&&vt(Ae,{item:Vo,row:o.row,col:o.col,payload:o}),setTimeout((()=>{var t;null===(t=uo(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2),vt(Ee,bo(t));const r=((t,e)=>{var o;return null===(o=null==t?void 0:t.map)||void 0===o?void 0:o.reduce(((t,o)=>[...t,...o.reduce(((t,o)=>[...t,...o.elements.filter(ce).filter((t=>t.team===e))]),[])]),[])})(go,t).reduce(((t,e)=>[...t,...fe(e)]),[]);await vt(so,{team:t,resourcesToGenerate:r})})),ct.on(Ae,(async t=>{await vt(Ce,Object.assign({},t)),await vt(Ce,Object.assign(Object.assign({},t),{item:"hexagon"}))})),ct.on(eo,(()=>{vo=mo.pop(),void 0===vo?vt(oo):vt(to,vo)})),ct.on(oo,(()=>{go.map.forEach((t=>{t.forEach((({elements:t})=>{((...t)=>{t.forEach((t=>{t.actions.current=t.actions.max}))})(...t.filter(ue))}))})),vt(Qe)}));const ko=(t,e)=>{const o=Object.assign({},fo[t].resources);for(const[t,r]of Object.entries(e)){if(o[t]<r)return!1;o[t]-=r}return fo[t].resources=o,!0};ct.on(Te,(({row:t,col:e,team:o})=>{if(!$o({team:o}))return;if(!ko(o,{grain:100,iron:200,hay:0,wood:0,stone:0}))return;const r=(({team:t,row:e,col:o})=>({id:ie(),name:To,team:t,row:e,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10},dices:[{name:"Standardwaffe",story:"Eine faire, ausgewogene Waffe die jeder Ritter haben sollte",sides:[{value:3},{value:3},{value:3},{value:4},{value:5},{value:6}]},{name:"Mächtiger Schlag des Betrugs",story:"Eine Waffe, die bis zu 12 Schaden verursachen kann, doch auch eine hohe Wahrscheinlichkeit hat gar keinen Schaden zu verursachen, oder sogar den Ritter selbst zu verletzen!",sides:[{value:-3},{value:0},{value:0},{value:6},{value:12}]}]}))({row:t,col:e,team:o});go.map[t][e].elements.push(r),vt(Pe,{row:t,col:e,elements:[...go.map[t][e].elements]}),vt(He,co(go,o)),vt(Ee,wo())})),ct.on(Re,(({row:t,col:e,team:o})=>{if(!$o({team:o}))return;if(!ko(o,{grain:50,iron:0,hay:0,wood:50,stone:0}))return;const r=(({team:t,row:e,col:o})=>({id:ie(),name:Uo,team:t,row:e,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10}}))({row:t,col:e,team:o});go.map[t][e].elements.push(r),vt(Pe,{row:t,col:e,elements:[...go.map[t][e].elements]}),vt(He,co(go,o)),vt(Ee,wo())})),ct.on(Ue,(()=>{void 0===((t,e)=>{for(const o of t.map)for(const t of o){const o=t.elements.filter((t=>he(t))).map((t=>t)).find((t=>t.team===e&&t.actions.current>0));if(o)return o}})(go,vo)&&vt(Ne,!0)}));const xo=t=>Number.parseInt(t.toString(),10);let Oo,jo;ct.on(De,(async t=>{jo&&await vt(Ie),$o(t.asset)&&(Oo=t)})),ct.on(Ze,(()=>{Oo=void 0})),ct.on(Ye,(async t=>{var e,o;if(!Oo)return;const r=new oe(xo(Oo.start.row),xo(Oo.start.col)).toCube(),i=new oe(xo(t.row),xo(t.col)).toCube(),n=t=>{const{row:e,col:o}=t.toCoords();return go.map[e][o].elements.filter((t=>t.team!==(null==Oo?void 0:Oo.asset.name))).some((t=>he(t)))},s=((t,e,o,r,i)=>{const n=new _e;n.push(t,0);const s={},a={},l=[];let c=!1;if(s[Se(t)]=Se(t),a[Se(t)]=0,t.equals(e))return{path:[]};if(r(e))return{path:[]};for(;n.length>0;){const t=n.pop();if(t.equals(e)){c=!0;break}if(n.length>1e3)throw new Error("No what kinda path are you searching for?!");l.push(t.toPosition().toString());for(const c of t.neighbors(o).filter((t=>!s[Se(t)])).map((t=>{var e;return null!==(e=o.find((e=>e.equals(t))))&&void 0!==e?e:t}))){if(r(c))continue;l.some((t=>t===Se(c)))||l.push(Se(c));const o=a[Se(t)]+c.cost();i<o||(!a[Se(c)]||o<a[Se(c)])&&(a[Se(c)]=o,n.push(c,o+e.heuristic(c)),s[Se(c)]=t.toPosition().toString())}}const d=t.toPosition();if(!c)return{path:[],visited:l};let u=e.toPosition();const h=[];do{h.push(u),u=oe.fromString(s[u.toString()])}while(null!==u&&!u.equals(d));return{path:h.reverse(),visited:l}})(r,i,po,n,Oo.asset.movement.points).path;let a=t;n(i)&&(a=null!==(o=null===(e=[...s].pop())||void 0===e?void 0:e.toCoords())&&void 0!==o?o:Oo.start),console.log("MoveModeTargetHovered",Object.assign(Object.assign({},Oo),{trail:s,end:a})),await vt(De,Object.assign(Object.assign({},Oo),{trail:s,end:a}))})),ct.on(Le,(async t=>{var e,o;if(!Oo)return;if((null!==(o=null===(e=Oo.trail)||void 0===e?void 0:e.length)&&void 0!==o?o:0)<1)return;const{start:r,asset:i}=Oo;if(!$o(i))return;if(void 0===i.actions&&console.error("asset.actions undefined",i),!yo(i))return;if(ee(Oo.start,t))return void vt(Ze);i.actions.current-=1;const n=[...go.map[r.row][r.col].elements];go.map[r.row][r.col].elements=[],n.forEach((e=>{e.id!==i.id?go.map[r.row][r.col].elements.push(Object.assign(Object.assign({},e),{row:r.row,col:r.col})):go.map[t.row][t.col].elements.push(Object.assign(Object.assign({},e),{row:t.row,col:t.col}))})),await vt(Pe,{row:r.row,col:r.col,elements:[...go.map[r.row][r.col].elements]}),await vt(Pe,{row:t.row,col:t.col,elements:[...go.map[t.row][t.col].elements]}),await vt(Ze),await vt(ze,{asset:i,location:t}),await vt(Ue)})),ct.on(We,(async t=>{$o(t.asset)&&(Oo&&await vt(Ze),jo=Object.assign(Object.assign({},t),{range:new oe(t.start.row,t.start.col).toCube().range(1).map((t=>t.toPosition().toCoords()))}),vt(Xe,jo))})),ct.on(qe,(async t=>{if(!jo||!$o(jo.asset))return;if(ee(jo.start,t))return void vt(Ie);const{row:e,col:o}=t,{asset:r}=jo,i=[...go.map[e][o].elements].filter((t=>he(t)&&t.team!==r.team));yo(r)&&i.length>0&&(r.actions.current-=1,await vt(Be,{location:t,attacker:[r],defender:[...i]})),vt(He,co(go,r.team)),vt(Ie),await vt(Ue)})),ct.on(Ie,(()=>jo=void 0)),ct.on(ze,(async({asset:t,location:e})=>{if(!$o(t))return;const{row:o,col:r}=e,i=[...go.map[o][r].elements].filter((e=>e.id!==t.id)).filter((e=>e.name===Go&&e.team!==t.team));if(i.length>0&&he(t)){const o={asset:i[0],transfered:{from:i[0].team,to:t.team},location:e,by:t,team:t.team};await vt(Je,o)}else vt(He,co(go,t.team)),await vt(Ue)})),ct.on(Je,(({location:t,team:e,asset:o})=>{if(!$o({team:e}))return;const{row:r,col:i}=t,n=[...go.map[r][i].elements];go.map[r][i].elements=[],n.forEach((t=>{t.id!==o.id?go.map[r][i].elements.push(t):go.map[r][i].elements.push(Object.assign(Object.assign({},t),{team:e}))})),vt(He,co(go,e))})),ct.on(Be,(t=>{vt(Ke,t)})),ct.on(Fe,(t=>{if(!$o(t.attacker.asset))return;const e=ao(t.attacker.dices);vt(Ge,{attacker:t.attacker.asset,defender:t.defender,damage:e,location:t.location})})),ct.on(Ge,(t=>{const{defender:e,damage:o,attacker:r}=t;o<0?r.health.current+=o:e.health.current-=o;const{row:i,col:n}=t.location,s=[...go.map[i][n].elements];go.map[i][n].elements=[],s.forEach((t=>{t.id===e.id?e.health.current>0&&go.map[i][n].elements.push(e):t.id===r.id?r.health.current>0&&go.map[i][n].elements.push(r):go.map[i][n].elements.push(t)})),vt(Pe,{row:i,col:n,elements:[...go.map[i][n].elements]}),vt(Ke,void 0),vt(Ve,{attacker:[r],defender:[e],location:t.location,result:o})})),window.location.hash.indexOf("log")>=0&&ot(tt.INFO),window.location.hash.indexOf("trace")>=0&&ot(tt.TRACE);const _o=s`
     :host {
         position: absolute;
         width: 120px;
@@ -173,11 +52,11 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
         background-repeat: no-repeat;
         background-position: center center;
     }
-`,qe=K`
+`,So=s`
 .inactive {
     opacity: 0.8;
     filter: grayscale(100%);
-}`,De=K`
+}`,Mo=s`
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -192,14 +71,14 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
     ::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
-`,Le=t=>K`
+`,Eo=t=>s`
      ${t} {
         scrollbar-color:  #888 #f1f1f1;
         scrollbar-width: thin;
      }
-`;wt("button-image",(t=>{const e=t.height?`height:${t.height};`:"";return U`<button style="${e}; background-image: url('${t.src}'), url('/assets/sidebar/btn_1.png')">
+`;$t("button-image",(t=>{const e=t.height?`height:${t.height};`:"";return T`<button style="${e}; background-image: url('${t.src}'), url('/assets/sidebar/btn_1.png')">
         <slot></slot>
-    </button>`}),{styles:K`
+    </button>`}),{styles:s`
     button {
         background: none;
         border: none;
@@ -218,9 +97,9 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
         flex-wrap: nowrap;
         justify-content: space-between;
     }
-    `,defaults:{src:"",height:""}}),wt("button-pure",(()=>U`<button>
+    `,defaults:{src:"",height:""}}),$t("button-pure",(()=>T`<button>
         <slot></slot>
-    </button>`),{styles:K`
+    </button>`),{styles:s`
     
     button {
         background: none;
@@ -234,7 +113,7 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
         width: 64px;
         height: 64px;
     }
-    `});const Fe=K`
+    `});const Ao=s`
 #background {
     position: absolute;
     left: 0;
@@ -256,7 +135,7 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
     opacity: 1;
     z-index: 1001;
 }
-`,Ie=K`
+`,Co=s`
     header {
         position: relative;
         height: 2rem;
@@ -266,11 +145,11 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
         right: 12px;
         font-size: 2rem;
     }
-`,Xe=(t,e)=>{t.dispatchEvent(new CustomEvent(e))};wt("modal-window",(t=>t.open?U`
-    <div id="background" @click="${()=>t.preventClose&&Xe(t,"close")}"></div>
+`,zo=(t,e)=>{t.dispatchEvent(new CustomEvent(e))};$t("modal-window",(t=>t.open?T`
+    <div id="background" @click="${()=>t.preventClose&&zo(t,"close")}"></div>
     <div id="modal">
         <header>
-            ${t.preventClose?U``:U`<button-pure id="close" @click="${()=>Xe(t,"close")}"><text-block size="large">X</text-block></button-pure>`}
+            ${t.preventClose?T``:T`<button-pure id="close" @click="${()=>zo(t,"close")}"><text-block size="large">X</text-block></button-pure>`}
             <slot name="header"></slot>
         </header>
         <div>
@@ -278,14 +157,14 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
         </div>
         <slot name="footer"></slot>
     </div>
-    `:U``),{styles:[Fe,Ie],defaults:{open:!1,preventClose:!1}});var Ye="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{};function Ve(t){var e={exports:{}};return t(e,e.exports),e.exports}var Ze=Ve((function(t,e){Object.defineProperty(e,"v",{value:!0}),e.shallowClone=void 0,e.shallowClone=function(t){return"object"!=typeof t||!t||t instanceof Date||t instanceof RegExp?t:Array.isArray(t)?[...t]:Object.assign({},t)}})),Be=Ve((function(t,e){function o(t){if(!t.dispatchEvent||!t.requestUpdate)throw new Error("Element missing required functions (dispatchEvent/requestUpdate)");return t}function n(t){const e=t;if(e.k)return e;const n=o(t),r=n.updated;return e.k={index:0,count:0,states:[],reducers:[]},n.updated=t=>(e.k.index=0,r(t)),e}Object.defineProperty(e,"v",{value:!0}),e.withReducer=e.withState=e.decorate=e.asUpdateableLitElement=void 0,e.asUpdateableLitElement=o,e.decorate=n,e.withState=function(t,e,o={}){const r=n(t),{index:i,count:s}=r.k;return i===s?(r.k.index++,r.k.count++,r.k.states.push(e),e):(r.k.index++,o.updateDefault&&r.k.states[i].inject(e.getState()),r.k.states[i])},e.withReducer=function(t,e){const o=n(t),{index:r,count:i,reducers:s}=o.k;return r!==i||s[r-1]?o.k.reducers[r-1]:(o.k.reducers[r-1]=e,e)}})),Je=Ve((function(t,e){var o=Ye&&Ye.$||function(t,e,o,n){return new(o||(o=Promise))((function(r,i){function s(t){try{l(n.next(t))}catch(t){i(t)}}function a(t){try{l(n.throw(t))}catch(t){i(t)}}function l(t){var e;t.done?r(t.value):(e=t.value,e instanceof o?e:new o((function(t){t(e)}))).then(s,a)}l((n=n.apply(t,e||[])).next())}))};Object.defineProperty(e,"v",{value:!0}),e.useState=void 0,e.useState=(t,e,n={})=>{let r=Ze.shallowClone(e);const i=[()=>t.requestUpdate()];return Be.withState(t,{publish:t=>o(void 0,void 0,void 0,(function*(){r!==t&&(r=Ze.shallowClone(t),i.forEach((t=>t(r))))})),subscribe:t=>i.push(t),getState:()=>r,inject:t=>{r=t}},n)}})),Ge=Ve((function(t,e){Object.defineProperty(e,"v",{value:!0}),e.useReducer=void 0,e.useReducer=(t,e,o,n={})=>{const{getState:r,publish:i}=Je.useState(t,o,n),s=[];return Be.withReducer(t,{getState:r,subscribe:t=>s.push(t),when:(t,e)=>s.push(((o,n)=>o===t&&e(n))),publish:(o,a)=>{const l=e(r());l[o]&&(i(l[o](a)),s.forEach((t=>t(o,r()))),n.dispatchEvent&&t.dispatchEvent(new CustomEvent(o,{detail:r()})))}})}})),Ke=Ve((function(t,e){Object.defineProperty(e,"v",{value:!0}),Object.defineProperty(e,"useState",{enumerable:!0,get:function(){return Je.useState}}),Object.defineProperty(e,"useReducer",{enumerable:!0,get:function(){return Ge.useReducer}})}));wt("modal-container",(t=>{const{getState:e,publish:o}=Ke.useState(t,!1);return U`
+    `:T``),{styles:[Ao,Co],defaults:{open:!1,preventClose:!1}}),$t("modal-container",(t=>{const{getState:e,publish:o}=Jt(t,!1);return T`
         <button-pure @click="${()=>o(!0)}"><slot></slot></button-pure>
         <modal-window .open=${e()} @close=${()=>o(!1)}>
             <slot slot="header" name="header"></slot>
             <slot name="body"></slot>
             <slot slot="footer" name="footer"></slot>
         </modal-window>
-    `}));wt("text-block",(({size:t,type:e})=>U`<span class="${t} ${e}"><slot></slot></span>`),{styles:[K`
+    `}));$t("text-block",(({size:t,type:e})=>T`<span class="${t} ${e}"><slot></slot></span>`),{styles:[s`
     .small {
         font-size: 0.75rem;
     }
@@ -298,20 +177,20 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
     .x-large {
         font-size: 2rem;
     }
-`,K`
+`,s`
     .inline {
         display: inline;
     }
     .paragraph {
         display: block;
     }
-`],defaults:{size:"medium",type:"inline"}});wt("loading-bar",(({width:t})=>U`
+`],defaults:{size:"medium",type:"inline"}});$t("loading-bar",(({width:t})=>T`
     <div class="progress-bar">
         <span class="bar">
-            ${"0%"===t?U``:U`<span class="progress" style="width: ${t};"></span>`}
+            ${"0%"===t?T``:T`<span class="progress" style="width: ${t};"></span>`}
         </span>
     </div>
-    `),{styles:[K`
+    `),{styles:[s`
     
 .progress-bar {
     border-radius: 60px;
@@ -334,14 +213,14 @@ const B=window.ShadowRoot&&(void 0===window.ShadyCSS||window.ShadyCSS.nativeShad
 span {
     display: block;
 }
-`],defaults:{width:"100%"}});wt("dice-roll",(({result:t})=>U`<div id="cube">
+`],defaults:{width:"100%"}});$t("dice-roll",(({result:t})=>T`<div id="cube">
         <div id="side1"></div>
         <div id="side2"></div>
         <div id="side3">${t}</div>
         <div id="side4"></div>
         <div id="side5"></div>
         <div id="side6"></div>
-    </div>`),{styles:K`
+    </div>`),{styles:s`
 :host {
     width: 250px;
     height: 213px;
@@ -409,17 +288,17 @@ span {
     transform: rotateX(-90deg) translateX(0px) translateY(0px) translateZ(56px);
 	border:1px solid black;
 }
-`,props:[{result:{type:Number}}]});const Qe="player-knight";var to=wt(Qe,(t=>{const{getState:e,publish:o}=Ke.useState(t,"");return mt(t,we,o),U`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/knight_${t.team}.png'"></div>`}),{styles:[We,qe,K`
+`,props:[{result:{type:Number}}]});const To="player-knight";var Ro=$t(To,(t=>{const{getState:e,publish:o}=Jt(t,"");return pt(t,to,o),T`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/knight_${t.team}.png'"></div>`}),{styles:[_o,So,s`
         div {
             background-size: contain;
             opacity: 1;
         }
-        `],defaults:{team:""}}),eo=Object.freeze({__proto__:null,name:Qe,default:to});const oo="player-wagon";var no=wt(oo,(t=>{const{getState:e,publish:o}=Ke.useState(t,"");return mt(t,we,o),U`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/wagon_${t.team}.png'"></div>`}),{styles:[We,qe,K`
+        `],defaults:{team:""}}),Ho=Object.freeze({__proto__:null,name:To,default:Ro});const Uo="player-wagon";var No=$t(Uo,(t=>{const{getState:e,publish:o}=Jt(t,"");return pt(t,to,o),T`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/wagon_${t.team}.png'"></div>`}),{styles:[_o,So,s`
         div {
             background-size: contain;
             opacity: 1;
         }
-        `],defaults:{team:""}}),ro=Object.freeze({__proto__:null,name:oo,default:no});wt("dice-selector",(t=>{var e;return U`${null===(e=t.dices)||void 0===e?void 0:e.map((e=>U`<div>
+        `],defaults:{team:""}}),Po=Object.freeze({__proto__:null,name:Uo,default:No});$t("dice-selector",(t=>{var e;return T`${null===(e=t.dices)||void 0===e?void 0:e.map((e=>T`<div>
         <input type="radio" 
             @click=${()=>t.dispatchEvent(new CustomEvent("select",{detail:e}))}
             id="${e.name}" 
@@ -429,10 +308,10 @@ span {
             <strong>${e.name}</strong> - ${e.story}
             <div class="sides" style="grid-template-columns: 1fr ${e.sides.map((()=>"1fr")).join(" ")};">
                 <h5>Würfelergebnisse</h5>
-                ${e.sides.map((t=>U`<div class="side">${t.value}</div>`))}
+                ${e.sides.map((t=>T`<div class="side">${t.value}</div>`))}
             </div>
         </label>
-    </div>`))}`}),{styles:K`
+    </div>`))}`}),{styles:s`
         .sides {
             display: grid;
             padding: 0.5rem;
@@ -453,31 +332,29 @@ span {
      `});
 /**
  * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeHTML can only be used in text bindings");const o=io.get(e);if(void 0!==o&&$(t)&&t===o.value&&e.value===o.fragment)return;const n=document.createElement("template");n.innerHTML=t;const r=document.importNode(n.content,!0);e.setValue(r),io.set(e,{value:t,fragment:r})},(...t)=>{const e=ao(...t);return m.set(e,!0),e});var ao,lo=Ve((function(t,e){function o(t){if(!t.dispatchEvent||!t.requestUpdate)throw new Error("Element missing required functions (dispatchEvent/requestUpdate)");return t}function n(t){const e=t;if(e.O)return e;const n=o(t),r=n.updated;return e.O={index:0,count:0,effects:[]},n.updated=t=>(e.O.index=0,r(t)),e}Object.defineProperty(e,"v",{value:!0}),e.withEffect=e.decorate=e.asUpdateableLitElement=void 0,e.asUpdateableLitElement=o,e.decorate=n,e.withEffect=function(t,e){const o=n(t),{index:r,count:i}=o.O;return r===i?(o.O.index++,o.O.count++,o.O.effects.push(e),e):(o.O.index++,o.O.effects[r])}})),co=Ve((function(t,e){function o(t,e,o){const n=lo.withEffect(t,{on:e,observe:["__initial__dirty"]});n.observe.some(((t,e)=>o[e]!==t))&&n.on(),n.observe=o}Object.defineProperty(e,"v",{value:!0}),e.useOnce=e.useEffect=void 0,e.useEffect=o,e.useOnce=(t,e)=>o(t,e,[])})),uo=Ve((function(t,e){Object.defineProperty(e,"v",{value:!0}),Object.defineProperty(e,"useEffect",{enumerable:!0,get:function(){return co.useEffect}}),Object.defineProperty(e,"useOnce",{enumerable:!0,get:function(){return co.useOnce}})}));async function ho(t){for(const e of t)await e()}const po=(t,e)=>{var o,n;return[...null!==(o=e.none)&&void 0!==o?o:[],...null!==(n=e[t])&&void 0!==n?n:[]]};wt("sprite-set",(t=>{const{getState:e,publish:o}=Ke.useState(t,void 0),{getState:n,publish:r}=Ke.useState(t,void 0);return mt(t,ne,(e=>t.row.toString()===(null==e?void 0:e.row.toString())&&t.col.toString()===(null==e?void 0:e.col.toString())),o),mt(t,we,r),e()&&ho(po(n(),t.triggers)).then((()=>gt(Jt,{item:"hexagon",row:t.row,col:t.col}))),uo.useOnce(t,(()=>{t.addEventListener("click",(async()=>{ho(po(n(),t.triggers))}))})),U`<slot></slot>`}),{defaults:{row:0,col:0,triggers:{}}}),wt("sprite-player-elements-grid",(()=>U`<slot></slot>`),{styles:K`
+const Do=2;
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+class Zo extends class{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,o){this._$Ct=t,this._$AM=e,this._$Ci=o}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}{constructor(t){if(super(t),this.it=H,t.type!==Do)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(t){if(t===H||null==t)return this.ft=void 0,this.it=t;if(t===R)return t;if("string"!=typeof t)throw Error(this.constructor.directiveName+"() called with a non-string value");if(t===this.it)return this.ft;this.it=t;const e=[t];return e.raw=e,this.ft={_$litType$:this.constructor.resultType,strings:e,values:[]}}}Zo.directiveName="unsafeHTML",Zo.resultType=1;const Yo=(t=>(...e)=>({_$litDirective$:t,values:e}))(Zo);async function Lo(t){for(const e of t)await e()}const Wo=(t,e)=>{var o,r;return[...null!==(o=e.none)&&void 0!==o?o:[],...null!==(r=e[t])&&void 0!==r?r:[]]};$t("sprite-set",(t=>{const{getState:e,publish:o}=Jt(t,void 0),{getState:r,publish:i}=Jt(t,void 0);return pt(t,Pe,(e=>t.row.toString()===(null==e?void 0:e.row.toString())&&t.col.toString()===(null==e?void 0:e.col.toString())),o),pt(t,to,i),e()&&Lo(Wo(r(),t.triggers)).then((()=>vt(Ce,{item:"hexagon",row:t.row,col:t.col}))),Gt(t,(()=>{t.addEventListener("click",(async()=>{Lo(Wo(r(),t.triggers))}))})),T`<slot></slot>`}),{defaults:{row:0,col:0,triggers:{}}}),$t("sprite-player-elements-grid",(()=>T`<slot></slot>`),{styles:s`
     slot {
         display: grid;
         align-items: center;
         grid-template-columns: repeat(6, 1fr);
     }
-    `});const go=(o,n,r)=>{const i={},s=null==o?void 0:o.map((o=>{var s,a,l,c;const d=Object.entries(Object.assign(Object.assign({},e),t)).find((([t,e])=>e.name===o.name)),u=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([t,e])=>void 0!==e)).map((([t,e])=>`${t}="${e}"`)).join(" "),h=null!==(s=o.team)&&void 0!==s?s:"none";return i[h]=null!==(a=i[h])&&void 0!==a?a:[],i[h].push((()=>{var t;return gt(Jt,{item:null!==(t=null==d?void 0:d[1].name)&&void 0!==t?t:"",row:n,col:r,payload:Object.assign({},o)})})),U`${so(`<${null!==(l=null==d?void 0:d[1].name)&&void 0!==l?l:"span"} ${u}></${null!==(c=null==d?void 0:d[1].name)&&void 0!==c?c:"span"}>`)}`}));return U`<sprite-set .triggers=${i} col="${r}" row="${n}">${s}</sprite-set>`};wt("fighter-info",(({player:t,row:e,col:o})=>U`<div class="sprite ${(null==t?void 0:t.health.current)<1?"dead":"alive"}">
-            ${go(t?[t]:[],e,o)}
+    `});const Xo=(o,r,i)=>{const n={},s=null==o?void 0:o.map((o=>{var s,a,l,c;const d=Object.entries(Object.assign(Object.assign({},e),t)).find((([t,e])=>e.name===o.name)),u=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([t,e])=>void 0!==e)).map((([t,e])=>`${t}="${e}"`)).join(" "),h=null!==(s=o.team)&&void 0!==s?s:"none";return n[h]=null!==(a=n[h])&&void 0!==a?a:[],n[h].push((()=>{var t;return vt(Ce,{item:null!==(t=null==d?void 0:d[1].name)&&void 0!==t?t:"",row:r,col:i,payload:Object.assign({},o)})})),T`${Yo(`<${null!==(l=null==d?void 0:d[1].name)&&void 0!==l?l:"span"} ${u}></${null!==(c=null==d?void 0:d[1].name)&&void 0!==c?c:"span"}>`)}`}));return T`<sprite-set .triggers=${n} col="${i}" row="${r}">${s}</sprite-set>`};$t("fighter-info",(({player:t,row:e,col:o})=>T`<div class="sprite ${(null==t?void 0:t.health.current)<1?"dead":"alive"}">
+            ${Xo(t?[t]:[],e,o)}
         </div>
         <div class="info">
             <h3>Gesundheit</h3>
             <loading-bar width="${(null==t?void 0:t.health.current)/(null==t?void 0:t.health.max)*100}%"></loading-bar>
             <p>${null==t?void 0:t.health.current} von ${null==t?void 0:t.health.max}</p>
-        </div>`),{styles:[K`
+        </div>`),{styles:[s`
         :host {
             display: grid;
             grid-template-columns: 1fr 3fr;
@@ -497,7 +374,7 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
             animation: rotation 5s 1;
             animation-fill-mode: forwards;
         }
-        `],props:[{player:{type:Object},row:{type:Number},col:{type:Number}}]});const mo=K`
+        `],props:[{player:{type:Object},row:{type:Number},col:{type:Number}}]});const qo=s`
 :host {
   display: inline-block;
 }
@@ -514,7 +391,7 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
 }
 .hexagon:hover {
   background: var(--colorFocus);
-}`,fo=K`
+}`,Io=s`
     .inactive {
         opacity: 0.3;
         cursor: not-allowed;
@@ -529,19 +406,19 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
         cursor: not-allowed;
         filter: brightness(50%) hue-rotate(332deg);
     }
-`,vo=(t,e,o)=>`${function(t,e){var o,n;return e?Ot(e.start,t)?"active start":e.end&&(null!==(n=null===(o=e.trail)||void 0===o?void 0:o.length)&&void 0!==n?n:0)<1&&Ot(e.end,t)?"active unreachable":e.end&&Ot(e.end,t)?"active end":e.trail&&e.trail.some((e=>Ot(e,t)))?"active trail":"inactive":""}(t,e)} ${function(t,e){return e?Ot(e.start,t)?"active start":e.end&&Ot(e.end,t)?"active end":e.range&&e.range.some((e=>Ot(e,t)))?"active trail":"inactive":""}(t,o)}`,bo=(t,e,o)=>{e&&e.end&&Ot(e.end,t)?function(t,e){e&&gt(ae,t)}(t,e):o&&function(t,e){e&&gt(de,t)}(t,o)};wt("hexagon-element",(t=>{var e,o,n;uo.useOnce(t,(()=>{t.addEventListener("click",(()=>gt(Jt,{item:"hexagon",row:t.row,col:t.col})))}));const{row:r,col:i}=t,{getState:s,publish:a}=Ke.useState(t,{elements:t.elements,row:r,col:i}),{getState:l,publish:c}=Ke.useState(t,void 0),{getState:d,publish:u}=Ke.useState(t,void 0);mt(t,ne,(t=>(null==t?void 0:t.row.toString())===r.toString()&&(null==t?void 0:t.col.toString())===i.toString()),a),mt(t,re,c),mt(t,ce,u),mt(t,ae,(()=>c(void 0))),mt(t,ie,(()=>c(void 0))),mt(t,ue,(()=>u(void 0)));const h=s();return U`<div 
-      class="hexagon ${vo(t,l(),d())}" 
-      @mouseover=${()=>{l()&&gt(se,{row:r,col:i})}}
-      @click=${()=>(bo(t,l(),d()),document.dispatchEvent(new CustomEvent("hello-world",{detail:{hello:"world"}})))}
-      style="background-image:url(/assets/${null===(e=t.background)||void 0===e?void 0:e.file}.png); background-position: ${null===(o=t.background)||void 0===o?void 0:o.x}px ${null===(n=t.background)||void 0===n?void 0:n.y}px;">
-      ${go(h.elements,t.row,t.col)}</div>`}),{styles:[mo,fo],defaults:{background:void 0,elements:[],col:0,row:0}}),wt("world-map",(t=>{var e;const{getState:o,publish:n}=Ke.useState(t,void 0);return mt(t,Pt,n),U`<div id="globe">${null===(e=o())||void 0===e?void 0:e.map.map(((t,e)=>U`<div class="row ${e%2==0?"push":""}" style="width: calc(${120*t.length}px + 20rem)">
-                ${t.map(((t,o)=>U`<hexagon-element 
+`,Bo=(t,e,o)=>`${function(t,e){var o,r;return e?ee(e.start,t)?"active start":e.end&&(null!==(r=null===(o=e.trail)||void 0===o?void 0:o.length)&&void 0!==r?r:0)<1&&ee(e.end,t)?"active unreachable":e.end&&ee(e.end,t)?"active end":e.trail&&e.trail.some((e=>ee(e,t)))?"active trail":"inactive":""}(t,e)} ${function(t,e){return e?ee(e.start,t)?"active start":e.end&&ee(e.end,t)?"active end":e.range&&e.range.some((e=>ee(e,t)))?"active trail":"inactive":""}(t,o)}`,Fo=(t,e,o)=>{e&&e.end&&ee(e.end,t)?function(t,e){e&&vt(Le,t)}(t,e):o&&function(t,e){e&&vt(qe,t)}(t,o)};$t("hexagon-element",(t=>{var e,o,r;Gt(t,(()=>{t.addEventListener("click",(()=>vt(Ce,{item:"hexagon",row:t.row,col:t.col})))}));const{row:i,col:n}=t,{getState:s,publish:a}=Jt(t,{elements:t.elements,row:i,col:n}),{getState:l,publish:c}=Jt(t,void 0),{getState:d,publish:u}=Jt(t,void 0);pt(t,Pe,(t=>(null==t?void 0:t.row.toString())===i.toString()&&(null==t?void 0:t.col.toString())===n.toString()),a),pt(t,De,c),pt(t,Xe,u),pt(t,Le,(()=>c(void 0))),pt(t,Ze,(()=>c(void 0))),pt(t,Ie,(()=>u(void 0)));const h=s();return T`<div 
+      class="hexagon ${Bo(t,l(),d())}" 
+      @mouseover=${()=>{l()&&vt(Ye,{row:i,col:n})}}
+      @click=${()=>(Fo(t,l(),d()),document.dispatchEvent(new CustomEvent("hello-world",{detail:{hello:"world"}})))}
+      style="background-image:url(/assets/${null===(e=t.background)||void 0===e?void 0:e.file}.png); background-position: ${null===(o=t.background)||void 0===o?void 0:o.x}px ${null===(r=t.background)||void 0===r?void 0:r.y}px;">
+      ${Xo(h.elements,t.row,t.col)}</div>`}),{styles:[qo,Io],defaults:{background:void 0,elements:[],col:0,row:0}}),$t("world-map",(t=>{var e;const{getState:o,publish:r}=Jt(t,void 0);return pt(t,ye,r),T`<div id="globe">${null===(e=o())||void 0===e?void 0:e.map.map(((t,e)=>T`<div class="row ${e%2==0?"push":""}" style="width: calc(${120*t.length}px + 20rem)">
+                ${t.map(((t,o)=>T`<hexagon-element 
                         .background=${t.terrain.sprite} 
                         .elements="${t.elements}" 
                         row="${e}" col="${o}">
                     </hexagon-element>`))}
             </div>
-            `))}</div>`}),{styles:K`
+            `))}</div>`}),{styles:s`
     :host {
         display:block;
     }
@@ -554,16 +431,16 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     }
     .push {
         margin-left: 60px;
-    }`});const wo="building-mill";var yo=wt(wo,(({team:t})=>U`<div style="background-image:url('/assets/windmill_complete_${null!=t?t:"none"}.png'"></div>`),{styles:[We,K`
+    }`});const Go="building-mill";var Jo=$t(Go,(({team:t})=>T`<div style="background-image:url('/assets/windmill_complete_${null!=t?t:"none"}.png'"></div>`),{styles:[_o,s`
         div {
             width: 80%;
             height: 80%;
         }
-        `],defaults:{team:void 0}}),xo=Object.freeze({__proto__:null,name:wo,default:yo});const ko="building-castle-small";var $o=wt(ko,(t=>{const{getState:e,publish:o}=Ke.useState(t,"");return mt(t,we,o),U`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/castle_small_${t.team}.png'"></div>`}),{styles:[We,qe,K`
+        `],defaults:{team:void 0}}),Ko=Object.freeze({__proto__:null,name:Go,default:Jo});const Vo="building-castle-small";var Qo=$t(Vo,(t=>{const{getState:e,publish:o}=Jt(t,"");return pt(t,to,o),T`<div class="${e()===t.team?"active":"inactive"}" style="background-image:url('/assets/castle_small_${t.team}.png'"></div>`}),{styles:[_o,So,s`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Oo=Object.freeze({__proto__:null,name:ko,default:$o});const jo={hay:0,iron:0,grain:0,log:0,stone:0};var _o=_e,So=$e,Mo=()=>Object.assign(Object.assign({},jo),{stone:4,log:2,grain:1}),Eo=()=>Object.assign(Object.assign({},jo),{log:500,grain:500,stone:500}),Co=()=>Object.assign(Object.assign({},jo),{stone:1e3,iron:1e3,grain:1e3});const zo=K`
+        `],defaults:{team:"",row:void 0,col:void 0}}),tr=Object.freeze({__proto__:null,name:Vo,default:Qo});const er={hay:0,iron:0,grain:0,wood:0,stone:0};var or=ho,rr=lo,ir=()=>Object.assign(Object.assign({},er),{stone:4,wood:2,grain:1}),nr=()=>Object.assign(Object.assign({},er),{wood:500,grain:500,stone:500}),sr=()=>Object.assign(Object.assign({},er),{stone:1e3,iron:1e3,grain:1e3});const ar=s`
   :host {
     display: block;
     background-image: url("/assets/sidebar/bg.png");
@@ -577,8 +454,18 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     grid-template-rows: auto;
     column-gap: 10px;
     row-gap: 15px;
-    margin: 15px;
+    margin: 15px 15px 25px 15px;
   }
+  button {
+        cursor: pointer;
+    }
+    img {
+        width: 100%;
+    }
+    h3 {
+        color: var(--colorMain)
+    }
+  `,lr=s`
   building-castle-small {
     position: relative;
     display: block;
@@ -586,14 +473,13 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     height: 4em;
   }
   h3 {
-    color: var(--colorMain);
     text-align: center;
     margin-top: 0;
   }
   resource-counter {
     display: grid;
     grid-template-columns: 1fr;
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
   .enough {
     color: var(--colorMain);
@@ -601,96 +487,82 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
   .lack {
     color: var(--colorHighlight);
   }
-`,Ao=(t,e)=>U`
-    ${e.hay>0?U`<resource-counter
+`,cr=(t,e)=>T`
+    ${e.hay>0?T`<resource-counter
           count="${e.hay}"
           class="${t.hay>=e.hay?"enough":"lack"}"
         >
           <resource-hay></resource-hay>
-        </resource-counter>`:U``}
-    ${e.grain>0?U`<resource-counter
+        </resource-counter>`:T``}
+    ${e.grain>0?T`<resource-counter
           count="${e.grain}"
           class="${t.grain>=e.grain?"enough":"lack"}"
         >
           <resource-grain></resource-grain>
-        </resource-counter>`:U``}
-    ${e.log>0?U`<resource-counter
-          count="${e.log}"
-          class="${t.log>=e.log?"enough":"lack"}"
+        </resource-counter>`:T``}
+    ${e.wood>0?T`<resource-counter
+          count="${e.wood}"
+          class="${t.wood>=e.wood?"enough":"lack"}"
         >
-          <resource-log></resource-log>
-        </resource-counter>`:U``}
-    ${e.stone>0?U`<resource-counter
+          <resource-wood></resource-wood>
+        </resource-counter>`:T``}
+    ${e.stone>0?T`<resource-counter
           count="${e.stone}"
           class="${t.stone>=e.stone?"enough":"lack"}"
         >
           <resource-stone></resource-stone>
-        </resource-counter>`:U``}
-    ${e.iron>0?U`<resource-counter
+        </resource-counter>`:T``}
+    ${e.iron>0?T`<resource-counter
           count="${e.iron}"
           class="${t.iron>=e.iron?"enough":"lack"}"
         >
           <resource-iron></resource-iron>
-        </resource-counter>`:U``}
-  `;wt("sidebar-castle",(t=>{var e;const{selected:{payload:{team:o},row:n,col:r}}=t,{getState:i,publish:s}=Ke.useState(t,void 0);mt(t,Zt,s);const{resources:a}=null!==(e=i())&&void 0!==e?e:{resources:{}};return U`<building-castle-small team="${o}"></building-castle-small>
+        </resource-counter>`:T``}
+  `;$t("sidebar-castle",(t=>{var e;const{selected:{payload:{team:o},row:r,col:i}}=t,{getState:n,publish:s}=Jt(t,void 0);pt(t,Ee,s);const{resources:a}=null!==(e=n())&&void 0!==e?e:{resources:{}};return T`<building-castle-small team="${o}"></building-castle-small>
       <h3>Bauen</h3>
       <div class="container">
         <button-image
           height="35px"
           src="/assets/knight_${o}.png"
-          @click=${async()=>await gt(Kt,{team:o,row:n,col:r})}
+          @click=${async()=>await vt(Te,{team:o,row:r,col:i})}
         >
-          ${Ao(a,So())}
+          ${cr(a,rr())}
         </button-image>
         <button-image
           height="35px"
           src="/assets/wagon_${o}.png"
-          @click=${async()=>await gt(Qt,{team:o,row:n,col:r})}
+          @click=${async()=>await vt(Re,{team:o,row:r,col:i})}
         >
-          ${Ao(a,_o())}
+          ${cr(a,or())}
         </button-image>
         <button-image height="35px" src="/assets/resources/iron.png">
-          ${Ao(a,Mo())}
+          ${cr(a,ir())}
         </button-image>
         <button-image height="35px" src="/assets/castle_medium_${o}.png">
-          ${Ao(a,Eo())}
+          ${cr(a,nr())}
         </button-image>
         <button-image height="35px" src="/assets/castle_large_${o}.png">
-          ${Ao(a,Co())}
+          ${cr(a,sr())}
         </button-image>
-      </div>`}),{styles:[zo],defaults:{selected:{payload:{team:""},col:0,row:0}}});const To=t=>parseInt(t.toString(),10);wt("sidebar-knight",(t=>{const{selected:{payload:e,row:o,col:n}}=t,{health:r,actions:i}=e,s={row:To(o),col:To(n)};return U`
+      </div>`}),{styles:[ar,lr],defaults:{selected:{payload:{team:""},col:0,row:0}}});const dr=t=>parseInt(t.toString(),10);$t("sidebar-knight",(t=>{const{selected:{payload:e,row:o,col:r}}=t,{health:i,actions:n}=e,s={row:dr(o),col:dr(r)};return T`
     <h3>Ritter</h3>
     <div class="container">
         <img id="knight" src="/assets/knight_${e.team}.png">
-        <loading-bar id="health" width="${r.current/r.max*100}%"></loading-bar>
+        <loading-bar id="health" width="${i.current/i.max*100}%"></loading-bar>
         <div id="stats">
-            <strong>Leben</strong> ${r.current} von ${r.max} 
-            <strong>Aktionen:</strong> ${i.current} von ${i.max}
+            <strong>Leben</strong> ${i.current} von ${i.max} 
+            <strong>Aktionen:</strong> ${n.current} von ${n.max}
         </div>
-        <button ?disabled=${i.current<1} id="move" @click=${()=>gt(re,{asset:Object.assign({},e),start:s})}>🦵</button>
-        <button ?disabled=${i.current<1} id="attack" @click=${()=>gt(le,{asset:Object.assign({},e),start:s})}">⚔</button>
-        <button ?disabled=${i.current<1} id="fortify">🏰</button>
-    </div>`}),{styles:[K`
-    :host {
-        display: block;
-        background-image: url('/assets/sidebar/bg.png');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        padding: 15px;
-    }
+        <button ?disabled=${n.current<1} id="move" @click=${()=>vt(De,{asset:Object.assign({},e),start:s})}>🦵</button>
+        <button ?disabled=${n.current<1} id="attack" @click=${()=>vt(We,{asset:Object.assign({},e),start:s})}">⚔</button>
+        <button ?disabled=${n.current<1} id="fortify">🏰</button>
+    </div>`}),{styles:[ar,s`
     .container {
-        display: grid;
         grid-template-areas: 
             "knight knight health health health"
             "knight knight stats stats stats"
             "knight knight move attack fortify";
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        column-gap: 10px;
-        row-gap: 15px;
-        margin: 15px;
-    }
-    button {
-        cursor: pointer;
     }
     #knight {
         grid-area: knight;
@@ -704,24 +576,18 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     #stats {
         grid-area: stats;
     }
-    img {
-        width: 100%;
-    }
-    h3 {
-        color: var(--colorMain)
-    }
-`],props:[{selected:{type:Object}}]});wt("sidebar-wagon",(t=>{const{selected:{payload:e,row:o,col:n}}=t,{health:r,actions:i}=e,s={row:To(o),col:To(n)};return U`
+`],props:[{selected:{type:Object}}]});$t("sidebar-wagon",(t=>{const{selected:{payload:e,row:o,col:r}}=t,{health:i,actions:n}=e,s={row:dr(o),col:dr(r)};return T`
     <h3>Wagen</h3>
     <div class="container">
         <img id="wagon" src="/assets/wagon_${e.team}.png">
-        <loading-bar id="health" width="${r.current/r.max*100}%"></loading-bar>
+        <loading-bar id="health" width="${i.current/i.max*100}%"></loading-bar>
         <div id="stats">
-            <strong>Leben</strong> ${r.current} von ${r.max} 
-            <strong>Aktionen:</strong> ${i.current} von ${i.max}
+            <strong>Leben</strong> ${i.current} von ${i.max} 
+            <strong>Aktionen:</strong> ${n.current} von ${n.max}
         </div>
-        <button ?disabled=${i.current<1} id="move" title="Move" @click=${()=>gt(re,{asset:Object.assign({},e),start:s})}>🦵</button>
-        <button ?disabled=${i.current<1} id="load" title="Load/Unload">📦</button>
-    </div>`}),{styles:[K`
+        <button ?disabled=${n.current<1} id="move" title="Move" @click=${()=>vt(De,{asset:Object.assign({},e),start:s})}>🦵</button>
+        <button ?disabled=${n.current<1} id="load" title="Load/Unload">📦</button>
+    </div>`}),{styles:[s`
     :host {
         display: block;
         background-image: url('/assets/sidebar/bg.png');
@@ -761,46 +627,54 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     h3 {
         color: var(--colorMain)
     }
-`],props:[{selected:{type:Object}}]});const Ho=t=>({position:t?new jt(null==t?void 0:t.row,null==t?void 0:t.col):void 0,elements:t?[{item:t.item,payload:t.payload}]:[],dirty:!1});wt("controls-sidebar",(t=>{const{getState:e,publish:o}=Ke.useState(t,void 0);mt(t,Jt,o);const n=e(),{getState:r,publish:i}=Ke.useState(t,Ho(n)),s=r();return!s.dirty&&n&&new jt(n.row,n.col).equals(s.position)?i(Object.assign(Object.assign({},s),{elements:[...s.elements,{item:n.item,payload:n.payload}],dirty:"hexagon"===n.item})):i(Ho(n)),uo.useOnce(t,(()=>{setTimeout((()=>{gt(Ut)}),1)})),U`
-        ${r().elements.map((t=>{var e,o,n,i,s,a;switch(t.item){case ko:return U`<sidebar-castle 
-                        .selected="${{row:null===(e=r().position)||void 0===e?void 0:e.row,col:null===(o=r().position)||void 0===o?void 0:o.col,payload:t.payload}}">
-                    </sidebar-castle>`;case Qe:return U`<sidebar-knight
-                        .selected="${{row:null===(n=r().position)||void 0===n?void 0:n.row,col:null===(i=r().position)||void 0===i?void 0:i.col,payload:t.payload}}">
-                    </sidebar-knight>`;case oo:return U`<sidebar-wagon
-                        .selected="${{row:null===(s=r().position)||void 0===s?void 0:s.row,col:null===(a=r().position)||void 0===a?void 0:a.col,payload:t.payload}}">
-                    </sidebar-wagon>`;default:case ko:return U``}}))}
-    `}));const No=[];function Po(){No&&No.forEach((t=>{document.body.removeChild(t)})),No.length=0}function Ro(t,...e){const o=[],n=[];if(0===e.length)return U(t,...e);const r=t=>{n[n.length-1]=n[n.length-1]+t};return e.forEach(((i,s)=>{0===s&&n.push(t[0]);const a=e[s];(t=>t&&t.d&&"string"==typeof t.d&&1===Object.keys(t).length)(a)?(r(a.d),r(t[s+1])):(o.push(a),n.push(t[s+1]))})),U(n,...o)}Object.freeze({ELEMENT_NODE:1,TEXT_NODE:3,COMMENT_NODE:8,DOCUMENT_FRAGMENT_NODE:11});const Uo=new WeakMap;class Wo{constructor(t){this._parent=t,this._cache=new Map}has(t){return!!(this._cache.has(t)||this._parent&&this._parent._cache.has(t))}set(t,e){return this._cache.set(t,e),this}get(t){return this._cache.get(t)||this._parent&&this._parent._cache.get(t)}}let qo=Math.round(1e5*Math.random());const Do="-|\\.|[0-9]|[a-z]",Lo=new RegExp(`[a-z](${Do})*-(${Do})*`),Fo=(t,e)=>{const o=`${t}-${qo+=1}`;return((t,e)=>!!e.get(t))(o,e)?Fo(t,e):o};function Io(t,e=customElements){if(o=t,null===Lo.exec(o))throw new Error("tagName is invalid");var o;return Fo(t,e)}const Xo=new WeakMap,Yo=(t,e)=>Xo.set(e,t),Vo=(t,e,o=customElements)=>{Yo(t,e),o.define(t,class extends e{})},Zo=(t,e,o)=>{const n=customElements;if(!(t=>Object.prototype.isPrototypeOf.call(HTMLElement,t))(e))return((t,e,o)=>{const n=Io(t,e);if(!o)throw new Error("Lazy scoped elements requires the use of tags cache");return o.set(t,n),n})(t,n,o);if(e===customElements.get(t))return Yo(t,e),t;const r=Io(t,n);return Vo(r,e,n),r};function Bo(t,e,o){return(t=>Xo.get(t))(e)||o&&o.get(t)||Zo(t,e,o)}const Jo=new RegExp("<\\/?([a-z](-|\\.|[0-9]|[a-z])*-(-|\\.|[0-9]|[a-z])*)","g"),Go=new Wo,Ko=(t,e,o,n)=>{const r=t.map((t=>{let o=t;const r=(t=>{const e=[];let o;for(;null!==(o=Jo.exec(t));)e.push(o);return e})(t);for(let t=r.length-1;t>=0;t-=1){const i=r[t],[s,a]=i,l=Bo(a,e[a],n),c=i.index+s.length-a.length,d=c+a.length,u=0===s.indexOf("</");o=o.slice(0,c)+(u?l:`${l} data-tag-name="${a}"`)+o.slice(d)}return o}));return o.set(t,r),r};let Qo=!0;const{ShadyCSS:tn}=window;(void 0===tn||void 0===tn.prepareTemplateDom)&&(Qo=!1);const en=new WeakMap,on=new WeakMap,nn=t=>(on.has(t)||on.set(t,new Wo(on.get(t.constructor))),on.get(t)),rn=(t,e,o,n)=>t.map((t=>t instanceof k?sn(t,e,o,n):Array.isArray(t)?rn(t,e,o,n):t)),sn=(t,e,o,n)=>new k(function(t,e,o=Go,n){return o.get(t)||Ko(t,e,o,n)}(t.strings,e,o,n),rn(t.values,e,o,n),t.type,t.processor),an=(t,e,o,n)=>i=>{const s=sn(i,e,o,n);return(t=>e=>{const o=((t,e)=>`${t}--${e}`)(e.type,t);let n=N.get(o);void 0===n&&(n={stringsArray:new WeakMap,keyString:new Map},N.set(o,n));let i=n.stringsArray.get(e.strings);if(void 0!==i)return i;const s=e.strings.join(r);if(i=n.keyString.get(s),void 0===i){const o=e.getTemplateElement();Qo&&tn.prepareTemplateDom(o,t),i=new a(e,o),n.keyString.set(s,i)}return n.stringsArray.set(e.strings,i),i})(t)(s)},ln=(cn=t=>class extends t{static get scopedElements(){return{}}static render(t,e,o){if(!o||"object"!=typeof o||!o.scopeName)throw new Error("The `scopeName` option is required.");const{scopeName:n,eventContext:r}=o,i=(s=r,en.has(s)||en.set(s,new Wo(en.get(s.constructor))),en.get(s));var s;const a=nn(r),{scopedElements:l}=this;return super.render(t,e,{...o,templateFactory:an(n,l,i,a)})}defineScopedElement(t,e){return function(t,e,o){const n=o.get(t);n?void 0===customElements.get(n)&&Vo(n,e,customElements):o.set(t,Bo(t,e,o))}(t,e,nn(this))}static getScopedTagName(t){const e=this.scopedElements[t];return e?Bo(t,e,nn(this)):nn(this).get(t)}getScopedTagName(t){const e=this.constructor.scopedElements[t];return e?Bo(t,e,nn(this)):nn(this).get(t)}},t=>{if(function(t,e){let o=e;for(;o;){if(Uo.get(o)===t)return!0;o=Object.getPrototypeOf(o)}return!1}(cn,t))return t;const e=cn(t);return Uo.set(e,cn),e});var cn;const dn=t=>{return null!=(e=t)&&"function"==typeof e[Symbol.iterator]?[...t].map((t=>dn(t))):t instanceof k?U(t.strings,...t.values):t;var e};class un extends(ln(tt)){static get properties(){return{scopedElements:{type:Object},template:{type:Object}}}constructor(){super(),this.scopedElements={},this.template}firstUpdated(t){super.firstUpdated(t),Object.keys(this.scopedElements).forEach((t=>this.defineScopedElement(t,this.scopedElements[t])))}render(){return dn(this.template)}}const hn=(t=0)=>{const e=`scoped-elements-test-wrapper-${t}`;return void 0!==customElements.get(e)?hn(t+1):e},pn=hn();customElements.define(pn,un);try{"afterEach"in window&&afterEach((()=>{Po()})),"teardown"in window&&teardown((()=>{Po()}))}catch(t){}wt("modal-battle",(t=>{var e,o;const{getState:n,publish:r}=Ke.useState(t,void 0),{getState:i,publish:s}=Ke.useState(t,void 0);return mt(t,fe,r),Ro`
+`],props:[{selected:{type:Object}}]});const ur=t=>({position:t?new oe(null==t?void 0:t.row,null==t?void 0:t.col):void 0,elements:t?[{item:t.item,payload:t.payload}]:[],dirty:!1});$t("controls-sidebar",(t=>{const{get:e,set:o}=Jt(t,void 0);pt(t,Ce,o);const r=e(),{get:i,set:n}=Jt(t,ur(r)),s=i();return!s.dirty&&r&&new oe(r.row,r.col).equals(s.position)?n(Object.assign(Object.assign({},s),{elements:[...s.elements,{item:r.item,payload:r.payload}],dirty:"hexagon"===r.item})):n(ur(r)),Gt(t,(()=>{setTimeout((()=>{vt(ke)}),1)})),T`
+        ${i().elements.map((t=>{var e,o,r,n,s,a;switch(t.item){case Vo:return T`<sidebar-castle 
+                        .selected="${{row:null===(e=i().position)||void 0===e?void 0:e.row,col:null===(o=i().position)||void 0===o?void 0:o.col,payload:t.payload}}">
+                    </sidebar-castle>`;case To:return T`<sidebar-knight
+                        .selected="${{row:null===(r=i().position)||void 0===r?void 0:r.row,col:null===(n=i().position)||void 0===n?void 0:n.col,payload:t.payload}}">
+                    </sidebar-knight>`;case Uo:return T`<sidebar-wagon
+                        .selected="${{row:null===(s=i().position)||void 0===s?void 0:s.row,col:null===(a=i().position)||void 0===a?void 0:a.col,payload:t.payload}}">
+                    </sidebar-wagon>`;default:case Vo:return T``}}))}
+    `}),{styles:s`:host { 
+        position: absolute;
+        display: block;
+        min-width: 200px;
+        width: 20%;
+        right: 20px;
+        top: 20px;
+        z-index: 2;
+    }`}),$t("modal-battle",(t=>{var e,o;const{getState:r,publish:i}=Jt(t,void 0),{getState:n,publish:s}=Jt(t,void 0);return pt(t,Ke,i),T`
    <modal-window 
-        .open=${!!n()} 
+        .open=${!!r()} 
         preventClose>
         <h1 slot="header">Kampf beginnt!</h1>
         <div class="body">
-        ${null===(e=n())||void 0===e?void 0:e.attacker.map((t=>{const e=t;return Ro`
+        ${null===(e=r())||void 0===e?void 0:e.attacker.map((t=>{const e=t;return T`
                     <div>
                         <fighter-info 
                             .player=${e} 
-                            row="${n().location.row}" 
-                            col="${n().location.col}">
+                            row="${r().location.row}" 
+                            col="${r().location.col}">
                         </fighter-info>
                         <h3>Wähle deine Waffe</h3>
                         <div class="dices">
                             <dice-selector .dices="${e.dices}" @select="${t=>s(t.detail)}"></dice-selector>
                         </div>
                     </div>
-                `}))}${null===(o=n())||void 0===o?void 0:o.defender.map((t=>Ro`
+                `}))}${null===(o=r())||void 0===o?void 0:o.defender.map((t=>T`
                     <div>
                         <fighter-info 
                             .player=${t} 
-                            row="${n().location.row}" 
-                            col="${n().location.col}">
+                            row="${r().location.row}" 
+                            col="${r().location.col}">
                         </fighter-info>
                     </div>
                 `))}
         </div>
         <p slot="footer">
-            <button @click="${()=>{var t,e;return gt(pe,{attacker:{asset:null===(t=n())||void 0===t?void 0:t.attacker[0],dices:[i()]},defender:null===(e=n())||void 0===e?void 0:e.defender[0],location:{row:n().location.row,col:n().location.col}})}}" ?disabled="${void 0===i()}">Würfeln</button>
+            <button @click="${()=>{var t,e;return vt(Fe,{attacker:{asset:null===(t=r())||void 0===t?void 0:t.attacker[0],dices:[n()]},defender:null===(e=r())||void 0===e?void 0:e.defender[0],location:{row:r().location.row,col:r().location.col}})}}" ?disabled="${void 0===n()}">Würfeln</button>
         </p>
-    </modal-window>`}),{styles:[K`
+    </modal-window>`}),{styles:[s`
         .body {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -828,35 +702,35 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
             background-repeat: no-repeat;
             height: 15px;
         }
-        `]}),wt("modal-dice-result",(t=>{var e,o;const{getState:n,publish:r}=Ke.useState(t,void 0);return mt(t,ve,r),Ro`
+        `]}),$t("modal-dice-result",(t=>{var e,o;const{getState:r,publish:i}=Jt(t,void 0);return pt(t,Ve,i),T`
    <modal-window 
-        .open=${!!n()} 
-        @close=${()=>r(void 0)}>
+        .open=${!!r()} 
+        @close=${()=>i(void 0)}>
         <h1 slot="header">Gewürfelt!</h1>
         <div class="body">
-        ${null===(e=n())||void 0===e?void 0:e.attacker.map((t=>Ro`
+        ${null===(e=r())||void 0===e?void 0:e.attacker.map((t=>T`
                     <div class="attacker">
                         <fighter-info 
                             .player=${t} 
-                            row="${n().location.row}" 
-                            col="${n().location.col}">
+                            row="${r().location.row}" 
+                            col="${r().location.col}">
                         </fighter-info>
                     </div>
-                `))}${null===(o=n())||void 0===o?void 0:o.defender.map((t=>Ro`
+                `))}${null===(o=r())||void 0===o?void 0:o.defender.map((t=>T`
                     <div class="defender">
                         <fighter-info 
                             .player=${t} 
-                            row="${n().location.row}" 
-                            col="${n().location.col}">
+                            row="${r().location.row}" 
+                            col="${r().location.col}">
                         </fighter-info>
                     </div>
                 `))}
-        ${n()?Ro`<dice-roll class="dice" result="${n().result}"></dice-roll>`:Ro``}
+        ${r()?T`<dice-roll class="dice" result="${r().result}"></dice-roll>`:T``}
         </div>
 
         <p slot="footer">
         </p>
-    </modal-window>`}),{styles:[K`
+    </modal-window>`}),{styles:[s`
         .body {
             display: grid;
             grid-template-areas: 
@@ -875,7 +749,7 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
         .dice {
             grid-area: dice;
         }
-        `]}),wt("modal-mill-taken",(t=>{var e,o,n,r,i;const{getState:s,publish:a}=Ke.useState(t,void 0);return mt(t,me,a),U`
+        `]}),$t("modal-mill-taken",(t=>{var e,o,r,i,n;const{getState:s,publish:a}=Jt(t,void 0);return pt(t,Je,a),T`
     <modal-window 
          .open=${!!s()} 
          @close=${()=>a(void 0)}>
@@ -885,17 +759,17 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
                 <fighter-info 
                     .player=${null===(e=s())||void 0===e?void 0:e.by} 
                     .row="${null===(o=s())||void 0===o?void 0:o.location.row}" 
-                    .col="${null===(n=s())||void 0===n?void 0:n.location.col}">
+                    .col="${null===(r=s())||void 0===r?void 0:r.location.col}">
                 </fighter-info>
             </div>
             <div class="mills">
-                <building-mill .team="${null===(r=s())||void 0===r?void 0:r.transfered.to}" class="after"></building-mill>
-                <building-mill .team="${null===(i=s())||void 0===i?void 0:i.transfered.from}" class="before"></building-mill>
+                <building-mill .team="${null===(i=s())||void 0===i?void 0:i.transfered.to}" class="after"></building-mill>
+                <building-mill .team="${null===(n=s())||void 0===n?void 0:n.transfered.from}" class="before"></building-mill>
             </div>
          </div>
          <p slot="footer">
          </p>
-     </modal-window>`}),{styles:K`
+     </modal-window>`}),{styles:s`
     .body {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -918,7 +792,7 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
         0%   {	opacity: 1;	}
         100%   {	opacity: 0;	}
     }
-    `}),wt("modal-no-more-turns",(t=>{const{getState:e,publish:o}=Ke.useState(t,void 0);return mt(t,oe,o),Ro`
+    `}),$t("modal-no-more-turns",(t=>{const{getState:e,publish:o}=Jt(t,void 0);return pt(t,Ne,o),T`
    <modal-window 
         .open=${!!e()} 
         preventClose>
@@ -927,10 +801,10 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
             Du hast keine Aktionen mehr übrig. Willst du weiter geben, oder noch rum schauen?
         </div>
         <p slot="footer">
-            <button @click="${()=>(gt(ye),o(!1))}">Zug beenden</button>
+            <button @click="${()=>(vt(eo),o(!1))}">Zug beenden</button>
             <button @click="${()=>o(!1)}">Noch rumschauen</button>
         </p>
-    </modal-window>`}),{styles:[K`
+    </modal-window>`}),{styles:[s`
         .body {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -958,25 +832,25 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
             background-repeat: no-repeat;
             height: 15px;
         }
-        `]}),wt("modals-all",(()=>U`
+        `]}),$t("modals-all",(()=>T`
     <modal-no-more-turns></modal-no-more-turns>
     <modal-battle></modal-battle>
     <modal-dice-result></modal-dice-result>
-    <modal-mill-taken></modal-mill-taken>`)),wt("footer-element",(o=>{const{getState:n,publish:r}=Ke.useState(o,void 0),{getState:i,publish:s}=Ke.useState(o,[]);return mt(o,we,r),mt(o,te,s),Ro`<footer class="${n()}">
+    <modal-mill-taken></modal-mill-taken>`)),$t("footer-element",(o=>{const{getState:r,publish:i}=Jt(o,void 0),{getState:n,publish:s}=Jt(o,[]);return pt(o,to,i),pt(o,He,s),T`<footer class="${r()}">
     <div class="main ">
-        ${((o,n="")=>{const r=null==o?void 0:o.map((o=>{var r,i;const s=Object.entries(Object.assign(Object.assign({},e),t)).find((([t,e])=>e.name===o.name)),a=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([t,e])=>void 0!==e)).map((([t,e])=>`${t}="${e}"`)).join(" "),l=Lt(o)?{row:o.row,col:o.col}:{row:0,col:0};return U`<div
-            @click="${()=>{gt(Bt,Object.assign(Object.assign({item:o.name},l),{payload:o})),setTimeout((()=>{var t;null===(t=je(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
-            @mouseover="${()=>{setTimeout((()=>{var t;null===(t=je(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
-            style="position:relative; cursor: pointer; width: 120px;${n};">
-                ${so(`<${null!==(r=null==s?void 0:s[1].name)&&void 0!==r?r:"span"} ${a} style="${n};"></${null!==(i=null==s?void 0:s[1].name)&&void 0!==i?i:"span"}>`)}
-        </div>`}));return U`<sprite-player-elements-grid>${r}</sprite-player-elements-grid>`})(i().sort(((t,e)=>t.name.localeCompare(e.name))).filter((t=>!Ft(t)||t.actions.current>0)),"width: 10vh; height: 10vh;")}
+        ${((o,r="")=>{const i=null==o?void 0:o.map((o=>{var i,n;const s=Object.entries(Object.assign(Object.assign({},e),t)).find((([t,e])=>e.name===o.name)),a=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([t,e])=>void 0!==e)).map((([t,e])=>`${t}="${e}"`)).join(" "),l=de(o)?{row:o.row,col:o.col}:{row:0,col:0};return T`<div
+            @click="${()=>{vt(Ae,Object.assign(Object.assign({item:o.name},l),{payload:o})),setTimeout((()=>{var t;null===(t=uo(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
+            @mouseover="${()=>{setTimeout((()=>{var t;null===(t=uo(o))||void 0===t||t.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
+            style="position:relative; cursor: pointer; width: 120px;${r};">
+                ${Yo(`<${null!==(i=null==s?void 0:s[1].name)&&void 0!==i?i:"span"} ${a} style="${r};"></${null!==(n=null==s?void 0:s[1].name)&&void 0!==n?n:"span"}>`)}
+        </div>`}));return T`<sprite-player-elements-grid>${i}</sprite-player-elements-grid>`})(n().sort(((t,e)=>t.name.localeCompare(e.name))).filter((t=>!ue(t)||t.actions.current>0)),"width: 10vh; height: 10vh;")}
     </div>
     <div class="action">
-        <button-pure @click="${()=>gt(ye)}">
+        <button-pure @click="${()=>vt(eo)}">
             <text-block type="paragraph" size="x-large">⌛</text-block> Zug beenden
         </button-pure>
     </div>
-</footer>`}),{styles:[De,Le(K`footer .main`),K`
+</footer>`}),{styles:[Mo,Eo(s`footer .main`),s`
     footer {
         min-height: 10vh;
         max-height: 10vh;
@@ -1004,7 +878,7 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     footer .action {
         grid-area: action;
         place-self: center;
-    }`]});const gn=K`
+    }`]});const hr=s`
   :host {
     display: inline-block;
     background-position: center;
@@ -1013,50 +887,53 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     width: 3vh;
     height: 3vh;
   }
-`;var mn;wt("resource-grain",(()=>U``),{styles:[K`
+`;var vr;$t("resource-grain",(()=>T``),{styles:[s`
         :host {
           background-image: url("/assets/resources/grain.png");
         }
-      `,gn]}),wt("resource-stone",(()=>U``),{styles:[K`
+      `,hr]}),$t("resource-stone",(()=>T``),{styles:[s`
         :host {
           background-image: url("/assets/resources/stone.png");
         }
-      `,gn]}),wt("resource-iron",(()=>U``),{styles:[K`
+      `,hr]}),$t("resource-iron",(()=>T``),{styles:[s`
         :host {
           background-image: url("/assets/resources/iron.png");
         }
-      `,gn]}),wt("resource-log",(()=>U``),{styles:[K`
+      `,hr]}),$t("resource-wood",(()=>T``),{styles:[s`
         :host {
           background-image: url("/assets/resources/log.png");
         }
-      `,gn]}),wt("resource-hay",(()=>U``),{styles:[K`
+      `,hr]}),$t("resource-hay",(()=>T``),{styles:[s`
         :host {
           background-image: url("/assets/resources/hay.png");
         }
-      `,gn]}),wt("resource-counter",(({count:t})=>U`
+      `,hr]}),$t("resource-counter",(({count:t,collect:e})=>T`
         <slot></slot>
-        ${t}
-    `),{styles:[K`
+        ${t} ${e?T`<span>(+${e})</span>`:""}
+    `),{styles:[s`
         :host {
             font-size: 4vh;
         }
-        `],props:[{count:{type:Number}}]}),wt("header-element",(t=>{var e;const{getState:o,publish:n}=Ke.useState(t,void 0),{getState:r,publish:i}=Ke.useState(t,void 0);mt(t,we,n),mt(t,Zt,i);const s=null!==(e=r())&&void 0!==e?e:{resources:{}};return Ro`<header class="${o()}">
-        <resource-counter count="${s.resources.hay}">
+        span {
+            font-size: smaller;
+        }
+        `],defaults:{count:0,collect:void 0}}),$t("header-element",(t=>{var e,o,r,i,n,s,a,l;const{get:c,set:d}=Jt(t,void 0),{get:u,set:h}=Jt(t,void 0),{get:v,set:g}=Jt(t,void 0);pt(t,to,d),pt(t,Ee,h),pt(t,so,g);const p=null!==(e=u())&&void 0!==e?e:{resources:{}},m=(t,e,o)=>(t[e]=(t[e]||0)+o,t),f=null!==(r=null===(o=v())||void 0===o?void 0:o.resourcesToGenerate.reduce(((t,e)=>{var o,r;for(const i of le)t=m(t,i,null!==(r=null===(o=e.resources[i])||void 0===o?void 0:o.generatedResource)&&void 0!==r?r:0);return t}),{}))&&void 0!==r?r:{};return T`<header class="${c()}">
+        <resource-counter title="hay" count="${p.resources.hay}" collect=${null!==(i=f.hay)&&void 0!==i?i:0}>
             <resource-hay></resource-hay>
         </resource-counter>
-        <resource-counter count="${s.resources.grain}">
+        <resource-counter title="grain" count="${p.resources.grain}" collect=${null!==(n=f.grain)&&void 0!==n?n:0}>
             <resource-grain></resource-grain>
         </resource-counter>
-        <resource-counter count="${s.resources.stone}">
+        <resource-counter title="stone" count="${p.resources.stone}" collect=${null!==(s=f.stone)&&void 0!==s?s:0}>
             <resource-stone></resource-stone>
         </resource-counter>
-        <resource-counter count="${s.resources.iron}">
+        <resource-counter title="iron" count="${p.resources.iron}" collect=${null!==(a=f.iron)&&void 0!==a?a:0}>
             <resource-iron></resource-iron>
         </resource-counter>
-        <resource-counter count="${s.resources.log}">
-            <resource-log></resource-log>
+        <resource-counter title="wood" count="${p.resources.wood}" collect=${null!==(l=f.wood)&&void 0!==l?l:0}>
+            <resource-wood></resource-wood>
         </resource-counter>
-    </header>`}),{styles:K`
+    </header>`}),{styles:s`
     header {
         min-height: 5vh;
         max-height: 5vh;
@@ -1070,14 +947,17 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
     }
     .red {
         background-position: 100% 0%;
-    }`}),null===(mn=document.querySelector("body"))||void 0===mn||mn.addEventListener("keyup",(function(t){"Escape"===t.key&&gt(Vt,!0)})),wt("the-mill",(()=>(Dt({rows:10,cols:10}),U`
-    <header-element>header</header-element>
-    <world-map></world-map>
+    }`}),null===(vr=document.querySelector("body"))||void 0===vr||vr.addEventListener("keyup",(function(t){"Escape"===t.key&&vt(Me,!0)})),$t("the-mill",(()=>((async({rows:t,cols:e})=>{const o=xe({rows:t,cols:e}),r=Oe("green",{rows:t,cols:e}),i=Oe("red",{rows:t,cols:e}),n=Kt(0,t-1).map((t=>Kt(0,e-1).map((e=>({position:new oe(t,e),terrain:we(),elements:[...je(o,t,e),...je(r,t,e),...je(i,t,e)]})))));await vt(ye,{map:n,teams:["red","green"]})})({rows:10,cols:10}),T`
     <controls-sidebar>sidebar</controls-sidebar>
-    <footer-element>
-    </footer-element>
-    <modals-all></modals-all>
-    `)),{styles:[De,Le(K`world-map`),Le(K`controls-sidebar`),K`
+    <map>
+        <header-element>header</header-element>
+        <world-map></world-map>
+        <footer-element>
+        </footer-element>
+        <modals-all></modals-all>
+    </map>
+
+    `)),{styles:[Mo,Eo(s`world-map`),Eo(s`controls-sidebar`),s`
     header-element {
         grid-area: header;
     }
@@ -1090,26 +970,22 @@ const io=new WeakMap,so=(ao=t=>e=>{if(!(e instanceof S))throw new Error("unsafeH
         background-color: #87CEFA;
     }
     
-    controls-sidebar {
-        grid-area: sidebar;
-        display: block;
-        min-height: 85vh;
-        max-height: 85vh;
-        overflow-x: auto;
-        padding: 0 1rem;
-    }
     footer-element {
         grid-area: footer;
     }
     
-    :host {
+    map {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: auto;
         grid-template-areas: 
             "header header header header header"
-            "main main main main sidebar"
+            "main main main main main"
             "footer footer footer footer footer";
         }
-    `]});export{e as buildings,eo as knight,t as player,ro as wagon};
+    :host {
+        position: relative;
+        display: block;
+    }
+    `]});export{e as buildings,Ho as knight,t as player,Po as wagon};
 //# sourceMappingURL=the-mill.js.map

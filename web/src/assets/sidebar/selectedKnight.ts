@@ -1,9 +1,10 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
 import { BattleModeActivate, MoveModeActivate } from "../../game/world/events";
 import { asNumber } from "../../math/number";
+import { sidebarBaseCSS } from "./sidebar.style";
 
 type Props = {
     selected : { 
@@ -14,26 +15,12 @@ type Props = {
 }
 
 const style = css`
-    :host {
-        display: block;
-        background-image: url('/assets/sidebar/bg.png');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        padding: 15px;
-    }
     .container {
-        display: grid;
         grid-template-areas: 
             "knight knight health health health"
             "knight knight stats stats stats"
             "knight knight move attack fortify";
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        column-gap: 10px;
-        row-gap: 15px;
-        margin: 15px;
-    }
-    button {
-        cursor: pointer;
     }
     #knight {
         grid-area: knight;
@@ -46,12 +33,6 @@ const style = css`
     }
     #stats {
         grid-area: stats;
-    }
-    img {
-        width: 100%;
-    }
-    h3 {
-        color: var(--colorMain)
     }
 `
 export default pureLit("sidebar-knight", (_: LitElementWithProps<Props>) => {
@@ -76,7 +57,10 @@ export default pureLit("sidebar-knight", (_: LitElementWithProps<Props>) => {
     </div>`
 },
     {
-        styles: [style],
+        styles: [
+            sidebarBaseCSS,
+            style
+        ],
         props: [
             { "selected" : {type: Object}}
         ]

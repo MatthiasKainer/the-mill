@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 import { HEXAGON_WIDTH } from './consts';
 
 export const cssHexagon =  css`

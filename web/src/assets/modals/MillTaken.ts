@@ -1,7 +1,6 @@
-import { css, html } from "lit-element"
-import { useState } from "lit-element-state-decoupler"
+import { css, html } from "lit"
 import { useReceptor } from "organismus"
-import { pureLit } from "pure-lit"
+import { pureLit, useState } from "pure-lit"
 import { MillTaken, MillTakeover } from "../../game/world/events"
 
 export default pureLit("modal-mill-taken", (el) => {

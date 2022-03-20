@@ -11,7 +11,7 @@ type Props = {
     cols: number
 }
 
-type Tile = {
+export type Tile = {
     position: Position,
     terrain: Terrain,
     elements: Asset[]

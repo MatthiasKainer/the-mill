@@ -1,6 +1,5 @@
-import { html } from "lit-element"
-import { useState } from "lit-element-state-decoupler"
-import { pureLit } from "pure-lit"
+import { html } from "lit"
+import { pureLit, useState } from "pure-lit"
 
 export default pureLit("modal-container", (el) => {
     const { getState: modalOpen, publish: modalSetOpen } = useState(el, false)

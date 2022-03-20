@@ -1,7 +1,6 @@
-import { html } from "lit-element";
+import { css, html } from "lit";
 import { releaseHormone, useReceptor } from "organismus";
-import { pureLit } from "pure-lit";
-import {useState} from "lit-element-state-decoupler"
+import { pureLit, useState, useOnce } from "pure-lit";
 import { ItemSelected, SelectedItem } from "../../game/world/events";
 
 import "./selectedCastle"
@@ -10,7 +9,6 @@ import "./selectedWagon"
 import { Position } from "../../math/position";
 import { buildings, player } from "..";
 import { SidebarLoaded } from "../../game";
-import { useOnce } from "lit-element-effect";
 
 type SelectionState = {
     dirty: boolean
@@ -25,19 +23,19 @@ const newState = (element: { row: number, col: number, item: string, payload?: u
 })
 
 export default pureLit("controls-sidebar", (el) => {
-    const { getState: getSelectedElement, publish: setSelectedElement } = useState<SelectedItem<unknown> | undefined>(el, undefined)
+    const { get: getSelectedElement, set: setSelectedElement } = useState<SelectedItem<unknown> | undefined>(el, undefined)
     useReceptor(el, ItemSelected, setSelectedElement)
     const selectedElement = getSelectedElement()
-    const {getState, publish} = useState<SelectionState>(el, newState(selectedElement))
-    const current = getState()
+    const {get, set} = useState<SelectionState>(el, newState(selectedElement))
+    const current = get()
     if (!current.dirty && selectedElement && new Position(selectedElement.row, selectedElement.col).equals(current.position)) {
-        publish({ 
+        set({ 
             ...current, 
             elements: [...current.elements, {item: selectedElement.item, payload: selectedElement.payload}],
             dirty: selectedElement.item === "hexagon"
         })
     } else {
-        publish(newState(selectedElement))
+        set(newState(selectedElement))
     }
 
     useOnce(el, () => {
@@ -47,19 +45,19 @@ export default pureLit("controls-sidebar", (el) => {
     })
 
     return html`
-        ${getState().elements.map(element => {
+        ${get().elements.map(element => {
             switch (element.item) {
                 case buildings.castleSmall.name:
                     return html`<sidebar-castle 
-                        .selected="${{row: getState().position?.row, col: getState().position?.col, payload: element.payload}}">
+                        .selected="${{row: get().position?.row, col: get().position?.col, payload: element.payload}}">
                     </sidebar-castle>`
                 case player.knight.name:
                     return html`<sidebar-knight
-                        .selected="${{row: getState().position?.row, col: getState().position?.col, payload: element.payload}}">
+                        .selected="${{row: get().position?.row, col: get().position?.col, payload: element.payload}}">
                     </sidebar-knight>`
                 case player.wagon.name:
                     return html`<sidebar-wagon
-                        .selected="${{row: getState().position?.row, col: getState().position?.col, payload: element.payload}}">
+                        .selected="${{row: get().position?.row, col: get().position?.col, payload: element.payload}}">
                     </sidebar-wagon>`
                 default:
                     case buildings.castleSmall.name:
@@ -67,4 +65,14 @@ export default pureLit("controls-sidebar", (el) => {
             }
         })}
     `
+}, {
+    styles: css`:host { 
+        position: absolute;
+        display: block;
+        min-width: 200px;
+        width: 20%;
+        right: 20px;
+        top: 20px;
+        z-index: 2;
+    }`
 })

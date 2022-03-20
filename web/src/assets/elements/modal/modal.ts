@@ -1,4 +1,4 @@
-import { html, LitElement } from "lit-element"
+import { html, LitElement } from "lit"
 import { LitElementWithProps, pureLit } from "pure-lit"
 import { modalCoreCss, modalHeaderCss } from "./modal.styles"
 

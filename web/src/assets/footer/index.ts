@@ -1,8 +1,6 @@
-import { html } from "@open-wc/testing-helpers";
-import { css } from "lit-element";
-import { useState } from "lit-element-state-decoupler";
+import { css, html } from "lit";
 import { releaseHormone, useReceptor } from "organismus";
-import { pureLit } from "pure-lit";
+import { pureLit, useState } from "pure-lit";
 import { Asset, isMoveableAsset, Team } from "../../game";
 import { UpdateAllPlayerElements, TurnAccepted, TurnPlayerComplete } from "../../game/world/events";
 import { spriteGridFactory } from "../sprites";

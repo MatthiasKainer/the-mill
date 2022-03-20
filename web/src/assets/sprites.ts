@@ -1,13 +1,11 @@
-import { css, html } from "lit-element"
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { css, html } from "lit"
+import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import { releaseHormone, useReceptor } from "organismus";
-import { LitElementWithProps, pureLit } from "pure-lit";
-import { useOnce } from "lit-element-effect"
+import { LitElementWithProps, pureLit, useOnce, useState } from "pure-lit";
 
 import { buildings, player } from "."
 import { Asset, isPositionedAsset, Team } from "../game";
 import { HexagonUpdated, HexagonUpdatedPayload, ItemSelected, RequestSelectCoords, TurnAccepted } from "../game/world/events";
-import { useState } from "lit-element-state-decoupler";
 import { deepQuerySelector } from "../browser/Selector";
 
 type Props = {

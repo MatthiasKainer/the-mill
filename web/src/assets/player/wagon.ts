@@ -1,7 +1,6 @@
-import { css, html } from "lit-element"
-import { useState } from "lit-element-state-decoupler"
+import { css, html } from "lit"
 import { useReceptor } from "organismus"
-import { LitElementWithProps, pureLit } from "pure-lit"
+import { LitElementWithProps, pureLit, useState } from "pure-lit"
 import { TurnAccepted } from "../../game/world/events"
 import { inactive, sprite } from "../styles"
 

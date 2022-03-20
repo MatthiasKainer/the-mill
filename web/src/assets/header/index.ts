@@ -1,34 +1,45 @@
-import { html } from "@open-wc/testing-helpers";
-import { css } from "lit-element";
-import { useState } from "lit-element-state-decoupler";
+import { html, css } from "lit";
 import { useReceptor } from "organismus";
-import { pureLit } from "pure-lit";
-import { Player, Team } from "../../game";
-import { PlayerUpdate, TurnAccepted } from "../../game/world/events";
+import { pureLit, useState } from "pure-lit";
+import { Player, ResourceGeneratingBuilding, ResourceGenerator, RESOURCES, Team } from "../../game";
+import { DistributeResources, PlayerUpdate, TurnAccepted } from "../../game/world/events";
 
 import '../resources'
 
 export default pureLit("header-element", (el) => {
-    const {getState: getCurrentTeam, publish: setCurrentTeam} = useState<Team | undefined>(el, undefined)
-    const {getState: getCurrentPlayer, publish: setCurrentPlayer} = useState<Player | undefined>(el, undefined)
+    const {get: getCurrentTeam, set: setCurrentTeam} = useState<Team | undefined>(el, undefined)
+    const {get: getCurrentPlayer, set: setCurrentPlayer} = useState<Player | undefined>(el, undefined)
+    const {get: getResources, set: setResources} = useState<DistributeResources | undefined>(el, undefined)
     useReceptor(el, TurnAccepted, setCurrentTeam)
     useReceptor(el, PlayerUpdate, setCurrentPlayer)
+    useReceptor(el, DistributeResources, setResources)
     const player = getCurrentPlayer() ?? { resources: {}} as Player
+    const applyResource = (map: any, resource: string, amount: number) => {
+        map[resource] = (map[resource] || 0) + amount
+        return map
+    }
+    const applyAllResources = (map: any, generator: ResourceGeneratingBuilding) => {
+        for (const resource of RESOURCES) {
+            map = applyResource(map, resource, (generator.resources as any)[resource]?.generatedResource ?? 0)
+        }
+        return map
+    }
+    const resources: ResourceGenerator = getResources()?.resourcesToGenerate.reduce(applyAllResources, {}) ?? {}
     return html`<header class="${getCurrentTeam()!}">
-        <resource-counter count="${player.resources.hay}">
+        <resource-counter title="hay" count="${player.resources.hay}" collect=${resources.hay ?? 0}>
             <resource-hay></resource-hay>
         </resource-counter>
-        <resource-counter count="${player.resources.grain}">
+        <resource-counter title="grain" count="${player.resources.grain}" collect=${resources.grain ?? 0}>
             <resource-grain></resource-grain>
         </resource-counter>
-        <resource-counter count="${player.resources.stone}">
+        <resource-counter title="stone" count="${player.resources.stone}" collect=${resources.stone ?? 0}>
             <resource-stone></resource-stone>
         </resource-counter>
-        <resource-counter count="${player.resources.iron}">
+        <resource-counter title="iron" count="${player.resources.iron}" collect=${resources.iron ?? 0}>
             <resource-iron></resource-iron>
         </resource-counter>
-        <resource-counter count="${player.resources.log}">
-            <resource-log></resource-log>
+        <resource-counter title="wood" count="${player.resources.wood}" collect=${resources.wood ?? 0}>
+            <resource-wood></resource-wood>
         </resource-counter>
     </header>`
 }, {

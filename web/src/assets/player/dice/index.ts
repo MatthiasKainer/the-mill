@@ -1,4 +1,4 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { Dice } from "../../../game/player/dices/dice";
 

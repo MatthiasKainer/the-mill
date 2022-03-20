@@ -1,7 +1,7 @@
 import { defineHormone, defineSingleHormone } from "organismus";
 import { Asset } from ".";
 import { Dice } from "../player/dices/dice";
-import { FigherAsset, MoveableAsset, Player, SimpleCoords, Team } from "./types";
+import { FigherAsset, MoveableAsset, Player, ResourceGeneratingBuilding, Resources, SimpleCoords, Team } from "./types";
 
 export type Abort = boolean
 export const Abort = defineSingleHormone<Abort>("action/abort")
@@ -127,3 +127,22 @@ export const TurnPlayerComplete = defineHormone<TurnPlayerComplete>("turn/player
 
 export type TurnsComplete = {}
 export const TurnsComplete = defineHormone<TurnsComplete>("turn/world/complete")
+
+export type ResourcesGenerated = ResourceGeneratingBuilding
+export const ResourcesGenerated = defineHormone<ResourcesGenerated>("resources/generated")
+
+export type ResourceGenerationComplete = { 
+    team: Team 
+    before: Resources,
+    after: Resources
+}
+export const ResourceGenerationComplete = defineHormone<ResourceGenerationComplete>("resources/generation/complete");
+
+export type ResourceSummary = any;
+export const ResourceSummary = defineHormone<ResourceSummary>("resources/summary");
+
+export type DistributeResources = {
+    team: Team,
+    resourcesToGenerate: ResourceGeneratingBuilding[]
+}
+export const DistributeResources = defineHormone<DistributeResources>("resources/distribute")

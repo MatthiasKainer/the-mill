@@ -4,15 +4,16 @@ import { buildings } from "../../assets";
 import { Cube } from "../../math/cube/cube";
 import { shortestPath } from "../../math/pathfinder/a";
 import { Position, SimpleCoordsEquals } from "../../math/position";
-import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated } from "./events";
+import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary } from "./events";
 import { SidebarLoaded, StartGame, World, WorldLoaded } from "./worldLoader";
 import { roll } from "../player/dices";
 import { CreateKnight, findNextPlayerWithAction, costs as knightCosts } from "../player/knights/Knight";
-import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, MoveableAsset, Players, Resources, Team, teams } from "./types";
+import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
 import { TurnComplete } from "../player/Assets";
 import { findAllElementsFromTeam } from "./navigator";
 import { deepQuerySelector } from "../../browser/Selector";
-import { CreateWagon,costs as wagonCosts } from "../player/wagon/Wagon";
+import { CreateWagon, costs as wagonCosts } from "../player/wagon/Wagon";
+import { generateResources, getResourceGeneratingBuildings } from "./buildings";
 
 let world: World = {} as any as World
 let worldAsCube: Cube[] = []
@@ -25,7 +26,7 @@ let players: Players = {} as any as Players
 export const getCurrentWorld = () => ({ ...world });
 export const getCurrentTeam = () => currentTurn;
 export const setCurrentTeam = (team: Team) => currentTurn = team;
-export const getPlayer = (team: Team) => ({...players[team]})
+export const getPlayer = (team: Team) => ({ ...players[team] })
 export const getActivePlayer = () => players[currentTurn]
 const hasActionsLeft = (asset: MoveableAsset) => asset.actions.current > 0;
 const isOnTurn = ({ team }: { team: Team }) => team === currentTurn;
@@ -48,7 +49,7 @@ hypothalamus.on(WorldLoaded, (newWorld) => {
                 hay: 100,
                 grain: 200,
                 iron: 200,
-                log: 100,
+                wood: 100,
                 stone: 100
             }
         }
@@ -72,9 +73,54 @@ hypothalamus.on(TurnStarted, () => {
     releaseHormone(TurnAccepted, currentTurn)
 })
 
-hypothalamus.on(TurnAccepted, team => {
+export function allocateResources(initialResources: Resources, resourcesToGenerate: ResourceGeneratingBuilding[]) {
+    let availableResources: any = { ...initialResources };
+    let resourceGeneratingBuildings: ResourceGeneratingBuilding[] = [...resourcesToGenerate];
+    let touched = true;
+
+    while (touched) {
+        touched = false;
+        resourceGeneratingBuildings = resourceGeneratingBuildings.map((resourceGeneratingBuilding) => {
+            let result: ResourceGeneratingBuilding | undefined = resourceGeneratingBuilding;
+            Object.entries(resourceGeneratingBuilding.resources).forEach(([source, { generatedResource, ...costs }]) => {
+                if (Object.entries(costs).every(([resource, cost]) => availableResources[resource] <= cost)) {
+                    touched = true;
+                    result = undefined;
+                    Object.entries(costs).forEach(([resource, cost]) => {
+                        availableResources[resource] -= cost;
+                    })
+                    availableResources[source] += generatedResource;
+                    releaseHormone(ResourcesGenerated, resourceGeneratingBuilding);
+                }
+            })
+            return result;
+        }).filter(Boolean)
+    }
+    return availableResources
+}
+
+hypothalamus.on(DistributeResources, async ({ team, resourcesToGenerate }: DistributeResources) => {
+    if (getPlayer(team)?.resources) {
+        const before = { ...getPlayer(team).resources };
+        players[team].resources = allocateResources(players[team].resources, resourcesToGenerate);
+        releaseHormone(ResourceGenerationComplete, { team, before, after: players[team].resources });
+    }
+})
+
+hypothalamus.collect(ResourcesGenerated, ResourceGenerationComplete, (values) => {
+    releaseHormone(ResourceSummary, (values[ResourcesGenerated.name] as ResourceGeneratingBuilding[])?.map(generator => {
+        return {
+            name: generator.name,
+            from: Object.values(generator.resources).map(({ generatedResource, ...costs }) => ({ ...costs })),
+            to: Object.keys(generator.resources)
+        }
+    }));
+})
+
+hypothalamus.on(TurnAccepted, async (team) => {
     const playerAssets = findAllElementsFromTeam(world, team)
-    releaseHormone(UpdateAllPlayerElements, playerAssets)
+    await releaseHormone(UpdateAllPlayerElements, playerAssets)
+
     const playerCastle = playerAssets?.find(element => element.name === buildings.castleSmall.name)
     if (isPositionedAsset(playerCastle)) {
         releaseHormone(RequestSelectCoords, {
@@ -89,6 +135,13 @@ hypothalamus.on(TurnAccepted, team => {
     }, 2)
 
     releaseHormone(PlayerUpdate, getPlayer(team))
+
+    // refill all resources and movements
+    const resourceMap: ResourceGeneratingBuilding[] = 
+        getResourceGeneratingBuildings(world, team)
+            .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+    // distribute resources
+    await releaseHormone(DistributeResources, { team, resourcesToGenerate: resourceMap });
 })
 
 hypothalamus.on(RequestSelectCoords, async (data) => {
@@ -106,8 +159,10 @@ hypothalamus.on(TurnPlayerComplete, () => {
 })
 
 hypothalamus.on(TurnsComplete, () => {
+    // refill all movements
     world.map.forEach((row) => {
         row.forEach(({ elements }) => {
+            // For moveable assets, reset their movement
             TurnComplete(...elements
                 .filter(isMoveableAsset)
             )
@@ -117,14 +172,14 @@ hypothalamus.on(TurnsComplete, () => {
 })
 
 const tryPay = (team: Team, costs: Resources): boolean => {
-    const availableResources: any = {...players[team].resources};
+    const availableResources: any = { ...players[team].resources };
     for (const [resource, cost] of Object.entries(costs)) {
         if (availableResources[resource] < cost) {
             return false;
         }
         availableResources[resource] -= cost
     }
-    
+
     players[team].resources = availableResources
     return true;
 }

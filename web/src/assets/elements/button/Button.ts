@@ -1,6 +1,5 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { pureLit } from "pure-lit";
-
 
 export default pureLit("button-pure", () => {
     return html`<button>

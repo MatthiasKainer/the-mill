@@ -1,8 +1,6 @@
-import { html } from "@open-wc/testing-helpers"
-import { css } from "lit-element"
-import { useState } from "lit-element-state-decoupler"
+import { html, css } from "lit"
 import { useReceptor } from "organismus"
-import { pureLit } from "pure-lit"
+import { pureLit, useState } from "pure-lit"
 import { FigherAsset } from "../../game"
 import { ModalDiceResultOpen } from "../../game/world/events"
 

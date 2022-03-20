@@ -1,4 +1,4 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";

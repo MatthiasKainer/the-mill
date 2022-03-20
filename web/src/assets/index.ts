@@ -1,4 +1,4 @@
-import { html, css } from "lit-element"
+import { html, css } from "lit"
 import { releaseHormone } from "organismus"
 import { pureLit } from "pure-lit"
 import { load } from "../game"
@@ -15,21 +15,24 @@ export * from "./modals"
 export * from "./footer"
 export * from "./header"
 
-document.querySelector("body")?.addEventListener("keyup", function(e) {
-    if (e.key === "Escape") { 
-       releaseHormone(Abort, true)
-   }
+document.querySelector("body")?.addEventListener("keyup", function (e) {
+    if (e.key === "Escape") {
+        releaseHormone(Abort, true)
+    }
 })
 
 export default pureLit("the-mill", () => {
     load({ rows: 10, cols: 10 })
     return html`
-    <header-element>header</header-element>
-    <world-map></world-map>
     <controls-sidebar>sidebar</controls-sidebar>
-    <footer-element>
-    </footer-element>
-    <modals-all></modals-all>
+    <map>
+        <header-element>header</header-element>
+        <world-map></world-map>
+        <footer-element>
+        </footer-element>
+        <modals-all></modals-all>
+    </map>
+
     `
 }, {
     styles: [
@@ -49,26 +52,22 @@ export default pureLit("the-mill", () => {
         background-color: #87CEFA;
     }
     
-    controls-sidebar {
-        grid-area: sidebar;
-        display: block;
-        min-height: 85vh;
-        max-height: 85vh;
-        overflow-x: auto;
-        padding: 0 1rem;
-    }
     footer-element {
         grid-area: footer;
     }
     
-    :host {
+    map {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: auto;
         grid-template-areas: 
             "header header header header header"
-            "main main main main sidebar"
+            "main main main main main"
             "footer footer footer footer footer";
         }
+    :host {
+        position: relative;
+        display: block;
+    }
     `]
 })

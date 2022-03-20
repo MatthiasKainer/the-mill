@@ -1,7 +1,6 @@
-import { css, html, LitElement } from "lit-element";
-import { useState } from "lit-element-state-decoupler";
+import { css, html, LitElement } from "lit";
 import { useReceptor } from "organismus";
-import { pureLit } from "pure-lit";
+import { pureLit, useState } from "pure-lit";
 import { World, WorldLoaded } from "../../game";
 import { HEXAGON_WIDTH } from "./consts";
 

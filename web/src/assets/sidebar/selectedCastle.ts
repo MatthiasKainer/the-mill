@@ -1,7 +1,6 @@
-import { css, html } from "lit-element";
-import { useState } from "lit-element-state-decoupler";
+import { css, html } from "lit";
 import { releaseHormone, useReceptor } from "organismus";
-import { LitElementWithProps, pureLit } from "pure-lit";
+import { LitElementWithProps, pureLit, useState } from "pure-lit";
 import { Player, Resources } from "../../game";
 import costs from "../../game/player/costs";
 import {
@@ -9,6 +8,7 @@ import {
   PlayerUpdate,
   WagonCreated,
 } from "../../game/world/events";
+import { sidebarBaseCSS } from "./sidebar.style";
 
 type Props = {
   selected: {
@@ -19,21 +19,6 @@ type Props = {
 };
 
 const style = css`
-  :host {
-    display: block;
-    background-image: url("/assets/sidebar/bg.png");
-    background-repeat: no-repeat;
-    padding: 15px;
-    background-size: 100% 100%;
-  }
-  .container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    column-gap: 10px;
-    row-gap: 15px;
-    margin: 15px;
-  }
   building-castle-small {
     position: relative;
     display: block;
@@ -41,14 +26,13 @@ const style = css`
     height: 4em;
   }
   h3 {
-    color: var(--colorMain);
     text-align: center;
     margin-top: 0;
   }
   resource-counter {
     display: grid;
     grid-template-columns: 1fr;
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
   .enough {
     color: var(--colorMain);
@@ -76,12 +60,12 @@ const costList = (resources: Resources, costs: Resources) => {
           <resource-grain></resource-grain>
         </resource-counter>`
       : html``}
-    ${costs.log > 0
+    ${costs.wood > 0
       ? html`<resource-counter
-          count="${costs.log}"
-          class="${resources.log >= costs.log ? "enough" : "lack"}"
+          count="${costs.wood}"
+          class="${resources.wood >= costs.wood ? "enough" : "lack"}"
         >
-          <resource-log></resource-log>
+          <resource-wood></resource-wood>
         </resource-counter>`
       : html``}
     ${costs.stone > 0
@@ -149,7 +133,7 @@ export default pureLit(
       </div>`;
   },
   {
-    styles: [style],
+    styles: [sidebarBaseCSS, style],
     defaults: {
       selected: {
         payload: {

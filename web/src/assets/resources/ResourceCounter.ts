@@ -1,14 +1,15 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { pureLit } from "pure-lit";
 
 type Props = {
-    count: number
+    count: number,
+    collect: number | undefined,
 }
 
-export default pureLit("resource-counter", ({count}: Props) => {
+export default pureLit("resource-counter", ({count, collect}: Props) => {
     return html`
         <slot></slot>
-        ${count}
+        ${count} ${collect ? html`<span>(+${collect})</span>` : ""}
     `
 }, {
     styles: [
@@ -16,9 +17,13 @@ export default pureLit("resource-counter", ({count}: Props) => {
         :host {
             font-size: 4vh;
         }
+        span {
+            font-size: smaller;
+        }
         `
     ],
-    props: [{
-        count: {type: Number}
-    }]
+    defaults : {
+        count: 0,
+        collect: undefined,
+    }
 })

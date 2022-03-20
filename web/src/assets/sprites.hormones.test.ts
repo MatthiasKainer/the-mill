@@ -4,14 +4,15 @@ import { setupStage } from "../testHelpers";
 import { fixture } from "@open-wc/testing-helpers";
 import { spriteFactory } from "./sprites";
 import { buildings } from ".";
+import { Asset } from "../game";
 
 describe("sprite receptors", () => {
     const spy = jest.fn()
     useReceptor(spy, ItemSelected, spy)
 
     beforeAll(async () => {
-        const assets = [{ id: buildings.castleSmall.name, name: buildings.castleSmall.name, team: "player" }]
-        await setupStage("player")
+        const assets = [{ id: buildings.castleSmall.name, name: buildings.castleSmall.name, team: "green" } as Asset]
+        await setupStage("green")
         await fixture(spriteFactory(assets, 0, 0));
     })
 
@@ -25,7 +26,7 @@ describe("sprite receptors", () => {
             "payload": {
                 id: "building-castle-small",
                 name: "building-castle-small",
-                team: "player"
+                team: "green"
             },
             "row": 0,
         })

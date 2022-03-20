@@ -7,13 +7,45 @@ export type Players = {
     [team in Team]: Player
 }
 
+export const RESOURCES = ["hay", "grain", "iron", "wood", "stone"]
+
+type ResourcesGenerator = {
+    hay?: number
+    grain?: number
+    iron?: number
+    wood?: number
+    stone?: number
+    generatedResource: number
+}
+
 export type Resources = {
     hay: number
     grain: number
     iron: number
-    log: number
+    wood: number
     stone: number
 }
+
+export type ResourceGenerator = {
+    hay?: ResourcesGenerator
+    grain?: ResourcesGenerator
+    iron?: ResourcesGenerator
+    wood?: ResourcesGenerator
+    stone?: ResourcesGenerator
+}
+
+export type ResourceGeneratingBuilding = {
+    resources: ResourceGenerator
+} & Asset
+export type PotentiallyResourceGeneratingBuilding = {
+    resources?: ResourceGenerator
+} & Asset
+
+export function isResourceGeneratingAsset(asset?: Asset): asset is ResourceGeneratingBuilding {
+    return (asset !== undefined
+        && (asset as ResourceGeneratingBuilding)?.resources !== undefined)
+}
+
 
 export type Player = {
     resources: Resources
@@ -37,7 +69,7 @@ export function isPositionedAsset(asset?: Asset): asset is PositionedAsset {
     return (asset !== undefined && (asset as PositionedAsset)?.row >= 0 && (asset as PositionedAsset)?.col >= 0)
 }
 
-export type PlayerAsset = Asset & {
+export type PlayerAsset = PotentiallyResourceGeneratingBuilding & {
     team: Team
 }
 

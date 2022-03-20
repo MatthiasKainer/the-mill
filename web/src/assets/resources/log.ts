@@ -1,8 +1,8 @@
-import { css, html } from "lit-element";
+import { css, html } from "lit";
 import { pureLit } from "pure-lit";
 import { baseResource } from "./base";
 
-export default pureLit("resource-log", () => {
+export default pureLit("resource-wood", () => {
     return html``
 }, {
     styles: [

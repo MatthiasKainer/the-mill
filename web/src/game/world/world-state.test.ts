@@ -6,13 +6,21 @@ import { Position } from "../../math/position";
 import { moveModeBuilder } from "../../testHelpers";
 import { TurnComplete } from "../player/Assets";
 import { CreateKnight } from "../player/knights/Knight";
-import { BattleStarted, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements } from "./events";
+import { Mill } from "./buildings";
+import { BattleStarted, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements } from "./events";
 import { Terrain } from "./terrain";
-import { FigherAsset, Player, Team, teams } from "./types";
+import { FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
 
 import "./world-state"
-import { getActivePlayer, getCurrentTeam, getPlayer, setCurrentTeam } from "./world-state";
+import { allocateResources, getActivePlayer, getCurrentTeam, getPlayer, setCurrentTeam } from "./world-state";
 import { SidebarLoaded, StartGame, World, WorldLoaded } from "./worldLoader";
+
+const mill = { ...Mill };
+const resourceGenerator = (resources: ResourceGenerator, team: Team = "green") => ({
+    ...mill,
+    resources,
+    team
+}) as ResourceGeneratingBuilding;
 
 const terrain = (): Terrain => ({
     sprite: {
@@ -127,7 +135,7 @@ describe("Load World", () => {
                     hay: 100,
                     grain: 200,
                     iron: 200,
-                    log: 100,
+                    wood: 100,
                     stone: 100
                 }
             })
@@ -499,4 +507,80 @@ describe("Building", () => {
         })
     })
 
+})
+
+describe("Allocate resources", () => {
+    const initialResources: Resources = {
+        iron: 0, hay: 100, grain: 0, stone: 0, wood: 0
+    }
+    const spyOnResourcesGenerated = jest.fn()
+    hypothalamus.on(ResourcesGenerated, spyOnResourcesGenerated)
+    it("leaves the initial resources untouched if no changes", () => {
+        const resources = allocateResources(initialResources, []);
+        expect(resources).toEqual(initialResources);
+    })
+    it("creates a new resource package, distributing all resources", () => {
+        const resourceGeneratingBuilding: ResourceGeneratingBuilding = {
+            ...mill,
+            resources: {
+                grain: {
+                    generatedResource: 50,
+                    hay: 100
+                }
+            },
+            team: "green"
+        }
+        const resources = allocateResources(initialResources, [resourceGeneratingBuilding]);
+        expect(resources).toEqual({
+            ...initialResources,
+            hay: 0,
+            grain: 50
+        });
+        expect(spyOnResourcesGenerated).toBeCalledTimes(1)
+        expect(spyOnResourcesGenerated).toBeCalledWith(
+            resourceGenerator({
+                grain: {
+                    generatedResource: 50,
+                    hay: 100
+                }
+            }))
+    })
+})
+
+describe("Accept Turn", () => {
+    const spyOnResourcesGenerated = jest.fn()
+    hypothalamus.on(ResourcesGenerated, spyOnResourcesGenerated)
+
+    beforeEach(async () => {
+        // given player green has a mill on field 0,0
+        await releaseHormone(WorldLoaded, WorldBuilder()({ "0:0": [{ ...mill, team: "green" }] }))
+        await releaseHormone(TurnAccepted, "green")
+    })
+
+    describe("The player with a mill accepts their turn", () => {
+
+        it("creates 50 hay in the players mills", () => {
+            expect(spyOnResourcesGenerated).toBeCalledWith(
+                resourceGenerator({
+                    hay: { generatedResource: 50 }
+                }),
+            )
+        })
+
+        it("converts hay to grain if available", () => {
+            expect(spyOnResourcesGenerated).toBeCalledWith(
+                resourceGenerator({
+                    grain: {
+                        hay: 100,
+                        generatedResource: 50
+                    }
+                })
+            )
+        })
+
+        it("converts the available hay to grain in the players mills, but at most 100 hay to 50 grain", () => {
+            expect(getPlayer("green").resources.hay).toBe(50)
+            expect(getPlayer("green").resources.grain).toBe(250)
+        })
+    })
 })

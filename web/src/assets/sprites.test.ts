@@ -5,6 +5,7 @@ import { mill, castleSmall } from "./buildings";
 import { useReceptor } from "organismus";
 import { spriteFactory } from "./sprites"
 import { setupStage } from "../testHelpers";
+import { Asset } from "../game";
 
 describe("Sprite Factory", () => {
     it("adds an empty element for an unknown sprite", async () => {
@@ -20,14 +21,14 @@ describe("Sprite Factory", () => {
     })
 
     it("adds the expected attributes to a known sprite", async () => {
-        const assets = [{ id: castleSmall.name, name: castleSmall.name, team: "player" }]
+        const assets = [{ id: castleSmall.name, name: castleSmall.name, team: "green" } as Asset]
         const element = await fixture(spriteFactory(assets, 0, 0));
-        expect(element.outerHTML).toContain(`<building-castle-small id="building-castle-small" team="player"></building-castle-small>`)
+        expect(element.outerHTML).toContain(`<building-castle-small id="building-castle-small" team="green"></building-castle-small>`)
     })
 
     it("selects the element if clicked on it", async () => {
-        const assets = [{ id: castleSmall.name, name: castleSmall.name, team: "player" }]
-        await setupStage("player")
+        const assets = [{ id: castleSmall.name, name: castleSmall.name, team: "green" } as Asset]
+        await setupStage("green")
         const spy = jest.fn()
         const element = await fixture(spriteFactory(assets, 0, 0));
         useReceptor(spy, ItemSelected, spy)
@@ -39,7 +40,7 @@ describe("Sprite Factory", () => {
                "payload": {
                    id: "building-castle-small",
                    name: "building-castle-small",
-                   team: "player"
+                   team: "green"
                 },
                "row": 0,
              })

@@ -14,7 +14,7 @@ export const costs = (): Resources => ({
     grain: 50,
     iron: 0,
     hay: 0,
-    log: 50,
+    wood: 50,
     stone: 0
 })
 
