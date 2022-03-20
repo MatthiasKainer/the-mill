@@ -1,8 +1,10 @@
 import { css, html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html";
 import { releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
 import { BattleModeActivate, MoveModeActivate } from "../../game/world/events";
+import { text, texts } from "../../internationalization";
 import { asNumber } from "../../math/number";
 import { sidebarBaseCSS } from "./sidebar.style";
 
@@ -43,17 +45,17 @@ export default pureLit("sidebar-knight", (_: LitElementWithProps<Props>) => {
         col: asNumber(col)
     }
     return html`
-    <h3>Ritter</h3>
+    <h3>${text(texts.assets.knight)}</h3>
     <div class="container">
         <img id="knight" src="/assets/knight_${payload.team}.png">
         <loading-bar id="health" width="${(health.current / health.max) * 100}%"></loading-bar>
         <div id="stats">
-            <strong>Leben</strong> ${health.current} von ${health.max} 
-            <strong>Aktionen:</strong> ${actions.current} von ${actions.max}
+            ${unsafeHTML(text(texts.assets.properties.life, health.current, health.max))}<br>
+            ${unsafeHTML(text(texts.assets.properties.actions, actions.current, actions.max))}
         </div>
-        <button ?disabled=${actions.current < 1} id="move" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
-        <button ?disabled=${actions.current < 1} id="attack" @click=${() => releaseHormone(BattleModeActivate, { asset: { ...payload }, start })}">⚔</button>
-        <button ?disabled=${actions.current < 1} id="fortify">🏰</button>
+        <button ?disabled=${actions.current < 1} id="move" title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
+        <button ?disabled=${actions.current < 1} id="attack" title="${text(texts.assets.properties.actions.attack)}" @click=${() => releaseHormone(BattleModeActivate, { asset: { ...payload }, start })}">⚔</button>
+        <button ?disabled=${actions.current < 1} id="fortify" title="${text(texts.assets.properties.actions.fortify)}" >🏰</button>
     </div>`
 },
     {

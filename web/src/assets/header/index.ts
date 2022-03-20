@@ -3,6 +3,7 @@ import { useReceptor } from "organismus";
 import { pureLit, useState } from "pure-lit";
 import { Player, ResourceGeneratingBuilding, ResourceGenerator, RESOURCES, Team } from "../../game";
 import { DistributeResources, PlayerUpdate, TurnAccepted } from "../../game/world/events";
+import { text, texts } from "../../internationalization";
 
 import '../resources'
 
@@ -26,19 +27,19 @@ export default pureLit("header-element", (el) => {
     }
     const resources: ResourceGenerator = getResources()?.resourcesToGenerate.reduce(applyAllResources, {}) ?? {}
     return html`<header class="${getCurrentTeam()!}">
-        <resource-counter title="hay" count="${player.resources.hay}" collect=${resources.hay ?? 0}>
+        <resource-counter title="${text(texts.resources.hay)}" count="${player.resources.hay}" collect=${resources.hay ?? 0}>
             <resource-hay></resource-hay>
         </resource-counter>
-        <resource-counter title="grain" count="${player.resources.grain}" collect=${resources.grain ?? 0}>
+        <resource-counter title="${text(texts.resources.grain)}" count="${player.resources.grain}" collect=${resources.grain ?? 0}>
             <resource-grain></resource-grain>
         </resource-counter>
-        <resource-counter title="stone" count="${player.resources.stone}" collect=${resources.stone ?? 0}>
+        <resource-counter title="${text(texts.resources.stone)}" count="${player.resources.stone}" collect=${resources.stone ?? 0}>
             <resource-stone></resource-stone>
         </resource-counter>
-        <resource-counter title="iron" count="${player.resources.iron}" collect=${resources.iron ?? 0}>
+        <resource-counter title="${text(texts.resources.iron)}" count="${player.resources.iron}" collect=${resources.iron ?? 0}>
             <resource-iron></resource-iron>
         </resource-counter>
-        <resource-counter title="wood" count="${player.resources.wood}" collect=${resources.wood ?? 0}>
+        <resource-counter title="${text(texts.resources.log)}" count="${player.resources.wood}" collect=${resources.wood ?? 0}>
             <resource-wood></resource-wood>
         </resource-counter>
     </header>`

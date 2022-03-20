@@ -8,6 +8,7 @@ import {
   PlayerUpdate,
   WagonCreated,
 } from "../../game/world/events";
+import { text, texts } from "../../internationalization";
 import { sidebarBaseCSS } from "./sidebar.style";
 
 type Props = {
@@ -103,11 +104,12 @@ export default pureLit(
     useReceptor(el, PlayerUpdate, setCurrentPlayer);
     const { resources } = getCurrentPlayer() ?? ({ resources: {} } as Player);
     return html`<building-castle-small team="${team}"></building-castle-small>
-      <h3>Bauen</h3>
+      <h3>${text(texts.assets.castle.build)}</h3>
       <div class="container">
         <button-image
           height="35px"
           src="/assets/knight_${team}.png"
+          title="${text(texts.assets.properties.actions.build.knight)}"
           @click=${async () =>
             await releaseHormone(KnightCreated, { team, row, col })}
         >
@@ -116,18 +118,25 @@ export default pureLit(
         <button-image
           height="35px"
           src="/assets/wagon_${team}.png"
+          title="${text(texts.assets.properties.actions.build.wagon)}"
           @click=${async () =>
             await releaseHormone(WagonCreated, { team, row, col })}
         >
           ${costList(resources, costs.wagon())}
         </button-image>
-        <button-image height="35px" src="/assets/resources/iron.png">
+        <button-image height="35px" 
+          title="${text(texts.assets.properties.actions.build.iron)}"
+          src="/assets/resources/iron.png">
           ${costList(resources, costs.iron())}
         </button-image>
-        <button-image height="35px" src="/assets/castle_medium_${team}.png">
+        <button-image height="35px" 
+          title="${text(texts.assets.properties.actions.build.castle_medium)}"
+          src="/assets/castle_medium_${team}.png">
           ${costList(resources, costs.castle_medium())}
         </button-image>
-        <button-image height="35px" src="/assets/castle_large_${team}.png">
+        <button-image height="35px" 
+          title="${text(texts.assets.properties.actions.build.castle_large)}"
+          src="/assets/castle_large_${team}.png">
           ${costList(resources, costs.castle_large())}
         </button-image>
       </div>`;

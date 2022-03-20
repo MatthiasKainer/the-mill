@@ -59,6 +59,13 @@ export const MoveModeTargetHovered = defineHormone<MoveModeHovered>("modes/move/
 export type MoveModeEndElement = SimpleCoords
 export const MoveModeEnd = defineHormone<MoveModeEndElement>("modes/move/end")
 
+export type BuildWithWagon = {
+    asset: Asset | ResourceGeneratingBuilding
+    start: SimpleCoords
+}
+export const BuildLumberjackSmallActivate = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/activate");
+export const BuildLumberjackSmallActive = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/active");
+
 export type BattleModeData = {
     asset: MoveableAsset
     start: SimpleCoords

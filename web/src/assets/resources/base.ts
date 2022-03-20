@@ -9,4 +9,8 @@ export const baseResource = css`
     width: 3vh;
     height: 3vh;
   }
+  div {
+    width: 100%;
+    height: 100%;
+  }
 `;

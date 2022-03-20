@@ -1,8 +1,10 @@
 import { css, html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html";
 import { releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
-import { MoveModeActivate } from "../../game/world/events";
+import { BuildLumberjackSmallActivate, MoveModeActivate } from "../../game/world/events";
+import { text, texts } from "../../internationalization";
 import { asNumber } from "../../math/number";
 
 type Props = {
@@ -26,7 +28,7 @@ const style = css`
         grid-template-areas: 
             "wagon wagon health health health"
             "wagon wagon stats stats stats"
-            "wagon wagon move attack fortify";
+            "move build_1 build_2 build_3 load";
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         column-gap: 10px;
         row-gap: 15px;
@@ -41,8 +43,14 @@ const style = css`
     #health {
         grid-area: health;
     }
-    #attack {
-        grid-area: attack;
+    #move {
+        grid-area: move;
+    }
+    #load {
+        grid-area: load;
+    }
+    #build_lumberjack {
+        grid-area: build_1;
     }
     #stats {
         grid-area: stats;
@@ -62,16 +70,19 @@ export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
         col: asNumber(col)
     }
     return html`
-    <h3>Wagen</h3>
+    <h3>${text(texts.assets.wagon)}</h3>
     <div class="container">
         <img id="wagon" src="/assets/wagon_${payload.team}.png">
         <loading-bar id="health" width="${(health.current / health.max) * 100}%"></loading-bar>
         <div id="stats">
-            <strong>Leben</strong> ${health.current} von ${health.max} 
-            <strong>Aktionen:</strong> ${actions.current} von ${actions.max}
+            ${unsafeHTML(text(texts.assets.properties.life, health.current, health.max))}<br>
+            ${unsafeHTML(text(texts.assets.properties.actions, actions.current, actions.max))}
         </div>
-        <button ?disabled=${actions.current < 1} id="move" title="Move" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
-        <button ?disabled=${actions.current < 1} id="load" title="Load/Unload">📦</button>
+        <button ?disabled=${actions.current < 1} id="move"  title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
+        <button ?disabled=${actions.current < 1} id="build_lumberjack" title="${text(texts.assets.properties.actions.build.lumberjack_small)}" @click=${() => releaseHormone(BuildLumberjackSmallActivate, { asset: { ...payload }, start })}>
+            <img id="build_lumberjack_small" src="/assets/lumberjack_small_${payload.team}.png">
+        </button>
+        <button ?disabled=${actions.current < 1} id="load"  title="${text(texts.assets.properties.actions.load)}">📦</button>
     </div>`
 },
     {
