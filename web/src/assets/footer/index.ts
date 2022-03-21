@@ -7,8 +7,8 @@ import { spriteGridFactory } from "../sprites";
 import { sidebar, sidebarFor } from "../styles";
 
 export default pureLit("footer-element", (el) => {
-    const {getState: getTeam, publish: setTeam} = useState<Team | undefined>(el, undefined)
-    const {getState: getAssets, publish: setAssets} = useState<Asset[]>(el, [])
+    const {get: getTeam, set: setTeam} = useState<Team | undefined>(el, undefined)
+    const {get: getAssets, set: setAssets} = useState<Asset[]>(el, [])
     useReceptor(el, TurnAccepted, setTeam)
     useReceptor(el, UpdateAllPlayerElements, setAssets)
     return html`<footer class="${getTeam()!}">

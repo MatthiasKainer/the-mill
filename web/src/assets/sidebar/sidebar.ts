@@ -22,12 +22,13 @@ const newState = (element: { row: number, col: number, item: string, payload?: u
     dirty: false
 })
 
-export default pureLit("controls-sidebar", (el) => {
+export default pureLit("controls-sidebar", async  (el) => {
     const { get: getSelectedElement, set: setSelectedElement } = useState<SelectedItem<unknown> | undefined>(el, undefined)
     useReceptor(el, ItemSelected, setSelectedElement)
     const selectedElement = getSelectedElement()
     const {get, set} = useState<SelectionState>(el, newState(selectedElement))
     const current = get()
+    console.log("controls-sidebar", current, selectedElement)
     if (!current.dirty && selectedElement && new Position(selectedElement.row, selectedElement.col).equals(current.position)) {
         set({ 
             ...current, 

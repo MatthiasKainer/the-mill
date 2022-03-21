@@ -158,8 +158,9 @@ hypothalamus.on(RequestUpdatedResources, ({ team }) => {
 })
 
 hypothalamus.on(RequestSelectCoords, async (data) => {
-    await releaseHormone(ItemSelected, { ...data })
     await releaseHormone(ItemSelected, { ...data, item: "hexagon" })
+    console.log("RequestSelectCoords", data)
+    await releaseHormone(ItemSelected, { ...data })
 })
 
 hypothalamus.on(TurnPlayerComplete, () => {
@@ -197,23 +198,39 @@ const tryPay = (team: Team, costs: Resources): boolean => {
     return true;
 }
 
-hypothalamus.on(KnightCreated, ({ row, col, team }) => {
+hypothalamus.on(KnightCreated, async ({ row, col, team }) => {
     if (!isOnTurn({ team })) return;
     if (!tryPay(team, knightCosts())) return;
     const knight = CreateKnight({ row, col, team })
     world.map[row][col].elements.push(knight)
-    releaseHormone(HexagonUpdated, { row, col, elements: [...world.map[row][col].elements] })
-    releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
-    releaseHormone(PlayerUpdate, getActivePlayer())
+    await Promise.all([
+        releaseHormone(HexagonUpdated, { row, col, elements: [...world.map[row][col].elements] }),
+        releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team)),
+        releaseHormone(PlayerUpdate, getActivePlayer())
+    ])
+
+    releaseHormone(RequestSelectCoords, {
+        item: knight.name,
+        row, col,
+        payload: knight,
+    })
 })
-hypothalamus.on(WagonCreated, ({ row, col, team }) => {
+hypothalamus.on(WagonCreated, async ({ row, col, team }) => {
     if (!isOnTurn({ team })) return;
     if (!tryPay(team, wagonCosts())) return;
     const wagon = CreateWagon({ row, col, team })
     world.map[row][col].elements.push(wagon)
-    releaseHormone(HexagonUpdated, { row, col, elements: [...world.map[row][col].elements] })
-    releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
-    releaseHormone(PlayerUpdate, getActivePlayer())
+
+    await Promise.all([
+        releaseHormone(HexagonUpdated, { row, col, elements: [...world.map[row][col].elements] }),
+        releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team)),
+        releaseHormone(PlayerUpdate, getActivePlayer())
+    ])
+    releaseHormone(RequestSelectCoords, {
+        item: wagon.name,
+        row, col,
+        payload: wagon,
+    })
 })
 
 hypothalamus.on(CheckPlayerHasActionsLeft, () => {
@@ -227,7 +244,7 @@ hypothalamus.on(CheckPlayerHasActionsLeft, () => {
 
 hypothalamus.on(BuildLumberjackSmall, async ({ position, asset }) => {
     const { elements, terrain } = world.map[position.row][position.col]
-    const {team} = asset
+    const { team } = asset
     const firstWagonIndex = elements.findIndex(element => element.name === "player-wagon")
     if (!isOnTurn({ team: asset.team })) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: `Not the turn of the team ${asset.team}` });
     else if (asset.name !== "player-wagon" || firstWagonIndex < 0) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: "No wagon on field" });
@@ -382,7 +399,7 @@ hypothalamus.on(ItemMoved, async ({ asset, location }) => {
             team: asset.team
         }
         await releaseHormone(MillTakeover, millTaken)
-        
+
         return
     }
     releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, asset.team))
