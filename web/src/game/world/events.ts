@@ -49,10 +49,12 @@ export const HexagonUpdated = defineSingleHormone<HexagonUpdatedPayload>("map/he
 export type MoveModeData = {
     asset: MoveableAsset
     start: SimpleCoords
+    inReach?: SimpleCoords[]
     trail?: SimpleCoords[]
     end?: SimpleCoords
 }
 export const MoveModeActivate = defineHormone<MoveModeData>("modes/move/activate")
+export const MoveModeActivated = defineHormone<MoveModeData>("modes/move/activated")
 export const MoveModeDeactivate = defineHormone("modes/move/deactivate")
 export type MoveModeHovered = SimpleCoords
 export const MoveModeTargetHovered = defineHormone<MoveModeHovered>("modes/move/hovered-target")

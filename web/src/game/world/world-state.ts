@@ -2,10 +2,10 @@ import { hypothalamus, releaseHormone } from "organismus";
 import { PlayerAsset } from ".";
 import { buildings } from "../../assets";
 import { Cube } from "../../math/cube/cube";
-import { shortestPath } from "../../math/pathfinder/a";
+import { isReachable, shortestPath } from "../../math/pathfinder/a";
 import { Position, SimpleCoordsEquals } from "../../math/position";
-import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources, RequestUpdatedResources } from "./events";
-import { SidebarLoaded, StartGame, World, WorldLoaded } from "./worldLoader";
+import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources, RequestUpdatedResources, MoveModeActivated } from "./events";
+import { SidebarLoaded, StartGame, Tile, World, WorldLoaded } from "./worldLoader";
 import { roll } from "../player/dices";
 import { CreateKnight, costs as knightCosts } from "../player/knights/Knight";
 import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, isResourceGeneratingAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
@@ -151,16 +151,15 @@ hypothalamus.on(TurnAccepted, async (team) => {
 hypothalamus.on(RequestUpdatedResources, ({ team }) => {
     // refill all resources and movements
     const resourceMap: ResourceGeneratingBuilding[] =
-        getResourceGeneratingBuildings(world, team)
-            .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+        getResourceGeneratingBuildings(world, team)?.reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
     // distribute resources
     releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
 })
 
 hypothalamus.on(RequestSelectCoords, async (data) => {
     await releaseHormone(ItemSelected, { ...data, item: "hexagon" })
-    console.log("RequestSelectCoords", data)
     await releaseHormone(ItemSelected, { ...data })
+    await releaseHormone(ItemSelected, { ...data, item: "hexagon" })
 })
 
 hypothalamus.on(TurnPlayerComplete, () => {
@@ -273,6 +272,12 @@ hypothalamus.on(BuildLumberjackSmall, async ({ position, asset }) => {
 const safeNumber = (n: number) => {
     return Number.parseInt(n.toString(), 10)
 }
+const isBlocked = (cube: Cube) => {
+    const { row, col } = cube.toCoords()
+    return world.map[row][col].elements
+        .filter(element => element.team !== moveModeState?.asset.name)
+        .some((element) => isFighterAsset(element))
+}
 
 let moveModeState: MoveModeData | undefined = undefined
 hypothalamus.on(MoveModeActivate, async data => {
@@ -280,7 +285,21 @@ hypothalamus.on(MoveModeActivate, async data => {
         await releaseHormone(BattleModeDeactivate)
     }
     if (!isOnTurn(data.asset)) return;
-    moveModeState = data
+    // calculate reachable tiles
+    function isInReach(hexagon: Tile): boolean {
+        const start = new Position(safeNumber(data.start.row), safeNumber(data.start.col)).toCube()
+        const end = new Position(safeNumber(hexagon.position.row), safeNumber(hexagon.position.col)).toCube()
+
+        return isReachable(start, end, worldAsCube, isBlocked, data.asset.movement.points)
+    }
+
+    moveModeState = {
+        ...data,
+        inReach: world.map.reduce((acc, row) =>
+            [...acc, ...row.filter(isInReach).map(tile => tile!.position)]
+            , [] as Position[])
+    }
+    await releaseHormone(MoveModeActivated, data)
 })
 hypothalamus.on(MoveModeDeactivate, () => {
     moveModeState = undefined
@@ -292,12 +311,6 @@ hypothalamus.on(MoveModeTargetHovered, async data => {
 
     const start = new Position(safeNumber(moveModeState.start.row), safeNumber(moveModeState.start.col)).toCube()
     const end = new Position(safeNumber(data.row), safeNumber(data.col)).toCube()
-    const isBlocked = (cube: Cube) => {
-        const { row, col } = cube.toCoords()
-        return world.map[row][col].elements
-            .filter(element => element.team !== moveModeState?.asset.name)
-            .some((element) => isFighterAsset(element))
-    }
 
     const trail = shortestPath(start, end, worldAsCube, isBlocked, moveModeState.asset.movement.points)
         .path;

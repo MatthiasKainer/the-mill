@@ -12,6 +12,8 @@ export function getCssClass(hexagon: SimpleCoords, data: MoveModeData | undefine
     if (data.end && ((data.trail?.length ?? 0) < 1) && SimpleCoordsEquals(data.end, hexagon)) return "active unreachable"
     if (data.end && SimpleCoordsEquals(data.end, hexagon)) return "active end"
     if (data.trail && data.trail.some(coord => SimpleCoordsEquals(coord, hexagon))) return "active trail"
+    console.log("Data in reach", hexagon, data.inReach)
+    if (!data.inReach?.some(coord => SimpleCoordsEquals(coord, hexagon))) return "inactive unreachable"
     return "inactive"
 }
 

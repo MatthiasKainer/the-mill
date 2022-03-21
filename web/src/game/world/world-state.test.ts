@@ -8,7 +8,7 @@ import { TurnComplete } from "../player/Assets";
 import { CreateSmallLumberjack } from "../player/buildings/Lumberjack";
 import { CreateKnight } from "../player/knights/Knight";
 import { Mill } from "./buildings";
-import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
+import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
 import { Terrain } from "./terrain";
 import { FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
 
@@ -259,10 +259,10 @@ describe("MoveMode", () => {
         const moveMode = moveModeBuilder({ start: { col: 0, row: 0 } });
         setupStage(moveMode.asset.team)
         await releaseHormone(MoveModeActivate, moveMode)
-        hypothalamus.on(MoveModeActivate, spy)
+        hypothalamus.on(MoveModeActivated, spy)
         await releaseHormone(MoveModeTargetHovered, { col: 2, row: 0 })
-        await new Promise(r => process.nextTick(r))
-        expect(spy).toBeCalledWith({ ...moveMode, trail: expect.anything(), end: { col: 2, row: 0 } })
+        expect(spy).toBeCalledTimes(1)
+        expect(spy).toBeCalledWith({ ...moveMode, trail: expect.anything(), inReach: expect.anything(), end: { col: 2, row: 0 } })
     })
 
     describe("When the knight has already done all actions", () => {

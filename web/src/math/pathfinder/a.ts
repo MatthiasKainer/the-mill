@@ -5,6 +5,10 @@ import { PathResult } from "./type";
 
 const id = (c: Cube) =>  c.toPosition().toString();
 
+export function isReachable(start: Cube, goal: Cube, map: Cube[], isBlocked: (p: Cube) => boolean, range: number) {
+  return shortestPath(start, goal, map, isBlocked, range).path.length > 0;
+}
+
 export const shortestPath = (start: Cube, goal: Cube, map: Cube[], isBlocked: (p: Cube) => boolean, range: number): PathResult => {
   const frontier = new Heapify();
   frontier.push(start, 0);

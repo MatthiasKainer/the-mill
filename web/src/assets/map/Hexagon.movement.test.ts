@@ -9,6 +9,7 @@ export type MoveModeBuilderData = {
     asset?: MoveableAsset
     start?: SimpleCoords
     trail?: SimpleCoords[]
+    inReach?: SimpleCoords[]
     end?: SimpleCoords
 }
 
@@ -19,7 +20,11 @@ describe("Hexagon Movement Behaviour", () => {
         expect(getCssClass(hexagon, undefined)).toBe("")
     })
     it("returns the inactive style if not in movement", () => {
-        expect(getCssClass(hexagon, moveModeBuilder())).toBe("inactive")
+        expect(getCssClass(hexagon, moveModeBuilder({ inReach: [hexagon] }))).toBe("inactive")
+    })
+
+    it("returns the inactive unreachable style if not in movement and not in reachable", () => {
+        expect(getCssClass(hexagon, moveModeBuilder())).toBe("inactive unreachable")
     })
 
     it("returns the active style if in start", () => {

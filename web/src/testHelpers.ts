@@ -10,6 +10,7 @@ import { Position } from "./math/position";
 export const moveModeBuilder = (builder: MoveModeBuilderData | undefined = undefined): MoveModeData => ({
     asset: builder?.asset ?? CreateKnight({ team: "red", ...builder?.start ?? { row: 0, col: 0 } }),
     start: builder?.start ?? { row: 0, col: 0 },
+    inReach: builder?.inReach,
     trail: builder?.trail,
     end: builder?.end
 })

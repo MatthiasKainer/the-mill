@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { releaseHormone, useReceptor } from 'organismus';
 import { LitElementWithProps, pureLit, useOnce, useState } from 'pure-lit';
-import { MoveModeActivate, MoveModeEnd, HexagonUpdated, HexagonUpdatedPayload, ItemSelected, MoveModeData, MoveModeTargetHovered, BattleModeActive, BattleModeDeactivate, MoveModeDeactivate, BattleModeData } from '../../game/world/events';
+import { MoveModeEnd, HexagonUpdated, HexagonUpdatedPayload, ItemSelected, MoveModeData, MoveModeTargetHovered, BattleModeActive, BattleModeDeactivate, MoveModeDeactivate, BattleModeData, MoveModeActivated } from '../../game/world/events';
 import { Sprite } from '../../game/world/sprite';
 import { spriteFactory } from '../sprites';
 import { Asset, SimpleCoords } from '../../game';
@@ -38,7 +38,7 @@ export default pureLit('hexagon-element', (el: LitElementWithProps<Props>) => {
     const { get: getMovementMode, set: setMovementMode } = useState<MoveModeData | undefined>(el, undefined)
     const { get: getBattleMode, set: setBattleMode } = useState<BattleModeData | undefined>(el, undefined)
     useReceptor(el, HexagonUpdated, (h) => (h?.row.toString() === row.toString() && h?.col.toString() === col.toString()), setElements)
-    useReceptor(el, MoveModeActivate, setMovementMode)
+    useReceptor(el, MoveModeActivated, setMovementMode)
     useReceptor(el, BattleModeActive, setBattleMode)
     useReceptor(el, MoveModeEnd, () => setMovementMode(undefined))
     useReceptor(el, MoveModeDeactivate, () => setMovementMode(undefined))

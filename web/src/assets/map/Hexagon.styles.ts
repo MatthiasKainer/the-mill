@@ -22,17 +22,19 @@ export const cssHexagon =  css`
 
 export const cssHexagonMovement = css`
     .inactive {
-        opacity: 0.3;
+        opacity: 0.8;
         cursor: not-allowed;
     }
-    .active.start {
-        filter: brightness(50%);
-    }
+    .active.start,
+    .active.trail,
     .active.end {
-        filter: brightness(50%);
+        filter: brightness(1.5);
     }
-    .active.unreachable {
+    .unreachable {
         cursor: not-allowed;
-        filter: brightness(50%) hue-rotate(332deg);
+        filter: saturate(0) hue-rotate(217deg);
+    }
+    .inactive.unreachable {
+      opacity: 0.1;
     }
 `
