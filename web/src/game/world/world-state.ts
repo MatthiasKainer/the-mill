@@ -4,7 +4,7 @@ import { buildings } from "../../assets";
 import { Cube } from "../../math/cube/cube";
 import { shortestPath } from "../../math/pathfinder/a";
 import { Position, SimpleCoordsEquals } from "../../math/position";
-import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources } from "./events";
+import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources, RequestUpdatedResources } from "./events";
 import { SidebarLoaded, StartGame, World, WorldLoaded } from "./worldLoader";
 import { roll } from "../player/dices";
 import { CreateKnight, costs as knightCosts } from "../player/knights/Knight";
@@ -147,6 +147,16 @@ hypothalamus.on(TurnAccepted, async (team) => {
     await releaseHormone(DistributeResources, { team, resourcesToGenerate: resourceMap });
 })
 
+
+hypothalamus.on(RequestUpdatedResources, ({ team }) => {
+    // refill all resources and movements
+    const resourceMap: ResourceGeneratingBuilding[] =
+        getResourceGeneratingBuildings(world, team)
+            .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+    // distribute resources
+    releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
+})
+
 hypothalamus.on(RequestSelectCoords, async (data) => {
     await releaseHormone(ItemSelected, { ...data })
     await releaseHormone(ItemSelected, { ...data, item: "hexagon" })
@@ -239,11 +249,7 @@ hypothalamus.on(BuildLumberjackSmall, async ({ position, asset }) => {
             releaseHormone(BuildLumberjackSmallSuccess, { position, asset: lumberjack })
         ])
         // notify whoever interested in the lumberjack resource creation that it was created
-        const resourceMap: ResourceGeneratingBuilding[] =
-            getResourceGeneratingBuildings(world, team!)
-                .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
-        // update resources
-        releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
+        releaseHormone(RequestUpdatedResources, { team })
     }
 })
 
@@ -396,11 +402,7 @@ hypothalamus.on(MillTakeover, ({ location, team, asset }) => {
         }
     })
     releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
-    // notify whoever interested in the mill resource creation that it was created
-    const resourceMap: ResourceGeneratingBuilding[] =
-        getResourceGeneratingBuildings(world, team!)
-            .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
-    releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
+    releaseHormone(RequestUpdatedResources, { team })
 })
 
 hypothalamus.on(BattleStarted, (data) => {

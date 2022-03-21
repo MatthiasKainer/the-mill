@@ -159,4 +159,5 @@ export type DistributeResources = {
     resourcesToGenerate: ResourceGeneratingBuilding[]
 }
 export const DistributeResources = defineHormone<DistributeResources>("resources/distribute")
+export const RequestUpdatedResources = defineHormone<{ team: Team }>("resources/distribute/request")
 export const UpdatedResources = defineHormone<DistributeResources>("resources/distribute/updated")
