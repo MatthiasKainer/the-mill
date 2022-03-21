@@ -2,7 +2,7 @@ import { html, css } from "lit";
 import { useReceptor } from "organismus";
 import { pureLit, useState } from "pure-lit";
 import { Player, ResourceGeneratingBuilding, ResourceGenerator, RESOURCES, Team } from "../../game";
-import { DistributeResources, PlayerUpdate, TurnAccepted } from "../../game/world/events";
+import { DistributeResources, PlayerUpdate, TurnAccepted, UpdatedResources } from "../../game/world/events";
 import { text, texts } from "../../internationalization";
 
 import '../resources'
@@ -13,7 +13,7 @@ export default pureLit("header-element", (el) => {
     const {get: getResources, set: setResources} = useState<DistributeResources | undefined>(el, undefined)
     useReceptor(el, TurnAccepted, setCurrentTeam)
     useReceptor(el, PlayerUpdate, setCurrentPlayer)
-    useReceptor(el, DistributeResources, setResources)
+    useReceptor(el, UpdatedResources, setResources)
     const player = getCurrentPlayer() ?? { resources: {}} as Player
     const applyResource = (map: any, resource: string, amount: number) => {
         map[resource] = (map[resource] || 0) + amount

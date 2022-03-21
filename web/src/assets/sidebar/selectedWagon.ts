@@ -1,14 +1,14 @@
 import { css, html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html";
-import { releaseHormone } from "organismus";
+import { hypothalamus, releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
-import { BuildLumberjackSmallActivate, MoveModeActivate } from "../../game/world/events";
+import { BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, MoveModeActivate } from "../../game/world/events";
 import { text, texts } from "../../internationalization";
 import { asNumber } from "../../math/number";
 
 type Props = {
-    selected : { 
+    selected: {
         payload: FigherAsset
         col: number
         row: number
@@ -62,9 +62,14 @@ const style = css`
         color: var(--colorMain)
     }
 `
+
+hypothalamus.on(BuildLumberjackSmallSuccess, (...args) => console.log("BuildLumberjackSmallSuccess", ...args))
+hypothalamus.on(BuildLumberjackSmallFailed, console.error)
+hypothalamus.on(BuildLumberjackSmall, (...args) => console.log("BuildLumberjackSmall", ...args))
+
 export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
     const { selected: { payload, row, col } } = _;
-    const {health, actions} = payload
+    const { health, actions } = payload
     const start = {
         row: asNumber(row),
         col: asNumber(col)
@@ -79,7 +84,7 @@ export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
             ${unsafeHTML(text(texts.assets.properties.actions, actions.current, actions.max))}
         </div>
         <button ?disabled=${actions.current < 1} id="move"  title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
-        <button ?disabled=${actions.current < 1} id="build_lumberjack" title="${text(texts.assets.properties.actions.build.lumberjack_small)}" @click=${() => releaseHormone(BuildLumberjackSmallActivate, { asset: { ...payload }, start })}>
+        <button ?disabled=${actions.current < 1} id="build_lumberjack" title="${text(texts.assets.properties.actions.build.lumberjack_small)}" @click=${() => releaseHormone(BuildLumberjackSmall, { asset: { ...payload }, position: start })}>
             <img id="build_lumberjack_small" src="/assets/lumberjack_small_${payload.team}.png">
         </button>
         <button ?disabled=${actions.current < 1} id="load"  title="${text(texts.assets.properties.actions.load)}">📦</button>
@@ -88,6 +93,6 @@ export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
     {
         styles: [style],
         props: [
-            { "selected" : {type: Object}}
+            { "selected": { type: Object } }
         ]
     })

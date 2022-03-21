@@ -5,7 +5,7 @@ import { World, WorldLoaded } from "../../game";
 import { HEXAGON_WIDTH } from "./consts";
 
 export default pureLit("world-map", (el: LitElement) => {
-    const { getState: getWorld, publish: setWorld } = useState<World | undefined>(el, undefined)
+    const { get: getWorld, set: setWorld } = useState<World | undefined>(el, undefined)
     useReceptor(el, WorldLoaded, setWorld)
 
     return html`<div id="globe">${

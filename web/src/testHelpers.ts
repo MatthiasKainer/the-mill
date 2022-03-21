@@ -19,8 +19,13 @@ export const setupStage = async (teamTurn: Team) => {
     await releaseHormone(TurnAccepted, teamTurn)
 }
 
+export async function awaitImmediate(): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, 0))
+}
+
 const terrain = (): Terrain => ({
     sprite: {
+        name: "",
         file: "",
         x: 0,
         y: 0

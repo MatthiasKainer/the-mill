@@ -4,16 +4,18 @@ import { buildings } from "../../assets";
 import { Cube } from "../../math/cube/cube";
 import { shortestPath } from "../../math/pathfinder/a";
 import { Position, SimpleCoordsEquals } from "../../math/position";
-import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary } from "./events";
+import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources } from "./events";
 import { SidebarLoaded, StartGame, World, WorldLoaded } from "./worldLoader";
 import { roll } from "../player/dices";
-import { CreateKnight, findNextPlayerWithAction, costs as knightCosts } from "../player/knights/Knight";
-import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
-import { TurnComplete } from "../player/Assets";
+import { CreateKnight, costs as knightCosts } from "../player/knights/Knight";
+import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, isResourceGeneratingAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
+import { findNextPlayerWithAction, TurnComplete } from "../player/Assets";
 import { findAllElementsFromTeam } from "./navigator";
 import { deepQuerySelector } from "../../browser/Selector";
 import { CreateWagon, costs as wagonCosts } from "../player/wagon/Wagon";
 import { generateResources, getResourceGeneratingBuildings } from "./buildings";
+import { CreateSmallLumberjack } from "../player/buildings/Lumberjack";
+import { isTerrain } from "../player/resources";
 
 let world: World = {} as any as World
 let worldAsCube: Cube[] = []
@@ -29,9 +31,9 @@ export const setCurrentTeam = (team: Team) => currentTurn = team;
 export const getPlayer = (team: Team) => ({ ...players[team] })
 export const getActivePlayer = () => players[currentTurn]
 const hasActionsLeft = (asset: MoveableAsset) => asset.actions.current > 0;
-const isOnTurn = ({ team }: { team: Team }) => team === currentTurn;
+const isOnTurn = ({ team }: { team: Team | undefined }) => team === currentTurn;
 
-hypothalamus.on(WorldLoaded, (newWorld) => {
+hypothalamus.on(WorldLoaded, async (newWorld) => {
     worldAsCube = []
     newWorld.map.forEach((row, rowIndex) => {
         row.forEach((_, colIndex) => {
@@ -54,7 +56,7 @@ hypothalamus.on(WorldLoaded, (newWorld) => {
             }
         }
     })
-    releaseHormone(StartGame)
+    await releaseHormone(StartGame)
 })
 
 hypothalamus.on(Abort, async (abort) => {
@@ -63,14 +65,14 @@ hypothalamus.on(Abort, async (abort) => {
     releaseHormone(BattleModeDeactivate)
 })
 
-hypothalamus.on([StartGame, SidebarLoaded], () => {
-    releaseHormone(TurnStarted)
+hypothalamus.on([StartGame, SidebarLoaded], async () => {
+    await releaseHormone(TurnStarted)
 })
 
-hypothalamus.on(TurnStarted, () => {
+hypothalamus.on(TurnStarted, async () => {
     turns = [...world.teams]
     currentTurn = turns.pop()!
-    releaseHormone(TurnAccepted, currentTurn)
+    await releaseHormone(TurnAccepted, currentTurn)
 })
 
 export function allocateResources(initialResources: Resources, resourcesToGenerate: ResourceGeneratingBuilding[]) {
@@ -137,10 +139,11 @@ hypothalamus.on(TurnAccepted, async (team) => {
     releaseHormone(PlayerUpdate, getPlayer(team))
 
     // refill all resources and movements
-    const resourceMap: ResourceGeneratingBuilding[] = 
+    const resourceMap: ResourceGeneratingBuilding[] =
         getResourceGeneratingBuildings(world, team)
             .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
     // distribute resources
+    releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
     await releaseHormone(DistributeResources, { team, resourcesToGenerate: resourceMap });
 })
 
@@ -211,6 +214,39 @@ hypothalamus.on(CheckPlayerHasActionsLeft, () => {
     }
 })
 
+
+hypothalamus.on(BuildLumberjackSmall, async ({ position, asset }) => {
+    const { elements, terrain } = world.map[position.row][position.col]
+    const {team} = asset
+    const firstWagonIndex = elements.findIndex(element => element.name === "player-wagon")
+    if (!isOnTurn({ team: asset.team })) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: `Not the turn of the team ${asset.team}` });
+    else if (asset.name !== "player-wagon" || firstWagonIndex < 0) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: "No wagon on field" });
+    else if (!isTerrain(terrain, "forest")) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: `No wood on field but ${terrain.sprite.name}` });
+    else if (elements.some(isResourceGeneratingAsset)) await releaseHormone(BuildLumberjackSmallFailed, { position, asset, reason: "There is already a building on the field" });
+    else {
+        const lumberjack = CreateSmallLumberjack({ position, asset })
+        elements.splice(firstWagonIndex, 1)
+        elements.unshift(lumberjack)
+        await Promise.all([
+            releaseHormone(HexagonUpdated, {
+                ...position,
+                elements: [
+                    ...elements
+                ]
+            }),
+            releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, asset.team!)),
+            releaseHormone(PlayerUpdate, getActivePlayer()),
+            releaseHormone(BuildLumberjackSmallSuccess, { position, asset: lumberjack })
+        ])
+        // notify whoever interested in the lumberjack resource creation that it was created
+        const resourceMap: ResourceGeneratingBuilding[] =
+            getResourceGeneratingBuildings(world, team!)
+                .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+        // update resources
+        releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
+    }
+})
+
 const safeNumber = (n: number) => {
     return Number.parseInt(n.toString(), 10)
 }
@@ -246,7 +282,6 @@ hypothalamus.on(MoveModeTargetHovered, async data => {
     if (isBlocked(end)) {
         actualEnd = [...trail].pop()?.toCoords() ?? moveModeState.start
     }
-    console.log("MoveModeTargetHovered", { ...moveModeState, trail, end: actualEnd })
 
     await releaseHormone(MoveModeActivate, { ...moveModeState, trail, end: actualEnd })
 })
@@ -341,6 +376,7 @@ hypothalamus.on(ItemMoved, async ({ asset, location }) => {
             team: asset.team
         }
         await releaseHormone(MillTakeover, millTaken)
+        
         return
     }
     releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, asset.team))
@@ -360,6 +396,11 @@ hypothalamus.on(MillTakeover, ({ location, team, asset }) => {
         }
     })
     releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
+    // notify whoever interested in the mill resource creation that it was created
+    const resourceMap: ResourceGeneratingBuilding[] =
+        getResourceGeneratingBuildings(world, team!)
+            .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+    releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
 })
 
 hypothalamus.on(BattleStarted, (data) => {
@@ -409,3 +450,4 @@ hypothalamus.on(BattlePlayerAttacked, (data) => {
         result: damage
     })
 })
+

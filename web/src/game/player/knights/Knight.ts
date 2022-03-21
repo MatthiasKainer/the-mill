@@ -1,6 +1,6 @@
 import { player } from "../../..";
 import { generateUUID } from "../../../math/guid";
-import { FigherAsset, isFighterAsset, Resources, SimpleCoords, Team, World } from "../../world";
+import { FigherAsset, Resources, SimpleCoords, Team } from "../../world";
 import { SpriteSet } from "../../world/sprite";
 import * as dices from "../dices"
 
@@ -38,20 +38,3 @@ export const costs = (): Resources => ({
     wood: 0,
     stone: 0
 })
-
-export const findNextPlayerWithAction = (world: World, currentTeam: Team) => {
-    for (const row of world.map) {
-        for (const col of row) {
-            const playerWithActionsLeft = col.elements
-                .filter(element => isFighterAsset(element))
-                .map(element => element as FigherAsset)
-                .find(element => element.team === currentTeam && element.actions.current > 0);
-            
-            if (playerWithActionsLeft) {
-                return playerWithActionsLeft;
-            }
-        }
-    }
-
-    return undefined
-}

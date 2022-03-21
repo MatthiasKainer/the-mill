@@ -34,9 +34,9 @@ export default pureLit('hexagon-element', (el: LitElementWithProps<Props>) => {
     })
 
     const {row, col} = el;
-    const { getState: getElements, publish: setElements } = useState<HexagonUpdatedPayload>(el, {elements: el.elements, row, col})
-    const { getState: getMovementMode, publish: setMovementMode } = useState<MoveModeData | undefined>(el, undefined)
-    const { getState: getBattleMode, publish: setBattleMode } = useState<BattleModeData | undefined>(el, undefined)
+    const { get: getElements, set: setElements } = useState<HexagonUpdatedPayload>(el, {elements: el.elements, row, col})
+    const { get: getMovementMode, set: setMovementMode } = useState<MoveModeData | undefined>(el, undefined)
+    const { get: getBattleMode, set: setBattleMode } = useState<BattleModeData | undefined>(el, undefined)
     useReceptor(el, HexagonUpdated, (h) => (h?.row.toString() === row.toString() && h?.col.toString() === col.toString()), setElements)
     useReceptor(el, MoveModeActivate, setMovementMode)
     useReceptor(el, BattleModeActive, setBattleMode)

@@ -1,4 +1,5 @@
 export type Sprite = {
+    name: string,
     file: string,
     x: number,
     y: number

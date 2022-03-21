@@ -61,10 +61,16 @@ export const MoveModeEnd = defineHormone<MoveModeEndElement>("modes/move/end")
 
 export type BuildWithWagon = {
     asset: Asset | ResourceGeneratingBuilding
-    start: SimpleCoords
+    position: SimpleCoords
 }
-export const BuildLumberjackSmallActivate = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/activate");
-export const BuildLumberjackSmallActive = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/active");
+export type BuildFailed = {
+    asset: Asset | ResourceGeneratingBuilding
+    position: SimpleCoords
+    reason: string
+}
+export const BuildLumberjackSmall = defineHormone<BuildWithWagon>("modes/build/lumberjack-small");
+export const BuildLumberjackSmallSuccess = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/success");
+export const BuildLumberjackSmallFailed = defineHormone<BuildFailed>("modes/build/lumberjack-small/failed");
 
 export type BattleModeData = {
     asset: MoveableAsset
@@ -153,3 +159,4 @@ export type DistributeResources = {
     resourcesToGenerate: ResourceGeneratingBuilding[]
 }
 export const DistributeResources = defineHormone<DistributeResources>("resources/distribute")
+export const UpdatedResources = defineHormone<DistributeResources>("resources/distribute/updated")
