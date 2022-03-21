@@ -3,7 +3,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html";
 import { hypothalamus, releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
-import { BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, MoveModeActivate } from "../../game/world/events";
+import { BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, MoveModeActivate } from "../../game/world/events";
 import { text, texts } from "../../internationalization";
 import { asNumber } from "../../math/number";
 
@@ -52,6 +52,9 @@ const style = css`
     #build_lumberjack {
         grid-area: build_1;
     }
+    #build_mine {
+        grid-area: build_2;
+    }
     #stats {
         grid-area: stats;
     }
@@ -86,6 +89,9 @@ export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
         <button ?disabled=${actions.current < 1} id="move"  title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
         <button ?disabled=${actions.current < 1} id="build_lumberjack" title="${text(texts.assets.properties.actions.build.lumberjack_small)}" @click=${() => releaseHormone(BuildLumberjackSmall, { asset: { ...payload }, position: start })}>
             <img id="build_lumberjack_small" src="/assets/lumberjack_small_${payload.team}.png">
+        </button>
+        <button ?disabled=${actions.current < 1} id="build_mine" title="${text(texts.assets.properties.actions.build.mine_small)}" @click=${() => releaseHormone(BuildMineSmall, { asset: { ...payload }, position: start })}>
+            <img id="build_mine_small" src="/assets/mine_small_${payload.team}.png">
         </button>
         <button ?disabled=${actions.current < 1} id="load"  title="${text(texts.assets.properties.actions.load)}">📦</button>
     </div>`

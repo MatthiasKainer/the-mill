@@ -106,6 +106,11 @@ export const texts = {
                         default: "assets.properties.actions.build.lumberjack_small",
                         de: "Baue einen Holzfäller (klein)",
                         en: "Build Lumberjack (small)",
+                    },
+                    mine_small: {
+                        default: "assets.properties.actions.build.mine_small",
+                        de: "Baue eine Mine (klein)",
+                        en: "Build Mine (small)",
                     }
                 }
             }

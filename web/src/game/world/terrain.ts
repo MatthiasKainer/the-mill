@@ -6,6 +6,9 @@ export type Terrain = {
     defense: number
 }
 
+// x=122
+// y=122
+
 export const TerrainPresets: {[key:string]: Terrain} = {
     "gras" : {
         sprite: {
@@ -61,8 +64,8 @@ export const TerrainPresets: {[key:string]: Terrain} = {
         sprite: {
             name: "mountain",
             file: "hexagonTerrain_sheet",
-            x: 414,
-            y: 1052
+            x: 536,
+            y: 1195
         },
         movementCosts: 10,
         defense: 9
@@ -71,5 +74,5 @@ export const TerrainPresets: {[key:string]: Terrain} = {
 
 export const randomTerrain = () => {
     const keys = Object.keys(TerrainPresets)
-    return TerrainPresets[keys[Math.floor(Math.random() * (keys.length - 1))]]
+    return TerrainPresets[keys[Math.floor(Math.random() * (keys.length))]] ?? TerrainPresets.mountain
 }

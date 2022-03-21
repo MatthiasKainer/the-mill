@@ -6,9 +6,10 @@ import { Position } from "../../math/position";
 import { moveModeBuilder } from "../../testHelpers";
 import { TurnComplete } from "../player/Assets";
 import { CreateSmallLumberjack } from "../player/buildings/Lumberjack";
+import { CreateSmallMine } from "../player/buildings/Mine";
 import { CreateKnight } from "../player/knights/Knight";
 import { Mill } from "./buildings";
-import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
+import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
 import { Terrain } from "./terrain";
 import { FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
 
@@ -515,15 +516,19 @@ describe("Building", () => {
         })
     })
 
-    describe("Building a lumbermill", () => {
+    describe.each([
+        { what: "lumbermill", action: BuildLumberjackSmall, success: BuildLumberjackSmallSuccess, fail: BuildLumberjackSmallFailed, ground: "forest", create: CreateSmallLumberjack },
+        { what: "mine", action: BuildMineSmall, success: BuildMineSmallSuccess, fail: BuildMineSmallFailed, ground: "mountain", create: CreateSmallMine },
+    ])
+    ("Building a %what", ({what, action, success, fail, ground, create}) => {
         let playerBefore: Player;
         // try build field -> if wagon on field         -> if wood -> build lumbermill -> update world -> remove wagoon
         //                    |-> if not wagon -> fail     |-> if not wood -> fail
 
-        const spyOnLumbermillSuccessfullyBuild = jest.fn()
-        const spyOnLumbermillNotBuild = jest.fn()
-        hypothalamus.on(BuildLumberjackSmallSuccess, spyOnLumbermillSuccessfullyBuild)
-        hypothalamus.on(BuildLumberjackSmallFailed, spyOnLumbermillNotBuild)
+        const spyOnSuccessfullyBuild = jest.fn()
+        const spyOnBuildFailed = jest.fn()
+        hypothalamus.on(success, spyOnSuccessfullyBuild)
+        hypothalamus.on(fail, spyOnBuildFailed)
 
         beforeEach(async () => {
             await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
@@ -534,17 +539,17 @@ describe("Building", () => {
             const otherAsset = { id: "", name: "", team: "fake" as Team }
             const position = { col: 0, row: 0 }
             beforeEach(async () => {
-                await releaseHormone(BuildLumberjackSmall, { asset: otherAsset, position })
+                await releaseHormone(action, { asset: otherAsset, position })
                 playerBefore = getActivePlayer()
             })
-            it("does not build a lumbermill", async () => {
-                expect(spyOnLumbermillNotBuild).toBeCalledTimes(1)
-                expect(spyOnLumbermillNotBuild).toBeCalledWith({
+            it(`does not build a ${what}`, async () => {
+                expect(spyOnBuildFailed).toBeCalledTimes(1)
+                expect(spyOnBuildFailed).toBeCalledWith({
                     asset: otherAsset,
                     position,
                     reason: "Not the turn of the team " + otherAsset.team
                 })
-                expect(spyOnLumbermillSuccessfullyBuild).not.toBeCalled()
+                expect(spyOnSuccessfullyBuild).not.toBeCalled()
             })
         })
 
@@ -552,17 +557,17 @@ describe("Building", () => {
             const otherAsset = { id: "", name: "", team: "red" as Team }
             const position = { col: 0, row: 0 }
             beforeEach(async () => {
-                await releaseHormone(BuildLumberjackSmall, { asset: otherAsset, position })
+                await releaseHormone(action, { asset: otherAsset, position })
                 playerBefore = getActivePlayer()
             })
-            it("does not build a lumbermill", async () => {
-                expect(spyOnLumbermillNotBuild).toBeCalledTimes(1)
-                expect(spyOnLumbermillNotBuild).toBeCalledWith({
+            it(`does not build a ${what}`, async () => {
+                expect(spyOnBuildFailed).toBeCalledTimes(1)
+                expect(spyOnBuildFailed).toBeCalledWith({
                     asset: otherAsset,
                     position,
                     reason: "No wagon on field"
                 })
-                expect(spyOnLumbermillSuccessfullyBuild).not.toBeCalled()
+                expect(spyOnSuccessfullyBuild).not.toBeCalled()
             })
         })
 
@@ -583,21 +588,21 @@ describe("Building", () => {
                     ...getCurrentWorld().map[0][0].terrain,
                     sprite: {
                         ...getCurrentWorld().map[0][0].terrain.sprite,
-                        name: "forest"
+                        name: ground
                     }
                 }
                 jest.resetAllMocks()
-                await releaseHormone(BuildLumberjackSmall, { asset: otherAsset, position })
+                await releaseHormone(action, { asset: otherAsset, position })
                 playerBefore = getActivePlayer()
             })
-            it("does not build a lumbermill", async () => {
-                expect(spyOnLumbermillNotBuild).toBeCalledTimes(1)
-                expect(spyOnLumbermillNotBuild).toBeCalledWith({
+            it(`does not build a ${what}`, async () => {
+                expect(spyOnBuildFailed).toBeCalledTimes(1)
+                expect(spyOnBuildFailed).toBeCalledWith({
                     asset: otherAsset,
                     position,
                     reason: "There is already a building on the field"
                 })
-                expect(spyOnLumbermillSuccessfullyBuild).not.toBeCalled()
+                expect(spyOnSuccessfullyBuild).not.toBeCalled()
             })
         })
 
@@ -611,17 +616,17 @@ describe("Building", () => {
                     ...getCurrentWorld().map[0][0].terrain,
                     sprite: {
                         ...getCurrentWorld().map[0][0].terrain.sprite,
-                        name: "forest"
+                        name: ground
                     }
                 }
-                await releaseHormone(BuildLumberjackSmall, { asset, position })
+                await releaseHormone(action, { asset, position })
                 playerBefore = getActivePlayer()
             })
 
-            it("adds the lumberjack to the position", () => {
+            it(`adds the ${what} to the position`, () => {
                 expect(getCurrentWorld().map[0][0].elements[0])
                     .toEqual({
-                        ...CreateSmallLumberjack({ position, asset }),
+                        ...create({ position, asset }),
                         id: expect.anything()
                     })
             })

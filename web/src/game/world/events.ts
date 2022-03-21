@@ -73,6 +73,9 @@ export type BuildFailed = {
 export const BuildLumberjackSmall = defineHormone<BuildWithWagon>("modes/build/lumberjack-small");
 export const BuildLumberjackSmallSuccess = defineHormone<BuildWithWagon>("modes/build/lumberjack-small/success");
 export const BuildLumberjackSmallFailed = defineHormone<BuildFailed>("modes/build/lumberjack-small/failed");
+export const BuildMineSmall = defineHormone<BuildWithWagon>("modes/build/mine-small");
+export const BuildMineSmallSuccess = defineHormone<BuildWithWagon>("modes/build/mine-small/success");
+export const BuildMineSmallFailed = defineHormone<BuildFailed>("modes/build/mine-small/failed");
 
 export type BattleModeData = {
     asset: MoveableAsset
