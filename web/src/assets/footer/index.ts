@@ -15,7 +15,7 @@ export default pureLit("footer-element", (el) => {
     <div class="main ">
         ${spriteGridFactory(getAssets()
             .sort((a, b) => a.name.localeCompare(b.name))
-            .filter(asset => !isMoveableAsset(asset) || asset.actions.current > 0), 
+            .filter(asset => isMoveableAsset(asset) && asset.actions.current > 0), 
             "width: 10vh; height: 10vh;")}
     </div>
     <div class="action">

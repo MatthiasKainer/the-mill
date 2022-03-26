@@ -887,7 +887,7 @@ class hi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             @mouseover="${()=>{setTimeout((()=>{var e;null===(e=To(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
             style="position:relative; cursor: pointer; width: 120px;${i};">
                 ${vi(`<${null!==(n=null==s?void 0:s[1].name)&&void 0!==n?n:"span"} ${a} style="${i};"></${null!==(r=null==s?void 0:s[1].name)&&void 0!==r?r:"span"}>`)}
-        </div>`}));return R`<sprite-player-elements-grid>${n}</sprite-player-elements-grid>`})(r().sort(((e,t)=>e.name.localeCompare(t.name))).filter((e=>!pt(e)||e.actions.current>0)),"width: 10vh; height: 10vh;")}
+        </div>`}));return R`<sprite-player-elements-grid>${n}</sprite-player-elements-grid>`})(r().sort(((e,t)=>e.name.localeCompare(t.name))).filter((e=>pt(e)&&e.actions.current>0)),"width: 10vh; height: 10vh;")}
     </div>
     <div class="action">
         <button-pure @click="${()=>me(yo)}">
