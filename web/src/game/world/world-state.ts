@@ -4,11 +4,11 @@ import { buildings } from "../../assets";
 import { Cube } from "../../math/cube/cube";
 import { isReachable, shortestPath } from "../../math/pathfinder/a";
 import { Position, SimpleCoordsEquals } from "../../math/position";
-import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, MillTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources, RequestUpdatedResources, MoveModeActivated, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess } from "./events";
+import { MoveModeActivate, HexagonUpdated, KnightCreated, MoveModeTargetHovered, MoveModeData, MoveModeEnd, MoveModeDeactivate, ItemMoved, BattleStarted, MillTakeover, ModalBattleOpen, BattleThrowDice, BattlePlayerAttacked, ModalDiceResultOpen, TurnStarted, TurnsComplete, TurnPlayerComplete, TurnAccepted, RequestSelectCoords, ItemSelected, BattleModeData, BattleModeActivate, BattleModeActive, BattleModeDeactivate, BattleModeEnd, CheckPlayerHasActionsLeft, PlayerNoActionsLeft, AssetTaken, UpdateAllPlayerElements, Abort, PlayerUpdate, WagonCreated, DistributeResources, ResourcesGenerated, ResourceGenerationComplete, ResourceSummary, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, UpdatedResources, RequestUpdatedResources, MoveModeActivated, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess, LumberjackTakeover, MineTakeover } from "./events";
 import { SidebarLoaded, StartGame, Tile, World, WorldLoaded } from "./worldLoader";
 import { roll } from "../player/dices";
 import { CreateKnight, costs as knightCosts } from "../player/knights/Knight";
-import { Asset, isFighterAsset, isMoveableAsset, isPositionedAsset, isResourceGeneratingAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
+import { Asset, isFighterAsset, isFightingAsset, isMoveableAsset, isPositionedAsset, isResourceGeneratingAsset, MoveableAsset, Players, ResourceGeneratingBuilding, Resources, Team, teams } from "./types";
 import { findNextPlayerWithAction, TurnComplete } from "../player/Assets";
 import { findAllElementsFromTeam } from "./navigator";
 import { deepQuerySelector } from "../../browser/Selector";
@@ -302,9 +302,10 @@ const safeNumber = (n: number) => {
 }
 const isBlocked = (cube: Cube) => {
     const { row, col } = cube.toCoords()
+    const sameTeam = (element: Asset) => element.team !== moveModeState?.asset.name
     return world.map[row][col].elements
-        .filter(element => element.team !== moveModeState?.asset.name)
-        .some((element) => isFighterAsset(element))
+        .filter(sameTeam)
+        .some(isFightingAsset)
 }
 
 let moveModeState: MoveModeData | undefined = undefined
@@ -426,41 +427,47 @@ hypothalamus.on(ItemMoved, async ({ asset, location }) => {
     const { row, col } = location;
     const otherElements = [...world.map[row][col].elements]
         .filter(item => item.id !== asset.id);
-    const mills = otherElements
-        .filter(item => item.name === buildings.mill.name && (item as PlayerAsset).team !== asset.team)
-    if (mills.length > 0 && isFighterAsset(asset)) {
-        const millTaken: MillTaken = {
-            asset: mills[0],
-            transfered: {
-                from: mills[0].team!,
-                to: asset.team
-            },
-            location,
-            by: asset,
-            team: asset.team
+    for (const { building, hormone } of [
+        { building: buildings.mill.name, hormone: MillTakeover },
+        { building: buildings.lumberjackSmall.name, hormone: LumberjackTakeover },
+        { building: buildings.mineSmall.name, hormone: MineTakeover },
+    ]) {
+        const assetToTake = otherElements
+            .filter(item => item.name === building && (item as PlayerAsset).team !== asset.team)
+        if (assetToTake.length > 0 && isFighterAsset(asset)) {
+            const assetTaken: AssetTaken = {
+                asset: assetToTake[0],
+                transfered: {
+                    from: assetToTake[0].team!,
+                    to: asset.team
+                },
+                location,
+                by: asset,
+                team: asset.team
+            }
+            await releaseHormone(hormone, assetTaken)
         }
-        await releaseHormone(MillTakeover, millTaken)
-
-        return
     }
     releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, asset.team))
     await releaseHormone(CheckPlayerHasActionsLeft)
-})
+});
 
-hypothalamus.on(MillTakeover, ({ location, team, asset }) => {
-    if (!isOnTurn({ team })) { return }
-    const { row, col } = location
-    const elements = [...world.map[row][col].elements];
-    world.map[row][col].elements = []
-    elements.forEach((element) => {
-        if (element.id !== asset.id)
-            world.map[row][col].elements.push(element)
-        else {
-            world.map[row][col].elements.push({ ...element, team } as PlayerAsset)
-        }
+([MillTakeover, LumberjackTakeover, MineTakeover]).forEach(hormone => {
+    hypothalamus.on(hormone, ({ location, team, asset }) => {
+        if (!isOnTurn({ team })) { return }
+        const { row, col } = location
+        const elements = [...world.map[row][col].elements];
+        world.map[row][col].elements = []
+        elements.forEach((element) => {
+            if (element.id !== asset.id) {
+                world.map[row][col].elements.push(element)
+            } else {
+                world.map[row][col].elements.push({ ...element, team } as PlayerAsset)
+            }
+        })
+        releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
+        releaseHormone(RequestUpdatedResources, { team })
     })
-    releaseHormone(UpdateAllPlayerElements, findAllElementsFromTeam(world, team))
-    releaseHormone(RequestUpdatedResources, { team })
 })
 
 hypothalamus.on(BattleStarted, (data) => {

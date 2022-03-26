@@ -9,7 +9,7 @@ import { CreateSmallLumberjack } from "../player/buildings/Lumberjack";
 import { CreateSmallMine } from "../player/buildings/Mine";
 import { CreateKnight } from "../player/knights/Knight";
 import { Mill } from "./buildings";
-import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, MillTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
+import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, LumberjackTakeover, MillTakeover, MineTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
 import { Terrain } from "./terrain";
 import { FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
 
@@ -363,8 +363,6 @@ describe("Item Moved", () => {
 
     const spyOnBattleStarted = jest.fn()
     hypothalamus.on(BattleStarted, spyOnBattleStarted)
-    const spyOnMillTaken = jest.fn()
-    hypothalamus.on(MillTakeover, spyOnMillTaken)
 
     beforeEach(() => {
         TurnComplete(myKnight, friendlyKnight, enemyKnight)
@@ -387,42 +385,58 @@ describe("Item Moved", () => {
         })
     })
 
-    describe("When moved to a field with a mill", () => {
-        describe("And the mill belongs to the player", () => {
-            beforeEach(async () => {
-                // given I have a world with two knights on field 0,0
-                await releaseHormone(WorldLoaded, WorldBuilder()({ "0:0": [myKnight, { ...mill, team: "green" }] }))
-                await releaseHormone(ItemMoved, { asset: myKnight, location })
-            })
+    describe.each([
+        { 
+            name: "mill", 
+            field: mill,
+            spy: (() => { const spy = jest.fn(); hypothalamus.on(MillTakeover, spy); return spy })()
+        },
+        {
+            name: "lumberjack",
+            field: CreateSmallLumberjack({ position: { row: 0, col: 0 }, asset: { team: "green" } as Asset }),
+            spy: (() => { const spy = jest.fn(); hypothalamus.on(LumberjackTakeover, spy); return spy })()
+        },
+        {
+            name: "mine",
+            field: CreateSmallMine({ position: { row: 0, col: 0 }, asset: { team: "green" } as Asset }),
+            spy: (() => { const spy = jest.fn(); hypothalamus.on(MineTakeover, spy); return spy })()
+        }
+    ])
+        ("When moved to a field with %s", ({ field, spy }) => {
+            describe(`And the ${field.name} belongs to the player`, () => {
+                beforeEach(async () => {
+                    // given I have a world with two knights on field 0,0
+                    await releaseHormone(WorldLoaded, WorldBuilder()({ "0:0": [myKnight, { ...field, team: "green" }] }))
+                    await releaseHormone(ItemMoved, { asset: myKnight, location })
+                })
 
-            it("does not trigger a mill taken", () => {
-                expect(spyOnMillTaken).not.toBeCalled()
+                it(`does not trigger a ${field.name} taken`, () => {
+                    expect(spy).not.toBeCalled()
+                })
             })
-        })
+            describe(`And the ${field.name} does not belong to the player yet`, () => {
+                beforeEach(async () => {
+                    // given I have a world with two knights on field 0,0
+                    await releaseHormone(WorldLoaded, WorldBuilder()({ "0:0": [myKnight, { ...field, team: "red" }] }))
+                    setupStage(myKnight.team)
+                    await releaseHormone(ItemMoved, { asset: myKnight, location })
+                })
 
-        describe("And the mill does not belong to the player yet", () => {
-            beforeEach(async () => {
-                // given I have a world with two knights on field 0,0
-                await releaseHormone(WorldLoaded, WorldBuilder()({ "0:0": [myKnight, mill] }))
-                setupStage(myKnight.team)
-                await releaseHormone(ItemMoved, { asset: myKnight, location })
-            })
-
-            it("triggers a mill taken event", () => {
-                expect(spyOnMillTaken).toBeCalled()
-                expect(spyOnMillTaken).toBeCalledWith({
-                    asset: { ...mill },
-                    transfered: {
-                        from: undefined,
-                        to: myKnight.team
-                    },
-                    location,
-                    by: myKnight,
-                    team: myKnight.team
+                it(`triggers a ${field.name} taken`, () => {
+                    expect(spy).toBeCalled()
+                    expect(spy).toBeCalledWith({
+                        asset: { ...field, team: "red" },
+                        transfered: {
+                            from: "red",
+                            to: myKnight.team
+                        },
+                        location,
+                        by: myKnight,
+                        team: myKnight.team
+                    })
                 })
             })
         })
-    })
 
     describe("When moved to a field with friendly knights", () => {
         beforeEach(async () => {
@@ -520,132 +534,132 @@ describe("Building", () => {
         { what: "lumbermill", action: BuildLumberjackSmall, success: BuildLumberjackSmallSuccess, fail: BuildLumberjackSmallFailed, ground: "forest", create: CreateSmallLumberjack },
         { what: "mine", action: BuildMineSmall, success: BuildMineSmallSuccess, fail: BuildMineSmallFailed, ground: "mountain", create: CreateSmallMine },
     ])
-    ("Building a %what", ({what, action, success, fail, ground, create}) => {
-        let playerBefore: Player;
-        // try build field -> if wagon on field         -> if wood -> build lumbermill -> update world -> remove wagoon
-        //                    |-> if not wagon -> fail     |-> if not wood -> fail
+        ("Building a %what", ({ what, action, success, fail, ground, create }) => {
+            let playerBefore: Player;
+            // try build field -> if wagon on field         -> if wood -> build lumbermill -> update world -> remove wagoon
+            //                    |-> if not wagon -> fail     |-> if not wood -> fail
 
-        const spyOnSuccessfullyBuild = jest.fn()
-        const spyOnBuildFailed = jest.fn()
-        hypothalamus.on(success, spyOnSuccessfullyBuild)
-        hypothalamus.on(fail, spyOnBuildFailed)
+            const spyOnSuccessfullyBuild = jest.fn()
+            const spyOnBuildFailed = jest.fn()
+            hypothalamus.on(success, spyOnSuccessfullyBuild)
+            hypothalamus.on(fail, spyOnBuildFailed)
 
-        beforeEach(async () => {
-            await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
-            jest.resetAllMocks()
-        })
-
-        describe("When it's not the players/wagons turn", () => {
-            const otherAsset = { id: "", name: "", team: "fake" as Team }
-            const position = { col: 0, row: 0 }
             beforeEach(async () => {
-                await releaseHormone(action, { asset: otherAsset, position })
-                playerBefore = getActivePlayer()
-            })
-            it(`does not build a ${what}`, async () => {
-                expect(spyOnBuildFailed).toBeCalledTimes(1)
-                expect(spyOnBuildFailed).toBeCalledWith({
-                    asset: otherAsset,
-                    position,
-                    reason: "Not the turn of the team " + otherAsset.team
-                })
-                expect(spyOnSuccessfullyBuild).not.toBeCalled()
-            })
-        })
-
-        describe("When there is no wagon on the field", () => {
-            const otherAsset = { id: "", name: "", team: "red" as Team }
-            const position = { col: 0, row: 0 }
-            beforeEach(async () => {
-                await releaseHormone(action, { asset: otherAsset, position })
-                playerBefore = getActivePlayer()
-            })
-            it(`does not build a ${what}`, async () => {
-                expect(spyOnBuildFailed).toBeCalledTimes(1)
-                expect(spyOnBuildFailed).toBeCalledWith({
-                    asset: otherAsset,
-                    position,
-                    reason: "No wagon on field"
-                })
-                expect(spyOnSuccessfullyBuild).not.toBeCalled()
-            })
-        })
-
-        describe("When there is already a building on the field", () => {
-            const otherAsset = { id: "player-wagon", name: "player-wagon", team: "red" as Team }
-            const position = { col: 0, row: 0 }
-            beforeEach(async () => {
-                const castle: Asset & ResourceGeneratingBuilding = {
-                    id: "green-castle",
-                    name: buildings.castleSmall.name,
-                    ...position,
-                    team: "green",
-                    resources: { wood: { generatedResource: 1 } }
-                }
-                await releaseHormone(WorldLoaded, WorldBuilder(1, 1)({ "0:0": [castle] }))
                 await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
-                getCurrentWorld().map[0][0].terrain = {
-                    ...getCurrentWorld().map[0][0].terrain,
-                    sprite: {
-                        ...getCurrentWorld().map[0][0].terrain.sprite,
-                        name: ground
-                    }
-                }
                 jest.resetAllMocks()
-                await releaseHormone(action, { asset: otherAsset, position })
-                playerBefore = getActivePlayer()
             })
-            it(`does not build a ${what}`, async () => {
-                expect(spyOnBuildFailed).toBeCalledTimes(1)
-                expect(spyOnBuildFailed).toBeCalledWith({
-                    asset: otherAsset,
-                    position,
-                    reason: "There is already a building on the field"
+
+            describe("When it's not the players/wagons turn", () => {
+                const otherAsset = { id: "", name: "", team: "fake" as Team }
+                const position = { col: 0, row: 0 }
+                beforeEach(async () => {
+                    await releaseHormone(action, { asset: otherAsset, position })
+                    playerBefore = getActivePlayer()
                 })
-                expect(spyOnSuccessfullyBuild).not.toBeCalled()
-            })
-        })
-
-        describe("When everything is okay", () => {
-            const asset = { id: "player-wagon", name: "player-wagon", team: "red" as Team }
-            const position = { col: 0, row: 0 }
-
-            beforeEach(async () => {
-                // 
-                getCurrentWorld().map[0][0].terrain = {
-                    ...getCurrentWorld().map[0][0].terrain,
-                    sprite: {
-                        ...getCurrentWorld().map[0][0].terrain.sprite,
-                        name: ground
-                    }
-                }
-                await releaseHormone(action, { asset, position })
-                playerBefore = getActivePlayer()
-            })
-
-            it(`adds the ${what} to the position`, () => {
-                expect(getCurrentWorld().map[0][0].elements[0])
-                    .toEqual({
-                        ...create({ position, asset }),
-                        id: expect.anything()
+                it(`does not build a ${what}`, async () => {
+                    expect(spyOnBuildFailed).toBeCalledTimes(1)
+                    expect(spyOnBuildFailed).toBeCalledWith({
+                        asset: otherAsset,
+                        position,
+                        reason: "Not the turn of the team " + otherAsset.team
                     })
-            })
-            it("notifies the hexagon on the change to allow rerender", () => {
-                expect(spyOnHexagonUpdate).toBeCalledTimes(1)
-            })
-            it("updates the player", () => {
-                expect(spyOnUpdateAllPlayerElements).toBeCalledTimes(1)
+                    expect(spyOnSuccessfullyBuild).not.toBeCalled()
+                })
             })
 
-            it("removes the wagon, and notifies the world", () => {
-                expect(getCurrentWorld().map[0][0].elements.every(element => element.name !== "player-wagon")).toBe(true)
-                expect(spyOnPlayerUpdate).toBeCalledTimes(1)
-                expect(spyOnPlayerUpdate).toBeCalledWith({
-                    ...playerBefore
+            describe("When there is no wagon on the field", () => {
+                const otherAsset = { id: "", name: "", team: "red" as Team }
+                const position = { col: 0, row: 0 }
+                beforeEach(async () => {
+                    await releaseHormone(action, { asset: otherAsset, position })
+                    playerBefore = getActivePlayer()
+                })
+                it(`does not build a ${what}`, async () => {
+                    expect(spyOnBuildFailed).toBeCalledTimes(1)
+                    expect(spyOnBuildFailed).toBeCalledWith({
+                        asset: otherAsset,
+                        position,
+                        reason: "No wagon on field"
+                    })
+                    expect(spyOnSuccessfullyBuild).not.toBeCalled()
+                })
+            })
+
+            describe("When there is already a building on the field", () => {
+                const otherAsset = { id: "player-wagon", name: "player-wagon", team: "red" as Team }
+                const position = { col: 0, row: 0 }
+                beforeEach(async () => {
+                    const castle: Asset & ResourceGeneratingBuilding = {
+                        id: "green-castle",
+                        name: buildings.castleSmall.name,
+                        ...position,
+                        team: "green",
+                        resources: { wood: { generatedResource: 1 } }
+                    }
+                    await releaseHormone(WorldLoaded, WorldBuilder(1, 1)({ "0:0": [castle] }))
+                    await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
+                    getCurrentWorld().map[0][0].terrain = {
+                        ...getCurrentWorld().map[0][0].terrain,
+                        sprite: {
+                            ...getCurrentWorld().map[0][0].terrain.sprite,
+                            name: ground
+                        }
+                    }
+                    jest.resetAllMocks()
+                    await releaseHormone(action, { asset: otherAsset, position })
+                    playerBefore = getActivePlayer()
+                })
+                it(`does not build a ${what}`, async () => {
+                    expect(spyOnBuildFailed).toBeCalledTimes(1)
+                    expect(spyOnBuildFailed).toBeCalledWith({
+                        asset: otherAsset,
+                        position,
+                        reason: "There is already a building on the field"
+                    })
+                    expect(spyOnSuccessfullyBuild).not.toBeCalled()
+                })
+            })
+
+            describe("When everything is okay", () => {
+                const asset = { id: "player-wagon", name: "player-wagon", team: "red" as Team }
+                const position = { col: 0, row: 0 }
+
+                beforeEach(async () => {
+                    // 
+                    getCurrentWorld().map[0][0].terrain = {
+                        ...getCurrentWorld().map[0][0].terrain,
+                        sprite: {
+                            ...getCurrentWorld().map[0][0].terrain.sprite,
+                            name: ground
+                        }
+                    }
+                    await releaseHormone(action, { asset, position })
+                    playerBefore = getActivePlayer()
+                })
+
+                it(`adds the ${what} to the position`, () => {
+                    expect(getCurrentWorld().map[0][0].elements[0])
+                        .toEqual({
+                            ...create({ position, asset }),
+                            id: expect.anything()
+                        })
+                })
+                it("notifies the hexagon on the change to allow rerender", () => {
+                    expect(spyOnHexagonUpdate).toBeCalledTimes(1)
+                })
+                it("updates the player", () => {
+                    expect(spyOnUpdateAllPlayerElements).toBeCalledTimes(1)
+                })
+
+                it("removes the wagon, and notifies the world", () => {
+                    expect(getCurrentWorld().map[0][0].elements.every(element => element.name !== "player-wagon")).toBe(true)
+                    expect(spyOnPlayerUpdate).toBeCalledTimes(1)
+                    expect(spyOnPlayerUpdate).toBeCalledWith({
+                        ...playerBefore
+                    })
                 })
             })
         })
-    })
 })
 
 describe("Allocate resources", () => {

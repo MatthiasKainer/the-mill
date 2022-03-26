@@ -1,4 +1,6 @@
-import { html, css } from "lit"
+import { html } from "lit"
+
+import { css } from "nested-css-to-flat/lit-css"
 import { releaseHormone, useReceptor } from "organismus"
 import { pureLit, useState } from "pure-lit"
 import { FigherAsset } from "../../game"
@@ -6,23 +8,23 @@ import { Dice } from "../../game/player/dices/dice"
 import { BattleThrowDice, ModalBattleOpen } from "../../game/world/events"
 
 export default pureLit("modal-battle", (el) => {
-    const { getState, publish } = useState<ModalBattleOpen | undefined>(el, undefined)
-    const { getState: getSelectedDice, publish: setSelectedDice } = useState<Dice | undefined>(el, undefined)
-    useReceptor(el, ModalBattleOpen, publish)
+    const { get, set } = useState<ModalBattleOpen | undefined>(el, undefined)
+    const { get: getSelectedDice, set: setSelectedDice } = useState<Dice | undefined>(el, undefined)
+    useReceptor(el, ModalBattleOpen, set)
     return html`
    <modal-window 
-        .open=${getState() ? true : false} 
+        .open=${get() ? true : false} 
         preventClose>
         <h1 slot="header">Kampf beginnt!</h1>
         <div class="body">
-        ${getState()?.attacker.map(_ => {
+        ${get()?.attacker.map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div>
                         <fighter-info 
                             .player=${player} 
-                            row="${getState()!.location.row}" 
-                            col="${getState()!.location.col}">
+                            row="${get()!.location.row}" 
+                            col="${get()!.location.col}">
                         </fighter-info>
                         <h3>Wähle deine Waffe</h3>
                         <div class="dices">
@@ -31,14 +33,14 @@ export default pureLit("modal-battle", (el) => {
                     </div>
                 `
         })
-        }${getState()?.defender.map(_ => {
+        }${get()?.defender.map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div>
                         <fighter-info 
                             .player=${player} 
-                            row="${getState()!.location.row}" 
-                            col="${getState()!.location.col}">
+                            row="${get()!.location.row}" 
+                            col="${get()!.location.col}">
                         </fighter-info>
                     </div>
                 `
@@ -48,24 +50,23 @@ export default pureLit("modal-battle", (el) => {
         <p slot="footer">
             <button @click="${() => releaseHormone(BattleThrowDice, {
                 attacker: {
-                    asset: getState()?.attacker[0],
+                    asset: get()?.attacker[0],
                     dices: [getSelectedDice()]
                 },
-                defender: getState()?.defender[0],                
-                location: {row: getState()!.location.row, col: getState()!.location.col},
+                defender: get()?.defender[0],                
+                location: {row: get()!.location.row, col: get()!.location.col},
             })}" ?disabled="${getSelectedDice() === undefined}">Würfeln</button>
         </p>
     </modal-window>`
 }, {
     styles: [
-        css`
-        .body {
+        css`.body {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: auto;
-        }
-        .body > * {
-            display: block;
+            & > * {
+                display: block;
+            }
         }
         .player-info {
             display: grid;
@@ -79,12 +80,12 @@ export default pureLit("modal-battle", (el) => {
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
-        }
-        .health-bar .current {
-            background-image: url('/assets/knight/health.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            height: 15px;
+            & .current {
+                background-image: url('/assets/knight/health.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+                height: 15px;
+            }
         }
         `
     ]

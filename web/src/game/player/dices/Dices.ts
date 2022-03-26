@@ -1,9 +1,27 @@
+import { text, texts } from "../../../internationalization";
 import { Dice } from "./dice";
+
+type TranslationElement = {
+    default: string,
+    de: string,
+    en: string,
+    [key: string]: string
+}
+type DiceStory = {
+    name: TranslationElement,
+    story: TranslationElement,
+}
+
+function getTexts(key: DiceStory): {name: string, story: string} {
+    return {
+        name: text(key.name),
+        story: text(key.story),
+    }
+}
 
 export function Standard(): Dice {
     return {
-        name: "Standardwaffe",
-        story: "Eine faire, ausgewogene Waffe die jeder Ritter haben sollte",
+        ...getTexts(texts.assets.dices.standard),
         sides: [
             { value: 3 },
             { value: 3 },
@@ -17,8 +35,7 @@ export function Standard(): Dice {
 
 export function MightyBlowOfBetrayal(): Dice {
     return {
-        name: "Mächtiger Schlag des Betrugs",
-        story: "Eine Waffe, die bis zu 12 Schaden verursachen kann, doch auch eine hohe Wahrscheinlichkeit hat gar keinen Schaden zu verursachen, oder sogar den Ritter selbst zu verletzen!",
+        ...getTexts(texts.assets.dices.mightyBlowOfBetrayal),
         sides: [
             { value: -3 },
             { value: 0 },
@@ -27,4 +44,18 @@ export function MightyBlowOfBetrayal(): Dice {
             { value: 12 },
         ]
     }
+}
+
+export function SmallCastleDefence(): Dice {
+    return {
+        ...getTexts(texts.assets.dices.smallCastleDefence),
+        sides: [
+            { value: 12 },
+            { value: 12 },
+            { value: 16 },
+            { value: 16 },
+            { value: 21 },
+        ]
+    }
+
 }

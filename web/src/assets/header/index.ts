@@ -1,4 +1,6 @@
-import { html, css } from "lit";
+import { html } from "lit";
+import { css } from "nested-css-to-flat/lit-css"
+
 import { useReceptor } from "organismus";
 import { pureLit, useState } from "pure-lit";
 import { Player, ResourceGeneratingBuilding, ResourceGenerator, RESOURCES, Team } from "../../game";

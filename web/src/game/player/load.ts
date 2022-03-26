@@ -25,12 +25,17 @@ export const getPlayerStartAssets = (team: Team, props: Props) => {
             const nextIndex = region[team](arrayForBuildings)
             arrayForBuildings[nextIndex] = [
                 ...(arrayForBuildings[nextIndex] ?? []),
-                { name: building.id, team, id: generateUUID(), resources: building.resources }
+                { 
+                    ...building,
+                    name: building.id, 
+                    team, 
+                    id: generateUUID(), 
+                }
             ]
             buildings--
         }
     })
-    return arrayForBuildings;
+    return arrayForBuildings
 }
 
 export const getPlayerStartResources = () => {

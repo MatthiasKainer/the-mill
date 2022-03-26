@@ -1,27 +1,27 @@
 import { css, html } from "lit"
 import { useReceptor } from "organismus"
 import { pureLit, useState } from "pure-lit"
-import { MillTaken, MillTakeover } from "../../game/world/events"
+import { AssetTaken, MillTakeover } from "../../game/world/events"
 
 export default pureLit("modal-mill-taken", (el) => {
-    const { getState, publish } = useState<MillTaken | undefined>(el, undefined)
-    useReceptor(el, MillTakeover, publish)
+    const { get, set } = useState<AssetTaken | undefined>(el, undefined)
+    useReceptor(el, MillTakeover, set)
     return html`
     <modal-window 
-         .open=${getState() ? true : false} 
-         @close=${() => publish(undefined)}>
+         .open=${get() ? true : false} 
+         @close=${() => set(undefined)}>
          <h1 slot="header">Mühle übernommen!</h1>
          <div class="body">
             <div class="by">
                 <fighter-info 
-                    .player=${getState()?.by} 
-                    .row="${getState()?.location.row}" 
-                    .col="${getState()?.location.col}">
+                    .player=${get()?.by} 
+                    .row="${get()?.location.row}" 
+                    .col="${get()?.location.col}">
                 </fighter-info>
             </div>
             <div class="mills">
-                <building-mill .team="${getState()?.transfered.to}" class="after"></building-mill>
-                <building-mill .team="${getState()?.transfered.from}" class="before"></building-mill>
+                <building-mill .team="${get()?.transfered.to}" class="after"></building-mill>
+                <building-mill .team="${get()?.transfered.from}" class="before"></building-mill>
             </div>
          </div>
          <p slot="footer">

@@ -1,7 +1,10 @@
-import { css, html } from "lit";
+import { html } from "lit";
+import { css } from "nested-css-to-flat/lit-css"
+
 import { releaseHormone, useReceptor } from "organismus";
 import { LitElementWithProps, pureLit, useState } from "pure-lit";
-import { Player, Resources } from "../../game";
+import { buildings } from "..";
+import { ActionableAsset, HealthyAsset, Player, Resources, Team } from "../../game";
 import costs from "../../game/player/costs";
 import {
   KnightCreated,
@@ -11,20 +14,38 @@ import {
 import { text, texts } from "../../internationalization";
 import { sidebarBaseCSS } from "./sidebar.style";
 
+import "./controls/health-bar"
+import { asNumber } from "../../math/number";
+
 type Props = {
   selected: {
-    payload: { team: string };
+    payload: HealthyAsset & ActionableAsset;
     col: number;
     row: number;
   };
 };
 
 const style = css`
-  building-castle-small {
-    position: relative;
-    display: block;
-    width: 4em;
-    height: 4em;
+  header {
+    display: grid;
+    grid-template-areas: 
+        "castle castle health health health"
+        "castle castle stats stats stats"
+        "castle castle attack none none";
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    
+    & #castle {
+      grid-area: castle;
+      position: relative;
+      width: 4em;
+      height: 4em;
+    }
+    & #health {
+      grid-area: health;
+    }
+    & #stats {
+      grid-area: stats;
+    }
   }
   h3 {
     text-align: center;
@@ -34,14 +55,17 @@ const style = css`
     display: grid;
     grid-template-columns: 1fr;
     font-size: 0.7rem;
-  }
-  .enough {
-    color: var(--colorMain);
-  }
-  .lack {
-    color: var(--colorHighlight);
+    
+    &.enough {
+      color: var(--colorMain);
+    }
+    &.lack {
+      color: var(--colorHighlight);
+    }
   }
 `;
+
+console.log(style)
 
 const costList = (resources: Resources, costs: Resources) => {
   return html`
@@ -93,17 +117,28 @@ export default pureLit(
   (el: LitElementWithProps<Props>) => {
     const {
       selected: {
-        payload: { team },
+        payload,
         row,
         col,
       },
     } = el;
-    const { getState: getCurrentPlayer, publish: setCurrentPlayer } = useState<
+    const { team, health, actions } = payload
+    const start = {
+      row: asNumber(row),
+      col: asNumber(col)
+    }
+    const { get: getCurrentPlayer, set: setCurrentPlayer } = useState<
       Player | undefined
     >(el, undefined);
     useReceptor(el, PlayerUpdate, setCurrentPlayer);
     const { resources } = getCurrentPlayer() ?? ({ resources: {} } as Player);
-    return html`<building-castle-small team="${team}"></building-castle-small>
+    return html`
+      <header>
+        <building-castle-small id="castle" team="${team}"></building-castle-small>
+        <health-bar id="health" .health="${health}"></health-bar>
+        <stats-bar id="stats" .health="${health}" .actions="${actions}"></stats-bar>
+        <button-attack id="attack" .actions="${actions}" .asset="${payload}" .position="${start}"></button-attack>
+      </header>
       <h3>${text(texts.assets.castle.build)}</h3>
       <div class="container">
         <button-image
@@ -111,7 +146,7 @@ export default pureLit(
           src="/assets/knight_${team}.png"
           title="${text(texts.assets.properties.actions.build.knight)}"
           @click=${async () =>
-            await releaseHormone(KnightCreated, { team, row, col })}
+        await releaseHormone(KnightCreated, { team, row, col })}
         >
           ${costList(resources, costs.knight())}
         </button-image>
@@ -120,7 +155,7 @@ export default pureLit(
           src="/assets/wagon_${team}.png"
           title="${text(texts.assets.properties.actions.build.wagon)}"
           @click=${async () =>
-            await releaseHormone(WagonCreated, { team, row, col })}
+        await releaseHormone(WagonCreated, { team, row, col })}
         >
           ${costList(resources, costs.wagon())}
         </button-image>
@@ -146,7 +181,11 @@ export default pureLit(
     defaults: {
       selected: {
         payload: {
-          team: "",
+          id: "",
+          name: buildings.castleSmall.name,
+          team: "" as Team,
+          health: { current: 0, max: 0 },
+          actions: { current: 0, max: 0 },
         },
 
         col: 0,

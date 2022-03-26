@@ -114,7 +114,7 @@ export type BattlePlayerAttacked = {
 }
 export const BattlePlayerAttacked = defineHormone<BattlePlayerAttacked>("battle/player/attacked")
 
-export type MillTaken = {
+export type AssetTaken = {
     asset: Asset
     transfered: {
         from?: Team,
@@ -124,7 +124,9 @@ export type MillTaken = {
     location: SimpleCoords
     team: Team
 }
-export const MillTakeover = defineHormone<MillTaken>("mill/takeover")
+export const MillTakeover = defineHormone<AssetTaken>("mill/takeover")
+export const LumberjackTakeover = defineHormone<AssetTaken>("lumberjack/takeover")
+export const MineTakeover = defineHormone<AssetTaken>("mine/takeover")
 
 export type ModalBattleOpen = BattleStarted
 export const ModalBattleOpen = defineHormone<ModalBattleOpen>("modal/battle/open")

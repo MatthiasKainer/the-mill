@@ -86,21 +86,40 @@ export type Movement = {
     points: number
 }
 
-export type MoveableAsset = PlayerAsset & {
-    movement: Movement
-    health: Health
+export type ActionableAsset = PlayerAsset & {
     actions: Actions
+}
+
+export function isActionableAsset(asset?: Asset): asset is ActionableAsset {
+    return (asset !== undefined && (asset as ActionableAsset)?.actions !== undefined)
+}
+
+export type HealthyAsset = PlayerAsset & {
+    health: Health
+}
+
+export function isHealthyAsset(asset?: Asset): asset is HealthyAsset {
+    return (asset !== undefined && (asset as HealthyAsset)?.health !== undefined)
+}
+
+export type MoveableAsset = PlayerAsset & ActionableAsset & HealthyAsset & {
+    movement: Movement
 }
 
 export function isMoveableAsset(asset: Asset): asset is MoveableAsset {
     return (asset && (asset as MoveableAsset)?.actions?.max > 0)
 }
 
-export type FigherAsset = MoveableAsset & {
+export type FightingAsset = {
     dices: Dice[]
 }
 
+export type FigherAsset = MoveableAsset & FightingAsset
+
 export function isFighterAsset(asset: Asset): asset is FigherAsset {
+    return (asset && (asset as FigherAsset)?.dices?.length > 0)
+}
+export function isFightingAsset(asset: Asset): asset is FigherAsset {
     return (asset && (asset as FigherAsset)?.dices?.length > 0)
 }
 

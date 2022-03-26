@@ -5,40 +5,40 @@ import { FigherAsset } from "../../game"
 import { ModalDiceResultOpen } from "../../game/world/events"
 
 export default pureLit("modal-dice-result", (el) => {
-    const { getState, publish } = useState<ModalDiceResultOpen | undefined>(el, undefined)
-    useReceptor(el, ModalDiceResultOpen, publish)
+    const { get, set } = useState<ModalDiceResultOpen | undefined>(el, undefined)
+    useReceptor(el, ModalDiceResultOpen, set)
     return html`
    <modal-window 
-        .open=${getState() ? true : false} 
-        @close=${() => publish(undefined)}>
+        .open=${get() ? true : false} 
+        @close=${() => set(undefined)}>
         <h1 slot="header">Gewürfelt!</h1>
         <div class="body">
-        ${getState()?.attacker.map(_ => {
+        ${get()?.attacker.map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div class="attacker">
                         <fighter-info 
                             .player=${player} 
-                            row="${getState()!.location.row}" 
-                            col="${getState()!.location.col}">
+                            row="${get()!.location.row}" 
+                            col="${get()!.location.col}">
                         </fighter-info>
                     </div>
                 `
         })
-        }${getState()?.defender.map(_ => {
+        }${get()?.defender.map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div class="defender">
                         <fighter-info 
                             .player=${player} 
-                            row="${getState()!.location.row}" 
-                            col="${getState()!.location.col}">
+                            row="${get()!.location.row}" 
+                            col="${get()!.location.col}">
                         </fighter-info>
                     </div>
                 `
         })
         }
-        ${getState() ? html`<dice-roll class="dice" result="${getState()!.result}"></dice-roll>` : html``}
+        ${get() ? html`<dice-roll class="dice" result="${get()!.result}"></dice-roll>` : html``}
         </div>
 
         <p slot="footer">

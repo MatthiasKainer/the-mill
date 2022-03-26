@@ -9,6 +9,7 @@ import "./selectedWagon"
 import { Position } from "../../math/position";
 import { buildings, player } from "..";
 import { SidebarLoaded } from "../../game";
+import "./controls/"
 
 type SelectionState = {
     dirty: boolean

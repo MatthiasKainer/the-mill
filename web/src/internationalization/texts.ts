@@ -46,6 +46,44 @@ export const texts = {
                 en: "Build",
             }
         },
+        dices: {
+            standard: {
+                name: {
+                    default: "assets.dices.standard.name",
+                    de: "Standardwaffe",
+                    en: "Standardweapon",
+                },
+                story: {
+                    default: "assets.dices.standard.story",
+                    de: "Eine faire, ausgewogene Waffe die jeder Ritter haben sollte",
+                    en: "A fair, well-balanced weapon that every knight should have",
+                }
+            },
+            mightyBlowOfBetrayal: {
+                name: {
+                    default: "assets.dices.mightyBlowOfBetrayal.name",
+                    de: "Mächtiger Schlag des Betrugs",
+                    en: "Mighty blow of betrayal",
+                },
+                story: {
+                    default: "assets.dices.mightyBlowOfBetrayal.story",
+                    de: "Eine Waffe, die bis zu 12 Schaden verursachen kann, doch auch eine hohe Wahrscheinlichkeit hat gar keinen Schaden zu verursachen, oder sogar den Ritter selbst zu verletzen!",
+                    en: "A weapon that can inflict up to 12 damage, but also has a high chance of inflicting no damage, or even injuring the knight himself",
+                }
+            },
+            smallCastleDefence: {
+                name: {
+                    default: "assets.dices.smallCastleDefence.name",
+                    de: "Verteidigungswaffen der kleinen Burg",
+                    en: "Defensive weapons of the small castle",
+                },
+                story: {
+                    default: "assets.dices.smallCastleDefence.story",
+                    de: "Schon die kleine Burg hat mächtige Verteidigungswaffen, die viele Angriffe abwehren kann. Nur eine mächtige Armee wird es schaffen, diese Verteidigung zu überwinden.",
+                    en: "The small castle has mighty defensive weapons so that many attacks can be thwarted. Only a mighty army can defeat it.",
+                }
+            }
+        },
         properties: {
             life: {
                 default: "assets.properties.life",
