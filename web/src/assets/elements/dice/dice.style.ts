@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from "nested-css-to-flat/lit-css";
 
 export const styles = css`
 :host {
@@ -18,6 +18,20 @@ export const styles = css`
     transition: all 0.5s ease-in-out;
     animation: cubeRotation 5s 1;
     animation-fill-mode: forwards;
+    & > div {
+        position: absolute;
+        transition: all 0.5s ease-in-out;
+        width: 112px;
+        height: 112px;
+        float: left;
+        overflow: hidden;
+        background-color:white;
+	    border:1px solid black;
+        
+        line-height: 112px;
+        text-align: center;
+        font-size: 5rem;
+    }
 }
 @keyframes cubeRotation {
     0%   {	transform: rotateX(-22deg) rotateY(1083deg) rotateZ(0deg);	}
@@ -28,44 +42,25 @@ export const styles = css`
     80%   {	color:white;	}
     100%   {	color:black;	}  
 }
-#cube > div {
-    position: absolute;
-    transition: all 0.5s ease-in-out;
-    width: 112px;
-    height: 112px;
-    float: left;
-    overflow: hidden;
-    background-color:white;
-    
-    line-height: 112px;
-    text-align: center;
-    font-size: 5rem;
-}
 #side1 {
   transform: rotatex(90deg) translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
 }
 #side2 {
     transform: rotateY(-90deg) translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
 }
 #side3 {
     transform: translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
-  color:white;
+    color:white;
     animation: reveal 5s 1;
     animation-fill-mode: forwards;
 }
 #side4 {
     transform: rotateY(90deg) translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
 }
 #side5 {
     transform: rotateY(180deg) translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
 }
 #side6 {
     transform: rotateX(-90deg) translateX(0px) translateY(0px) translateZ(56px);
-	border:1px solid black;
 }
 `

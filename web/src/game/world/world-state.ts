@@ -487,22 +487,31 @@ hypothalamus.on(BattleThrowDice, (data) => {
 
 hypothalamus.on(BattlePlayerAttacked, (data) => {
     const { defender, damage, attacker } = data
-    if (damage < 0) {
-        attacker.health.current += damage
-    } else {
-        defender.health.current -= damage
+    const attacker_after = {
+        ...attacker,
+        health: {
+            ...attacker.health,
+            current: (damage < 0) ? attacker.health.current + damage : attacker.health.current
+        }
     }
+    const defender_after = {
+        ...defender, health: {
+            ...defender.health,
+            current: (damage > 0) ? defender.health.current - damage : defender.health.current
+        }
+    }
+
     const { row, col } = data.location
     const elements = [...world.map[row][col].elements];
     world.map[row][col].elements = []
     elements.forEach((element) => {
-        if (element.id === defender.id) {
-            if (defender.health.current > 0) {
-                world.map[row][col].elements.push(defender)
+        if (element.id === defender_after.id) {
+            if (defender_after.health.current > 0) {
+                world.map[row][col].elements.push(defender_after)
             }
-        } else if (element.id === attacker.id) {
-            if (attacker.health.current > 0) {
-                world.map[row][col].elements.push(attacker)
+        } else if (element.id === attacker_after.id) {
+            if (attacker_after.health.current > 0) {
+                world.map[row][col].elements.push(attacker_after)
             }
         } else {
             world.map[row][col].elements.push(element)
@@ -513,6 +522,8 @@ hypothalamus.on(BattlePlayerAttacked, (data) => {
     releaseHormone(ModalDiceResultOpen, {
         attacker: [attacker],
         defender: [defender],
+        defender_after: [defender_after],
+        attacker_after: [attacker_after],
         location: data.location,
         result: damage
     })

@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { css } from 'nested-css-to-flat/lit-css';
 import { HEXAGON_WIDTH } from './consts';
 
 export const cssHexagon =  css`
@@ -15,9 +15,9 @@ export const cssHexagon =  css`
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   transition: all 500ms linear;
   z-index: 1;
-}
-.hexagon:hover {
-  background: var(--colorFocus);
+  &:hover {
+    background: var(--colorFocus);
+  }
 }`
 
 export const cssHexagonMovement = css`
@@ -25,10 +25,10 @@ export const cssHexagonMovement = css`
         opacity: 0.8;
         cursor: not-allowed;
     }
-    .active.start,
-    .active.trail,
-    .active.end {
+    .active {
+      &.start, &,trail, &.end {
         filter: brightness(1.5);
+      }
     }
     .unreachable {
         cursor: not-allowed;

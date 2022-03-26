@@ -132,6 +132,8 @@ export type ModalBattleOpen = BattleStarted
 export const ModalBattleOpen = defineHormone<ModalBattleOpen>("modal/battle/open")
 
 export type ModalDiceResultOpen = BattleStarted & {
+    defender_after: FigherAsset[]
+    attacker_after: FigherAsset[]
     result: number
 }
 export const ModalDiceResultOpen = defineHormone<ModalDiceResultOpen>("modal/dice-result/open")

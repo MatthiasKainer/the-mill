@@ -10,7 +10,7 @@ export default pureLit("loading-bar", ({width}: Prop) => {
     return html`
     <div class="progress-bar">
         <span class="bar">
-            ${width === "0%" ? html`` : html`<span class="progress" style="width: ${width};"></span>`}
+            ${(width.trim() === "0%" || width.trim().indexOf("-") === 0) ? html`<span></span>` : html`<span class="progress" style="width: ${width};"></span>`}
         </span>
     </div>
     `

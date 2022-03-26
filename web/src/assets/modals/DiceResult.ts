@@ -6,33 +6,45 @@ import { ModalDiceResultOpen } from "../../game/world/events"
 
 export default pureLit("modal-dice-result", (el) => {
     const { get, set } = useState<ModalDiceResultOpen | undefined>(el, undefined)
-    useReceptor(el, ModalDiceResultOpen, set)
+    const attacker = useState<FigherAsset[]>(el, [])
+    const defender = useState<FigherAsset[]>(el, [])
+    let timeout = setTimeout(() => undefined, 1)
+    useReceptor(el, ModalDiceResultOpen, (data) => {
+        set(data);
+        attacker.set(data.attacker);
+        defender.set(data.defender);
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            attacker.set(data.attacker_after)
+            defender.set(data.defender_after)
+        }, 5000)
+    })
     return html`
    <modal-window 
         .open=${get() ? true : false} 
         @close=${() => set(undefined)}>
         <h1 slot="header">Gewürfelt!</h1>
         <div class="body">
-        ${get()?.attacker.map(_ => {
+        ${attacker.get().map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div class="attacker">
                         <fighter-info 
                             .player=${player} 
-                            row="${get()!.location.row}" 
-                            col="${get()!.location.col}">
+                            row="${get()?.location.row ?? 0}" 
+                            col="${get()?.location.col ?? 0}">
                         </fighter-info>
                     </div>
                 `
         })
-        }${get()?.defender.map(_ => {
+        }${defender.get().map(_ => {
             const player = _ as FigherAsset;
             return html`
                     <div class="defender">
                         <fighter-info 
                             .player=${player} 
-                            row="${get()!.location.row}" 
-                            col="${get()!.location.col}">
+                            row="${get()?.location.row ?? 0}" 
+                            col="${get()?.location.col ?? 0}">
                         </fighter-info>
                     </div>
                 `
