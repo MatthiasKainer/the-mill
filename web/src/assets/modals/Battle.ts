@@ -76,12 +76,12 @@ export default pureLit("modal-battle", (el) => {
             height: 140px;
         }
         .health-bar {
-            background-image: url('/assets/knight/health-bg.png');
+            background-image: url('assets/knight/health-bg.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
             & .current {
-                background-image: url('/assets/knight/health.png');
+                background-image: url('assets/knight/health.png');
                 background-size: contain;
                 background-repeat: no-repeat;
                 height: 15px;

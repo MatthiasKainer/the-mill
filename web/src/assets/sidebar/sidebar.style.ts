@@ -3,7 +3,7 @@ import { css } from "lit";
 export const sidebarBaseCSS = css`
   :host {
     display: block;
-    background-image: url("/assets/sidebar/bg.png");
+    background-image: url("assets/sidebar/bg.png");
     background-repeat: no-repeat;
     padding: 15px;
     background-size: 100% 100%;

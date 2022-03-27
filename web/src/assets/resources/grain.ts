@@ -12,7 +12,7 @@ export default pureLit(
     styles: [
       css`
         :host {
-          background-image: url("/assets/resources/grain.png");
+          background-image: url("assets/resources/grain.png");
         }
       `,
       baseResource,

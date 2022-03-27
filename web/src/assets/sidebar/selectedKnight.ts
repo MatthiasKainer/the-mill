@@ -46,7 +46,7 @@ export default pureLit("sidebar-knight", (_: LitElementWithProps<Props>) => {
     return html`
     <h3>${text(texts.assets.knight)}</h3>
     <div class="container">
-        <img id="knight" src="/assets/knight_${payload.team}.png">
+        <img id="knight" src="assets/knight_${payload.team}.png">
         <health-bar id="health" .health="${health}"></health-bar>
         <stats-bar id="stats" .health="${health}" .actions="${actions}"></stats-bar>
         <button ?disabled=${actions.current < 1} id="move" title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>

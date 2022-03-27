@@ -141,7 +141,7 @@ export default pureLit(
       <div class="container">
         <button-image
           height="35px"
-          src="/assets/knight_${team}.png"
+          src="assets/knight_${team}.png"
           title="${text(texts.assets.properties.actions.build.knight)}"
           @click=${async () =>
         await releaseHormone(KnightCreated, { team, row, col, origin: payload })}
@@ -150,7 +150,7 @@ export default pureLit(
         </button-image>
         <button-image
           height="35px"
-          src="/assets/wagon_${team}.png"
+          src="assets/wagon_${team}.png"
           title="${text(texts.assets.properties.actions.build.wagon)}"
           @click=${async () =>
         await releaseHormone(WagonCreated, { team, row, col, origin: payload })}
@@ -159,17 +159,17 @@ export default pureLit(
         </button-image>
         <button-image height="35px" 
           title="${text(texts.assets.properties.actions.build.iron)}"
-          src="/assets/resources/iron.png">
+          src="assets/resources/iron.png">
           ${costList(resources, costs.iron())}
         </button-image>
         <button-image height="35px" 
           title="${text(texts.assets.properties.actions.build.castle_medium)}"
-          src="/assets/castle_medium_${team}.png">
+          src="assets/castle_medium_${team}.png">
           ${costList(resources, costs.castle_medium())}
         </button-image>
         <button-image height="35px" 
           title="${text(texts.assets.properties.actions.build.castle_large)}"
-          src="/assets/castle_large_${team}.png">
+          src="assets/castle_large_${team}.png">
           ${costList(resources, costs.castle_large())}
         </button-image>
       </div>`;

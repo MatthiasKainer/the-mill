@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rollup -c",
     "serve": "npx http-serve  ",
-    "publish:pages": "cp -r public/ ../docs",
+    "publish:pages": "npm run build && rm -rf ../docs && cp -r public/ ../docs && git add ../docs && git commit -m 'publish pages' && git push",
     "test": "jest"
   },
   "author": "Matthias Kainer",

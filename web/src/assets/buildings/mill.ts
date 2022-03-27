@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default pureLit(name, ({ team }: Props) => {
-    return html`<div style="background-image:url('/assets/windmill_complete_${team ?? "none"}.png'"></div>`
+    return html`<div style="background-image:url('assets/windmill_complete_${team ?? "none"}.png'"></div>`
 },
 {
     styles: [

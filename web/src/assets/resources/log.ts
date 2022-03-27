@@ -9,7 +9,7 @@ export default pureLit("resource-wood", () => {
     styles: [
       css`
         :host {
-          background-image: url("/assets/resources/log.png");
+          background-image: url("assets/resources/log.png");
         }
       `,
       baseResource,

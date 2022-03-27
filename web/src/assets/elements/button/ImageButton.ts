@@ -8,7 +8,7 @@ type Props = {
 
 export default pureLit("button-image", (el: LitElementWithProps<Props>) => {
     const style = el.height ? `height:${el.height};` : ""
-    return html`<button style="${style}; background-image: url('${el.src}'), url('/assets/sidebar/btn_1.png')">
+    return html`<button style="${style}; background-image: url('${el.src}'), url('assets/sidebar/btn_1.png')">
         <slot></slot>
     </button>`
 }, {
@@ -18,7 +18,7 @@ export default pureLit("button-image", (el: LitElementWithProps<Props>) => {
         border: none;
         margin: 0;
         padding: 0;
-        background-image: url('/assets/sidebar/btn_1.png');
+        background-image: url('assets/sidebar/btn_1.png');
         background-size: contain;
         height: 70px;
         background-repeat: no-repeat;

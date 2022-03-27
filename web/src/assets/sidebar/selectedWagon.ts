@@ -17,7 +17,7 @@ type Props = {
 const style = css`
     :host {
         display: block;
-        background-image: url('/assets/sidebar/bg.png');
+        background-image: url('assets/sidebar/bg.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         padding: 15px;
@@ -74,15 +74,15 @@ export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
     return html`
     <h3>${text(texts.assets.wagon)}</h3>
     <div class="container">
-        <img id="wagon" src="/assets/wagon_${payload.team}.png">
+        <img id="wagon" src="assets/wagon_${payload.team}.png">
         <health-bar id="health" .health="${health}"></health-bar>
         <stats-bar id="stats" .health="${health}" .actions="${actions}"></stats-bar>
         <button ?disabled=${actions.current < 1} id="move"  title="${text(texts.assets.properties.actions.move)}" @click=${() => releaseHormone(MoveModeActivate, { asset: { ...payload }, start })}>🦵</button>
         <button ?disabled=${actions.current < 1} id="build_lumberjack" title="${text(texts.assets.properties.actions.build.lumberjack_small)}" @click=${() => releaseHormone(BuildLumberjackSmall, { asset: { ...payload }, position: start })}>
-            <img id="build_lumberjack_small" src="/assets/lumberjack_small_${payload.team}.png">
+            <img id="build_lumberjack_small" src="assets/lumberjack_small_${payload.team}.png">
         </button>
         <button ?disabled=${actions.current < 1} id="build_mine" title="${text(texts.assets.properties.actions.build.mine_small)}" @click=${() => releaseHormone(BuildMineSmall, { asset: { ...payload }, position: start })}>
-            <img id="build_mine_small" src="/assets/mine_small_${payload.team}.png">
+            <img id="build_mine_small" src="assets/mine_small_${payload.team}.png">
         </button>
         <button ?disabled=${actions.current < 1} id="load"  title="${text(texts.assets.properties.actions.load)}">📦</button>
     </div>`

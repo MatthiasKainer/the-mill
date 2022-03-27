@@ -30,7 +30,7 @@ export default pureLit("sidebar-mill", (_: LitElementWithProps<Props>) => {
     return html`
     <h3>Mühle</h3>
     <div class="container">
-        <img id="mill" src="/assets/mill_${payload.team ?? "none"}.png">
+        <img id="mill" src="assets/mill_${payload.team ?? "none"}.png">
     </div>`
 },
     {

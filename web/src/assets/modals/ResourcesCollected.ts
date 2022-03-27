@@ -38,13 +38,13 @@ export default pureLit("modal-no-more-turns", (el) => {
             height: 140px;
         }
         .health-bar {
-            background-image: url('/assets/knight/health-bg.png');
+            background-image: url('assets/knight/health-bg.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
         }
         .health-bar .current {
-            background-image: url('/assets/knight/health.png');
+            background-image: url('assets/knight/health.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;

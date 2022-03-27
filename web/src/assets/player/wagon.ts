@@ -14,7 +14,7 @@ type Props = {
 export default pureLit(name, (el: LitElementWithProps<Props>) => {
     const { getState, publish } = useState(el, "")
     useReceptor(el, TurnAccepted, publish)
-    return html`<div class="${getState() === el.team ? "active" : "inactive"}" style="background-image:url('/assets/wagon_${el.team}.png'"></div>`
+    return html`<div class="${getState() === el.team ? "active" : "inactive"}" style="background-image:url('assets/wagon_${el.team}.png'"></div>`
 },
 {
     styles: [

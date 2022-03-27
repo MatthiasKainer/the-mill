@@ -32,7 +32,7 @@ export default pureLit("dice-selector", (el: LitElementWithProps<Props>) => {
             margin: 0;
         }
         .side {
-            background-image: url("/assets/dice.png");
+            background-image: url("assets/dice.png");
             background-size: contain;
             height: 1rem;
             background-repeat: no-repeat;
