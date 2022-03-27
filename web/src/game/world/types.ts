@@ -1,4 +1,5 @@
 import { Dice } from "../player/dices/dice"
+import { SpriteSet } from "./sprite"
 
 export const teams = (): Team[] => ["green", "red"]
 export type Team = "green" | "red"
@@ -40,6 +41,7 @@ export type ResourceGeneratingBuilding = {
 export type PotentiallyResourceGeneratingBuilding = {
     resources?: ResourceGenerator
 } & Asset
+export type ResourceGeneratingSprite = SpriteSet & ResourceGeneratingBuilding & SimpleCoords
 
 export function isResourceGeneratingAsset(asset?: Asset): asset is ResourceGeneratingBuilding {
     return (asset !== undefined

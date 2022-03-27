@@ -397,12 +397,12 @@ describe("Item Moved", () => {
         },
         {
             name: "lumberjack",
-            field: CreateSmallLumberjack({ position: { row: 0, col: 0 }, asset: { team: "green" } as Asset }),
+            field: CreateSmallLumberjack({ row: 0, col: 0, team: "green" }),
             spy: (() => { const spy = jest.fn(); hypothalamus.on(LumberjackTakeover, spy); return spy })()
         },
         {
             name: "mine",
-            field: CreateSmallMine({ position: { row: 0, col: 0 }, asset: { team: "green" } as Asset }),
+            field: CreateSmallMine({ row: 0, col: 0, team: "green" }),
             spy: (() => { const spy = jest.fn(); hypothalamus.on(MineTakeover, spy); return spy })()
         }
     ])
@@ -684,7 +684,7 @@ describe("Building", () => {
         { what: "lumbermill", action: BuildLumberjackSmall, success: BuildLumberjackSmallSuccess, fail: BuildLumberjackSmallFailed, ground: "forest", create: CreateSmallLumberjack },
         { what: "mine", action: BuildMineSmall, success: BuildMineSmallSuccess, fail: BuildMineSmallFailed, ground: "mountain", create: CreateSmallMine },
     ])
-        ("Building a %what", ({ what, action, success, fail, ground, create }) => {
+        ("Building a $what", ({ what, action, success, fail, ground, create }) => {
             let playerBefore: Player;
             // try build field -> if wagon on field         -> if wood -> build lumbermill -> update world -> remove wagoon
             //                    |-> if not wagon -> fail     |-> if not wood -> fail
@@ -790,7 +790,7 @@ describe("Building", () => {
                 it(`adds the ${what} to the position`, () => {
                     expect(getCurrentWorld().map[0][0].elements[0])
                         .toEqual({
-                            ...create({ position, asset }),
+                            ...create({ ...position, team: asset.team! }),
                             id: expect.anything()
                         })
                 })

@@ -1,12 +1,12 @@
 import { generateUUID } from "../../../math/guid"
-import { Asset, ResourceGeneratingBuilding, SimpleCoords } from "../../world"
-import { SpriteSet } from "../../world/sprite"
+import { PositionedTeamAsset, ResourceGeneratingSprite } from "../../world"
 
-export const CreateSmallLumberjack = ({position, asset}: {position: SimpleCoords, asset: Asset}): SpriteSet & ResourceGeneratingBuilding & SimpleCoords => ({
+export const CreateSmallLumberjack = ({row, col, team}: PositionedTeamAsset): ResourceGeneratingSprite => ({
     id: generateUUID(), 
     name: "lumberjack-small",
-    team: asset.team,
-    ...position,
+    team,
+    row,
+    col,
     occurences: {
         min: 1
     },

@@ -3,8 +3,9 @@ import { useReceptor } from "organismus"
 import { LitElementWithProps, pureLit, useState } from "pure-lit"
 import { TurnAccepted } from "../../game/world/events"
 import { inactive, sprite } from "../styles"
+import {assets} from "../assetsConsts"
 
-export const name = "mine-small"
+export const name = assets.mine.small
 
 type Props = {
     team: string

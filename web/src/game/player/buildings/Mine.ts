@@ -1,12 +1,12 @@
 import { generateUUID } from "../../../math/guid"
-import { Asset, ResourceGeneratingBuilding, SimpleCoords } from "../../world"
-import { SpriteSet } from "../../world/sprite"
+import { PositionedTeamAsset, ResourceGeneratingSprite } from "../../world"
 
-export const CreateSmallMine = ({position, asset}: {position: SimpleCoords, asset: Asset}): SpriteSet & ResourceGeneratingBuilding & SimpleCoords => ({
+export const CreateSmallMine = ({row, col, team}: PositionedTeamAsset): ResourceGeneratingSprite => ({
     id: generateUUID(), 
     name: "mine-small",
-    team: asset.team,
-    ...position,
+    team,
+    row,
+    col,
     occurences: {
         min: 1
     },

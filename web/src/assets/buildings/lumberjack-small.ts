@@ -1,10 +1,11 @@
 import { html, css } from "lit"
 import { useReceptor } from "organismus"
 import { LitElementWithProps, pureLit, useState } from "pure-lit"
+import {assets} from "../assetsConsts"
 import { TurnAccepted } from "../../game/world/events"
 import { inactive, sprite } from "../styles"
 
-export const name = "lumberjack-small"
+export const name = assets.lumberjack.small
 
 type Props = {
     team: string

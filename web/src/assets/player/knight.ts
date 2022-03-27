@@ -3,7 +3,7 @@ import { useReceptor } from "organismus"
 import { LitElementWithProps, pureLit, useState } from "pure-lit"
 import { TurnAccepted } from "../../game/world/events"
 import { inactive, sprite } from "../styles"
-import {assets} from "./assetsConsts"
+import {assets} from "../assetsConsts"
 
 export const name = assets.knight;
 
