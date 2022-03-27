@@ -76,7 +76,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         scrollbar-color:  #888 #f1f1f1;
         scrollbar-width: thin;
      }
-`;Ee("button-image",(e=>{const t=e.height?`height:${e.height};`:"";return R`<button style="${t}; background-image: url('${e.src}'), url('/assets/sidebar/btn_1.png')">
+`;Ee("button-image",(e=>{const t=e.height?`height:${e.height};`:"";return R`<button style="${t}; background-image: url('${e.src}'), url('assets/sidebar/btn_1.png')">
         <slot></slot>
     </button>`}),{styles:a`
     button {
@@ -84,7 +84,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         border: none;
         margin: 0;
         padding: 0;
-        background-image: url('/assets/sidebar/btn_1.png');
+        background-image: url('assets/sidebar/btn_1.png');
         background-size: contain;
         height: 70px;
         background-repeat: no-repeat;
@@ -282,12 +282,12 @@ span {
 #side6 {
     transform: rotateX(-90deg) translateX(0px) translateY(0px) translateZ(56px);
 }
-`,props:[{result:{type:Number}}]});const li=It.knight;var ci=Ee(li,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('/assets/knight_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
+`,props:[{result:{type:Number}}]});const li=It.knight;var ci=Ee(li,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/knight_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         div {
             background-size: contain;
             opacity: 1;
         }
-        `],defaults:{team:""}}),di=Object.freeze({__proto__:null,name:li,default:ci});const ui=It.wagon;var hi=Ee(ui,(e=>{const{getState:t,publish:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('/assets/wagon_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
+        `],defaults:{team:""}}),di=Object.freeze({__proto__:null,name:li,default:ci});const ui=It.wagon;var hi=Ee(ui,(e=>{const{getState:t,publish:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/wagon_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         div {
             background-size: contain;
             opacity: 1;
@@ -314,7 +314,7 @@ span {
             margin: 0;
         }
         .side {
-            background-image: url("/assets/dice.png");
+            background-image: url("assets/dice.png");
             background-size: contain;
             height: 1rem;
             background-repeat: no-repeat;
@@ -427,27 +427,27 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     }
     .push {
         margin-left: 60px;
-    }`});const Oi="building-mill";var ji=Ee(Oi,(({team:e})=>R`<div style="background-image:url('/assets/windmill_complete_${null!=e?e:"none"}.png'"></div>`),{styles:[ti,a`
+    }`});const Oi="building-mill";var ji=Ee(Oi,(({team:e})=>R`<div style="background-image:url('assets/windmill_complete_${null!=e?e:"none"}.png'"></div>`),{styles:[ti,a`
         div {
             width: 80%;
             height: 80%;
         }
-        `],defaults:{team:void 0}}),_i=Object.freeze({__proto__:null,name:Oi,default:ji});const Ei="building-castle-small";var Si=Ee(Ei,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('/assets/castle_small_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
+        `],defaults:{team:void 0}}),_i=Object.freeze({__proto__:null,name:Oi,default:ji});const Ei="building-castle-small";var Si=Ee(Ei,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/castle_small_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Ai=Object.freeze({__proto__:null,name:Ei,default:Si});const Ti="lumberjack-small";var Mi=Ee(Ti,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('/assets/lumberjack_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
+        `],defaults:{team:"",row:void 0,col:void 0}}),Ai=Object.freeze({__proto__:null,name:Ei,default:Si});const Ti="lumberjack-small";var Mi=Ee(Ti,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/lumberjack_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Ci=Object.freeze({__proto__:null,name:Ti,default:Mi});const zi="mine-small";var Ri=Ee(zi,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('/assets/mine_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
+        `],defaults:{team:"",row:void 0,col:void 0}}),Ci=Object.freeze({__proto__:null,name:Ti,default:Mi});const zi="mine-small";var Ri=Ee(zi,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/mine_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
         `],defaults:{team:"",row:void 0,col:void 0}}),Hi=Object.freeze({__proto__:null,name:zi,default:Ri});const Ni={hay:0,iron:0,grain:0,wood:0,stone:0};var Ui=Do,Bi=Uo,Pi=()=>Object.assign(Object.assign({},Ni),{stone:4,wood:2,grain:1}),Di=()=>Object.assign(Object.assign({},Ni),{wood:500,grain:500,stone:500}),Ii=()=>Object.assign(Object.assign({},Ni),{stone:1e3,iron:1e3,grain:1e3});const Yi=a`
   :host {
     display: block;
-    background-image: url("/assets/sidebar/bg.png");
+    background-image: url("assets/sidebar/bg.png");
     background-repeat: no-repeat;
     padding: 15px;
     background-size: 100% 100%;
@@ -549,7 +549,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
       <div class="container">
         <button-image
           height="35px"
-          src="/assets/knight_${r}.png"
+          src="assets/knight_${r}.png"
           title="${vt(ht.properties.actions.build.knight)}"
           @click=${async()=>await we(Xt,{team:r,row:i,col:n,origin:o})}
         >
@@ -557,7 +557,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         </button-image>
         <button-image
           height="35px"
-          src="/assets/wagon_${r}.png"
+          src="assets/wagon_${r}.png"
           title="${vt(ht.properties.actions.build.wagon)}"
           @click=${async()=>await we(Ft,{team:r,row:i,col:n,origin:o})}
         >
@@ -565,23 +565,23 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.iron)}"
-          src="/assets/resources/iron.png">
+          src="assets/resources/iron.png">
           ${Wi(u,Pi())}
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.castle_medium)}"
-          src="/assets/castle_medium_${r}.png">
+          src="assets/castle_medium_${r}.png">
           ${Wi(u,Di())}
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.castle_large)}"
-          src="/assets/castle_large_${r}.png">
+          src="assets/castle_large_${r}.png">
           ${Wi(u,Ii())}
         </button-image>
       </div>`}),{styles:[Yi,Gi],defaults:{selected:{payload:{id:"",name:Ei,team:"",health:{current:0,max:0},actions:{current:0,max:0}},col:0,row:0}}});Ee("sidebar-knight",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Li(o),col:Li(i)};return R`
     <h3>${vt(ht.knight)}</h3>
     <div class="container">
-        <img id="knight" src="/assets/knight_${t.team}.png">
+        <img id="knight" src="assets/knight_${t.team}.png">
         <health-bar id="health" .health="${n}"></health-bar>
         <stats-bar id="stats" .health="${n}" .actions="${r}"></stats-bar>
         <button ?disabled=${r.current<1} id="move" title="${vt(ht.properties.actions.move)}" @click=${()=>we(io,{asset:Object.assign({},t),start:s})}>🦵</button>
@@ -610,21 +610,21 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
 `],props:[{selected:{type:Object}}]});Ee("sidebar-wagon",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Li(o),col:Li(i)};return R`
     <h3>${vt(ht.wagon)}</h3>
     <div class="container">
-        <img id="wagon" src="/assets/wagon_${t.team}.png">
+        <img id="wagon" src="assets/wagon_${t.team}.png">
         <health-bar id="health" .health="${n}"></health-bar>
         <stats-bar id="stats" .health="${n}" .actions="${r}"></stats-bar>
         <button ?disabled=${r.current<1} id="move"  title="${vt(ht.properties.actions.move)}" @click=${()=>we(io,{asset:Object.assign({},t),start:s})}>🦵</button>
         <button ?disabled=${r.current<1} id="build_lumberjack" title="${vt(ht.properties.actions.build.lumberjack_small)}" @click=${()=>we(lo,{asset:Object.assign({},t),position:s})}>
-            <img id="build_lumberjack_small" src="/assets/lumberjack_small_${t.team}.png">
+            <img id="build_lumberjack_small" src="assets/lumberjack_small_${t.team}.png">
         </button>
         <button ?disabled=${r.current<1} id="build_mine" title="${vt(ht.properties.actions.build.mine_small)}" @click=${()=>we(ho,{asset:Object.assign({},t),position:s})}>
-            <img id="build_mine_small" src="/assets/mine_small_${t.team}.png">
+            <img id="build_mine_small" src="assets/mine_small_${t.team}.png">
         </button>
         <button ?disabled=${r.current<1} id="load"  title="${vt(ht.properties.actions.load)}">📦</button>
     </div>`}),{styles:[a`
     :host {
         display: block;
-        background-image: url('/assets/sidebar/bg.png');
+        background-image: url('assets/sidebar/bg.png');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         padding: 15px;
@@ -735,12 +735,12 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             height: 140px;
         }
         .health-bar {
-            background-image: url('/assets/knight/health-bg.png');
+            background-image: url('assets/knight/health-bg.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
             & .current {
-                background-image: url('/assets/knight/health.png');
+                background-image: url('assets/knight/health.png');
                 background-size: contain;
                 background-repeat: no-repeat;
                 height: 15px;
@@ -865,13 +865,13 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             height: 140px;
         }
         .health-bar {
-            background-image: url('/assets/knight/health-bg.png');
+            background-image: url('assets/knight/health-bg.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
         }
         .health-bar .current {
-            background-image: url('/assets/knight/health.png');
+            background-image: url('assets/knight/health.png');
             background-size: contain;
             background-repeat: no-repeat;
             height: 15px;
@@ -937,23 +937,23 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
   }
 `;var Vi;Ee("resource-grain",(()=>R`<div title="${vt(ut.grain)}"></div>`),{styles:[a`
         :host {
-          background-image: url("/assets/resources/grain.png");
+          background-image: url("assets/resources/grain.png");
         }
       `,Ki]}),Ee("resource-stone",(()=>R`<div title="${vt(ut.stone)}"></div>`),{styles:[a`
         :host {
-          background-image: url("/assets/resources/stone.png");
+          background-image: url("assets/resources/stone.png");
         }
       `,Ki]}),Ee("resource-iron",(()=>R`<div title="${vt(ut.iron)}"></div>`),{styles:[a`
         :host {
-          background-image: url("/assets/resources/iron.png");
+          background-image: url("assets/resources/iron.png");
         }
       `,Ki]}),Ee("resource-wood",(()=>R`<div title="${vt(ut.log)}"></div>`),{styles:[a`
         :host {
-          background-image: url("/assets/resources/log.png");
+          background-image: url("assets/resources/log.png");
         }
       `,Ki]}),Ee("resource-hay",(()=>R`<div title="${vt(ut.hay)}"></div>`),{styles:[a`
         :host {
-          background-image: url("/assets/resources/hay.png");
+          background-image: url("assets/resources/hay.png");
         }
       `,Ki]}),Ee("resource-counter",(({count:e,collect:t})=>R`
         <slot></slot>
