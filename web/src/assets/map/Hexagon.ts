@@ -50,7 +50,7 @@ export default pureLit('hexagon-element', (el: LitElementWithProps<Props>) => {
       class="hexagon ${getCssClass(el, getMovementMode(), getBattleMode())}" 
       @mouseover=${() => { if (getMovementMode()) {releaseHormone(MoveModeTargetHovered, {row, col})} }}
       @click=${() => (click(el, getMovementMode(), getBattleMode()), document.dispatchEvent(new CustomEvent("hello-world", { detail: { hello: "world"}})))}
-      style="background-image:url(/assets/${el.background?.file}.png); background-position: ${el.background?.x}px ${el.background?.y}px;">
+      style="background-image:url(assets/${el.background?.file}.png); background-position: ${el.background?.x}px ${el.background?.y}px;">
       ${spriteFactory(update.elements, el.row, el.col)}</div>`
 }, {
     styles: [cssHexagon, cssHexagonMovement],
