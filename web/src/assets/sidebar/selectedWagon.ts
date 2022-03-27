@@ -1,8 +1,8 @@
 import { css, html } from "lit";
-import { hypothalamus, releaseHormone } from "organismus";
+import { releaseHormone } from "organismus";
 import { LitElementWithProps, pureLit } from "pure-lit";
 import { FigherAsset } from "../../game";
-import { BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, MoveModeActivate } from "../../game/world/events";
+import { BuildLumberjackSmall, BuildMineSmall, MoveModeActivate } from "../../game/world/events";
 import { text, texts } from "../../internationalization";
 import { asNumber } from "../../math/number";
 
@@ -64,11 +64,6 @@ const style = css`
         color: var(--colorMain)
     }
 `
-
-hypothalamus.on(BuildLumberjackSmallSuccess, (...args) => console.log("BuildLumberjackSmallSuccess", ...args))
-hypothalamus.on(BuildLumberjackSmallFailed, console.error)
-hypothalamus.on(BuildLumberjackSmall, (...args) => console.log("BuildLumberjackSmall", ...args))
-
 export default pureLit("sidebar-wagon", (_: LitElementWithProps<Props>) => {
     const { selected: { payload, row, col } } = _;
     const { health, actions } = payload

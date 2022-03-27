@@ -1,6 +1,6 @@
 import { player } from "../../..";
 import { generateUUID } from "../../../math/guid";
-import { FigherAsset, Resources, SimpleCoords, Team } from "../../world";
+import { FigherAsset, PositionedTeamAsset, Resources, SimpleCoords } from "../../world";
 import { SpriteSet } from "../../world/sprite";
 import * as dices from "../dices"
 
@@ -11,7 +11,9 @@ export const Knight: SpriteSet = {
     }
 }
 
-export const CreateKnight = ({ team, row, col }: {team: Team} & SimpleCoords): FigherAsset & SimpleCoords => ({ 
+export type NewKnight = FigherAsset & SimpleCoords
+
+export const CreateKnight = ({ team, row, col }: PositionedTeamAsset): NewKnight => ({ 
     id: generateUUID(), 
     name: player.knight.name, 
     team, 

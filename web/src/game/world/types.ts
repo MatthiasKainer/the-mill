@@ -64,6 +64,7 @@ export type Asset = {
 }
 
 export type PositionedAsset = Asset & SimpleCoords
+export type PositionedTeamAsset = {team: Team} & SimpleCoords
 
 export function isPositionedAsset(asset?: Asset): asset is PositionedAsset {
     return (asset !== undefined && (asset as PositionedAsset)?.row >= 0 && (asset as PositionedAsset)?.col >= 0)

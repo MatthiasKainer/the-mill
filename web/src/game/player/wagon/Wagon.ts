@@ -1,6 +1,6 @@
 import { player } from "../../..";
 import { generateUUID } from "../../../math/guid";
-import { MoveableAsset, Resources, SimpleCoords, Team } from "../../world";
+import { MoveableAsset, PositionedTeamAsset, Resources, SimpleCoords } from "../../world";
 import { SpriteSet } from "../../world/sprite";
 
 export const Wagon: SpriteSet = {
@@ -18,7 +18,9 @@ export const costs = (): Resources => ({
     stone: 0
 })
 
-export const CreateWagon = ({ team, row, col }: {team: Team} & SimpleCoords): MoveableAsset & SimpleCoords => ({ 
+export type NewWagon = MoveableAsset & SimpleCoords
+
+export const CreateWagon = ({ team, row, col }: PositionedTeamAsset): NewWagon => ({ 
     id: generateUUID(), 
     name: player.wagon.name, 
     team, 
