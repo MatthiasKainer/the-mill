@@ -406,7 +406,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
       class="hexagon ${ki(e,l(),d())}" 
       @mouseover=${()=>{l()&&we(so,{row:n,col:r})}}
       @click=${()=>(xi(e,l(),d()),document.dispatchEvent(new CustomEvent("hello-world",{detail:{hello:"world"}})))}
-      style="background-image:url(/assets/${null===(t=e.background)||void 0===t?void 0:t.file}.png); background-position: ${null===(o=e.background)||void 0===o?void 0:o.x}px ${null===(i=e.background)||void 0===i?void 0:i.y}px;">
+      style="background-image:url(assets/${null===(t=e.background)||void 0===t?void 0:t.file}.png); background-position: ${null===(o=e.background)||void 0===o?void 0:o.x}px ${null===(i=e.background)||void 0===i?void 0:i.y}px;">
       ${wi(h.elements,e.row,e.col)}</div>`}),{styles:[yi,$i],defaults:{background:void 0,elements:[],col:0,row:0}}),Ee("world-map",(e=>{var t;const{get:o,set:i}=ot(e,void 0);return $e(e,Rt,i),R`<div id="globe">${null===(t=o())||void 0===t?void 0:t.map.map(((e,t)=>R`<div class="row ${t%2==0?"push":""}" style="width: calc(${120*e.length}px + 20rem)">
                 ${e.map(((e,o)=>R`<hexagon-element 
                         .background=${e.terrain.sprite} 
