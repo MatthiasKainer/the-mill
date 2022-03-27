@@ -1,7 +1,8 @@
 import { defineHormone, defineSingleHormone } from "organismus";
 import { Asset } from ".";
 import { Dice } from "../player/dices/dice";
-import { FigherAsset, MoveableAsset, Player, ResourceGeneratingBuilding, Resources, SimpleCoords, Team } from "./types";
+import { BuildingAsset } from "./buildings";
+import { ActionableAsset, FigherAsset, MoveableAsset, Player, ResourceGeneratingBuilding, Resources, SimpleCoords, Team } from "./types";
 
 export type Abort = boolean
 export const Abort = defineSingleHormone<Abort>("action/abort")
@@ -26,15 +27,18 @@ export type ItemMovedAsset = {
     location: SimpleCoords
 }
 export const ItemMoved = defineHormone<ItemMovedAsset>("player/item/moved")
-export const KnightCreated = defineHormone<SimpleCoords & {
+
+export type AssetCreated = SimpleCoords & {
+    origin: BuildingAsset & ActionableAsset
     team: Team
-}>("player/knights/created")
-export const WagonCreated = defineHormone<SimpleCoords & {
-    team: Team
-}>("player/wagon/created")
+}
+export const KnightCreated = defineHormone<AssetCreated>("player/knights/created")
+export const WagonCreated = defineHormone<AssetCreated>("player/wagon/created")
 
 export const UpdateAllPlayerElements = defineHormone<Asset[]>("player/assets/loaded")
 
+export type PerformedAction = { item: ActionableAsset & SimpleCoords }
+export const ActionPerformed = defineHormone<PerformedAction>("player/action/performed")
 
 export type CheckPlayerHasActionsLeft = {}
 export const CheckPlayerHasActionsLeft = defineHormone<CheckPlayerHasActionsLeft>("turn/player/actions/hasLeft")

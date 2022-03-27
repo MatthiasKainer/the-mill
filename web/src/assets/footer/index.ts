@@ -1,4 +1,5 @@
-import { css, html } from "lit";
+import { html } from "lit";
+import { css } from "nested-css-to-flat/lit-css";
 import { releaseHormone, useReceptor } from "organismus";
 import { pureLit, useState } from "pure-lit";
 import { Asset, isMoveableAsset, Team } from "../../game";
@@ -27,7 +28,7 @@ export default pureLit("footer-element", (el) => {
 }, {
     styles: [
         sidebar,
-        sidebarFor(css`footer .main`),
+        sidebarFor("footer .main"),
         css`
     footer {
         min-height: 10vh;
@@ -39,22 +40,22 @@ export default pureLit("footer-element", (el) => {
             "main action";
         padding-left: 5vw;
         padding-right: 5vw;
-    }
-    footer .main {
-        grid-area: main;
-        transition: background-color 2s;
-        min-height: 10vh;
-        max-height: 10vh;
-        overflow-x: auto;
-    }
-    footer.red {
-        background-color: #A95C44;
-    }
-    footer.green {
-        background-color: #178044;
-    }
-    footer .action {
-        grid-area: action;
-        place-self: center;
+        & .main {
+            grid-area: main;
+            transition: background-color 2s;
+            min-height: 10vh;
+            max-height: 10vh;
+            overflow-x: auto;
+        }        
+        &.red {
+            background-color: #A95C44;
+        }
+        &.green {
+            background-color: #178044;
+        }
+        & .action {
+            grid-area: action;
+            place-self: center;
+        }
     }`]
 })

@@ -65,8 +65,6 @@ const style = css`
   }
 `;
 
-console.log(style)
-
 const costList = (resources: Resources, costs: Resources) => {
   return html`
     ${costs.hay > 0
@@ -146,7 +144,7 @@ export default pureLit(
           src="/assets/knight_${team}.png"
           title="${text(texts.assets.properties.actions.build.knight)}"
           @click=${async () =>
-        await releaseHormone(KnightCreated, { team, row, col })}
+        await releaseHormone(KnightCreated, { team, row, col, origin: payload })}
         >
           ${costList(resources, costs.knight())}
         </button-image>
@@ -155,7 +153,7 @@ export default pureLit(
           src="/assets/wagon_${team}.png"
           title="${text(texts.assets.properties.actions.build.wagon)}"
           @click=${async () =>
-        await releaseHormone(WagonCreated, { team, row, col })}
+        await releaseHormone(WagonCreated, { team, row, col, origin: payload })}
         >
           ${costList(resources, costs.wagon())}
         </button-image>

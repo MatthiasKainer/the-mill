@@ -25,7 +25,7 @@ function isDistributedSpriteSet(sprite: SpriteSet): sprite is DistributedSpriteS
     return sprite !== undefined && (sprite as DistributedSpriteSet).max > 0
 }
 
-type BuildingAsset = Asset
+export type BuildingAsset = Asset
 
 const buildings: SpriteSet[] | DistributedSpriteSet[] = [
     {...Mill, min: 0, max: 2},

@@ -1,4 +1,4 @@
-import { css, CSSResult } from "lit";
+import { css } from "nested-css-to-flat/lit-css";
 
 export const sprite = css`
     :host {
@@ -40,7 +40,7 @@ export const sidebar = css`
       background: #555;
     }
 `
-export const sidebarFor = (element: CSSResult) => css`
+export const sidebarFor = (element: string) => css`
      ${element} {
         scrollbar-color:  #888 #f1f1f1;
         scrollbar-width: thin;

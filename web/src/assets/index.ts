@@ -1,4 +1,5 @@
-import { html, css } from "lit"
+import { html } from "lit"
+import { css } from "nested-css-to-flat/lit-css"
 import { releaseHormone } from "organismus"
 import { pureLit } from "pure-lit"
 import { load } from "../game"
@@ -37,8 +38,8 @@ export default pureLit("the-mill", () => {
 }, {
     styles: [
         sidebar,
-        sidebarFor(css`world-map`),
-        sidebarFor(css`controls-sidebar`),
+        sidebarFor(`world-map`),
+        sidebarFor(`controls-sidebar`),
         css`
     header-element {
         grid-area: header;

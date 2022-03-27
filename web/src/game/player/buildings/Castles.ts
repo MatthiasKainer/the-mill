@@ -1,8 +1,11 @@
-import { ActionableAsset, FightingAsset, HealthyAsset, ResourceGeneratingBuilding, Team } from "../../world";
+import { ActionableAsset, FightingAsset, HealthyAsset, PositionedAsset, ResourceGeneratingBuilding, SimpleCoords, Team } from "../../world";
 import { SpriteSet } from "../../world/sprite";
 import * as dices from "../dices"
 
-export const SmallCastle: SpriteSet & ResourceGeneratingBuilding & FightingAsset & HealthyAsset & ActionableAsset = {
+type Castle = SpriteSet & ResourceGeneratingBuilding & FightingAsset & HealthyAsset & ActionableAsset
+type PositionedCastle = Castle & PositionedAsset
+
+export const SmallCastle: Castle = {
     id: "building-castle-small",
     name: "Small Castle",
     team: "" as Team,
@@ -25,3 +28,18 @@ export const SmallCastle: SpriteSet & ResourceGeneratingBuilding & FightingAsset
         iron: { generatedResource: 10 },
     }
 }
+
+export const CreateSmallCastle = ({ team, row, col }: {team: Team} & SimpleCoords): PositionedCastle => ({
+    ...SmallCastle,
+    health: {...SmallCastle.health},
+    team,
+    row, 
+    col,
+    actions: {...SmallCastle.actions},
+    resources: {
+        grain: {...SmallCastle.resources.grain!},
+        hay: { ...SmallCastle.resources.hay! },
+        stone: { ...SmallCastle.resources.stone! },
+        iron: { ...SmallCastle.resources.iron! },
+    },
+})

@@ -5,13 +5,14 @@ import { buildings, player } from "../../assets";
 import { Position } from "../../math/position";
 import { moveModeBuilder } from "../../testHelpers";
 import { TurnComplete } from "../player/Assets";
+import { CreateSmallCastle } from "../player/buildings/Castles";
 import { CreateSmallLumberjack } from "../player/buildings/Lumberjack";
 import { CreateSmallMine } from "../player/buildings/Mine";
 import { CreateKnight } from "../player/knights/Knight";
 import { Mill } from "./buildings";
 import { BattleStarted, BuildLumberjackSmall, BuildLumberjackSmallFailed, BuildLumberjackSmallSuccess, BuildMineSmall, BuildMineSmallFailed, BuildMineSmallSuccess, HexagonUpdated, ItemMoved, KnightCreated, LumberjackTakeover, MillTakeover, MineTakeover, ModalBattleOpen, MoveModeActivate, MoveModeActivated, MoveModeDeactivate, MoveModeEnd, MoveModeTargetHovered, PlayerUpdate, RequestSelectCoords, ResourcesGenerated, TurnAccepted, TurnPlayerComplete, TurnsComplete, TurnStarted, UpdateAllPlayerElements, WagonCreated } from "./events";
 import { Terrain } from "./terrain";
-import { FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
+import { ActionableAsset, FigherAsset, Player, ResourceGeneratingBuilding, ResourceGenerator, Resources, Team, teams } from "./types";
 
 import "./world-state"
 import { allocateResources, getActivePlayer, getCurrentTeam, getPlayer, setCurrentTeam } from "./world-state";
@@ -386,8 +387,8 @@ describe("Item Moved", () => {
     })
 
     describe.each([
-        { 
-            name: "mill", 
+        {
+            name: "mill",
             field: mill,
             spy: (() => { const spy = jest.fn(); hypothalamus.on(MillTakeover, spy); return spy })()
         },
@@ -487,45 +488,80 @@ describe("Building", () => {
     describe("Building a knight", () => {
         let playerBefore: Player;
 
-        beforeEach(async () => {
-            await releaseHormone(KnightCreated, { col: 0, row: 0, team: getCurrentTeam() })
-            playerBefore = getActivePlayer()
-        })
-
-        it("adds the knight to the position", async () => {
-            expect(getCurrentWorld().map[0][0].elements[0])
-                .toEqual({
-                    ...CreateKnight({ col: 0, row: 0, team: getCurrentTeam() }),
-                    id: expect.anything()
-                })
-        })
-        it("notifies the hexagon on the change to allow rerender", () => {
-            expect(spyOnHexagonUpdate).toBeCalledTimes(1)
-        })
-        it("updates the player", () => {
-            expect(spyOnUpdateAllPlayerElements).toBeCalledTimes(1)
-        })
-
-        it("removes the player resources, and notifies the world", () => {
-            expect(spyOnPlayerUpdate).toBeCalledTimes(1)
-            expect(spyOnPlayerUpdate).toBeCalledWith({
-                ...playerBefore,
-                resources: {
-                    ...playerBefore.resources,
-                    iron: 0
-                }
-            })
-        })
-
-        describe("when the player tries to build a knight without resources", () => {
-
+        describe("When the player triggers a build", () => {
+            let castle = CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0 });
             beforeEach(async () => {
-                await releaseHormone(KnightCreated, { col: 0, row: 0, team: getCurrentTeam() })
+                castle = CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0 });
+                await releaseHormone(WorldLoaded, WorldBuilder()({
+                    "0:0": [castle]
+                }))
+                jest.resetAllMocks()
+                await releaseHormone(KnightCreated, { 
+                    col: 0, row: 0, team: getCurrentTeam(),
+                    origin: castle 
+                })
                 playerBefore = getActivePlayer()
             })
 
-            it("does not add another the knight to the position", () => {
-                expect(getCurrentWorld().map[0][0].elements).toHaveLength(1)
+            it("adds the knight to the position", async () => {
+                expect(getCurrentWorld().map[0][0].elements.find(e => e.name === player.knight.name))
+                    .toEqual({
+                        ...CreateKnight({ col: 0, row: 0, team: getCurrentTeam() }),
+                        id: expect.anything()
+                    })
+            })
+            it("notifies the hexagon on the change to allow rerender", () => {
+                expect(spyOnHexagonUpdate).toBeCalledTimes(1)
+            })
+            it("updates the player", () => {
+                expect(spyOnUpdateAllPlayerElements).toBeCalledTimes(1)
+            })
+            it("removes the turn from the castle", () => {
+                expect((getCurrentWorld().map[0][0].elements.find(element => element.id === castle.id) as ActionableAsset).actions.current).toBe(1)
+            })
+
+            it("removes the player resources, and notifies the world", () => {
+                expect(spyOnPlayerUpdate).toBeCalledTimes(1)
+                expect(spyOnPlayerUpdate).toBeCalledWith({
+                    ...playerBefore,
+                    resources: {
+                        ...playerBefore.resources,
+                        iron: 0
+                    }
+                })
+            })
+
+        })
+
+        
+        describe("when the player tries to build a knight without resources", () => {
+            const castle = CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0 });
+
+            beforeEach(async () => {
+                await releaseHormone(WorldLoaded, WorldBuilder()({
+                    "0:0": [castle]
+                }))
+                jest.resetAllMocks()
+                await releaseHormone(KnightCreated, { col: 0, row: 0, team: getCurrentTeam(), origin: castle })
+                playerBefore = getActivePlayer()
+            })
+
+            it("does not add another the knight to the position", async () => {
+                await releaseHormone(KnightCreated, { col: 0, row: 0, team: getCurrentTeam(), origin: castle })
+                expect(getCurrentWorld().map[0][0].elements.filter(element => element.name === player.knight.name)).toHaveLength(1)
+            })
+        })
+
+        describe("when the player tries to build a knight without a turn left on the castle", () => {
+
+            beforeEach(async () => {
+                const origin = CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0  })
+                origin.actions.current = 0;
+                await releaseHormone(KnightCreated, { col: 0, row: 0, team: getCurrentTeam(), origin })
+            })
+
+            it("does not add the knight to the position", () => {
+                expect(getCurrentWorld().map[0][0].elements).toHaveLength(0)
             })
         })
     })
@@ -545,7 +581,7 @@ describe("Building", () => {
             hypothalamus.on(fail, spyOnBuildFailed)
 
             beforeEach(async () => {
-                await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
+                await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam(), origin: CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0 }) });
                 jest.resetAllMocks()
             })
 
@@ -597,7 +633,7 @@ describe("Building", () => {
                         resources: { wood: { generatedResource: 1 } }
                     }
                     await releaseHormone(WorldLoaded, WorldBuilder(1, 1)({ "0:0": [castle] }))
-                    await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam() });
+                    await releaseHormone(WagonCreated, { col: 0, row: 0, team: getCurrentTeam(), origin: CreateSmallCastle({ team: getCurrentTeam(), col: 0, row: 0  }) });
                     getCurrentWorld().map[0][0].terrain = {
                         ...getCurrentWorld().map[0][0].terrain,
                         sprite: {

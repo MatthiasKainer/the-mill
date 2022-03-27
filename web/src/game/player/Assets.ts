@@ -1,4 +1,4 @@
-import { isMoveableAsset, MoveableAsset, Team, World } from "..";
+import { isMoveableAsset, MoveableAsset, Player, Team, World } from "..";
 
 export const TurnComplete = (...assets: MoveableAsset[]) => {
     assets.forEach(asset => {
@@ -22,4 +22,8 @@ export const findNextPlayerWithAction = (world: World, currentTeam: Team) => {
     }
 
     return undefined
+}
+
+export function getPlayerResources(player: Player) {
+    return { ...player.resources };
 }
