@@ -1,4 +1,4 @@
-var e=Object.freeze({__proto__:null,get knight(){return ci},get wagon(){return hi}}),t=Object.freeze({__proto__:null,get mill(){return ji},get castleSmall(){return Si},get lumberjackSmall(){return Mi},get mineSmall(){return Ri}});
+var e=Object.freeze({__proto__:null,get knight(){return di},get wagon(){return vi}}),t=Object.freeze({__proto__:null,get mill(){return _i},get castleSmall(){return Ai},get lumberjackSmall(){return Ci},get mineSmall(){return Hi}});
 /**
  * @license
  * Copyright 2019 Google LLC
@@ -36,7 +36,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,i)&&t.indexOf(i)<0&&(o[i]=e[i]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var n=0;for(i=Object.getOwnPropertySymbols(e);n<i.length;n++)t.indexOf(i[n])<0&&Object.prototype.propertyIsEnumerable.call(e,i[n])&&(o[i[n]]=e[i[n]])}return o}const wt=["hay","grain","iron","wood","stone"];function yt(e){var t;return void 0!==e&&void 0!==(null===(t=e)||void 0===t?void 0:t.resources)}function $t(e){var t,o;return void 0!==e&&(null===(t=e)||void 0===t?void 0:t.row)>=0&&(null===(o=e)||void 0===o?void 0:o.col)>=0}function kt(e){var t;return void 0!==e&&void 0!==(null===(t=e)||void 0===t?void 0:t.actions)}function xt(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.actions)||void 0===o?void 0:o.max)>0}function Ot(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.dices)||void 0===o?void 0:o.length)>0}function jt(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.dices)||void 0===o?void 0:o.length)>0}const _t={id:"building-mill",name:"Mill",occurences:{min:1},resources:{grain:{hay:100,generatedResource:50},hay:{generatedResource:50}}};function Et(e){return void 0!==e&&e.max>0}const St=[Object.assign(Object.assign({},_t),{min:0,max:2}),Object.assign(Object.assign({},_t),{min:8,max:10})],At=({min:e,max:t},o,i)=>{const n=e=>o*i*(e/10);return Math.floor(Math.random()*(n(t)-n(e))+n(e))},Tt=(e,t)=>{var o;return null===(o=null==e?void 0:e.map)||void 0===o?void 0:o.reduce(((e,o)=>[...e,...o.reduce(((e,o)=>[...e,...o.elements.filter(yt).filter((e=>e.team===t))]),[])]),[])},Mt=(...e)=>e.reduce(((e,t)=>(e.push(...Object.entries(t.resources).map((e=>{var[o,i]=e,{generatedResource:n}=i,r=bt(i,["generatedResource"]);let s={};s[o]=Object.assign(Object.assign({},r),{generatedResource:n});return Object.assign(Object.assign({},t),{resources:s})}))),e)),[]).filter(Boolean),Ct={gras:{sprite:{name:"gras",file:"hexagonTerrain_sheet",x:414,y:1906},movementCosts:1,defense:0},desert:{sprite:{name:"desert",file:"hexagonTerrain_sheet",x:902,y:627},movementCosts:4,defense:0},mud:{sprite:{name:"mud",file:"hexagonTerrain_sheet",x:658,y:912},movementCosts:4,defense:1},muddyHills:{sprite:{name:"muddyHills",file:"hexagonTerrain_sheet",x:780,y:627},movementCosts:8,defense:3},forest:{sprite:{name:"forest",file:"hexagonTerrain_sheet",x:536,y:912},movementCosts:8,defense:3},mountain:{sprite:{name:"mountain",file:"hexagonTerrain_sheet",x:536,y:1195},movementCosts:10,defense:9}},zt=()=>{var e;const t=Object.keys(Ct);return null!==(e=Ct[t[Math.floor(Math.random()*t.length)]])&&void 0!==e?e:Ct.mountain},Rt=pe("game/world/worldLoaded"),Ht=pe("game/start"),Ut=pe("game/load/sidebar"),Nt=({rows:e,cols:t})=>(e=>{const t=new Array(e.rows*e.cols).map((()=>[]));return St.forEach((o=>{var i;let n=o.occurences.factor?Math.max(o.occurences.min,t.length/o.occurences.factor):o.occurences.min;for(;n>0;){const s=Et(o)?At(o,e.rows,e.cols):(r=t.length,Math.round(Math.random()*(r-1)));t[s]=[...null!==(i=t[s])&&void 0!==i?i:[],Object.assign(Object.assign({},o),{name:o.id,id:dt()})],n--}var r})),t})({rows:e,cols:t}),Bt=(e,{rows:t,cols:o})=>((e,t)=>{const o=new Array(t.rows*t.cols).map((()=>[]));return[ft].forEach((t=>{var i;let n=t.occurences.factor?Math.max(t.occurences.min,o.length/t.occurences.factor):t.occurences.min;for(;n>0;){const r=pt[e](o);o[r]=[...null!==(i=o[r])&&void 0!==i?i:[],Object.assign(Object.assign({},t),{name:t.id,team:e,id:dt()})],n--}})),o})(e,{rows:t,cols:o}),Pt=(e,t,o)=>{var i;return(null!==(i=e.pop())&&void 0!==i?i:[]).map((e=>Object.assign(Object.assign({},e),{row:t,col:o})))},Dt=e=>`player-${e}`,It={knight:Dt("knight"),wagon:Dt("wagon"),mine:{small:"mine-small"},lumberjack:{small:"lumberjack-small"}};class Yt{constructor(e=4086,t=Uint32Array){this.capacity=e,this.capacity=e,this._keys=[],this._priorities=new t(e+1),this.length=0}clear(){this.length=0}bubbleUp(e){const t=this._keys[e],o=this._priorities[e];for(;e>1;){const t=e>>>1;if(this._priorities[t]<=o)break;this._keys[e]=this._keys[t],this._priorities[e]=this._priorities[t],e=t}this._keys[e]=t,this._priorities[e]=o}bubbleDown(e){const t=this._keys[e],o=this._priorities[e],i=1+(this.length>>>1),n=this.length+1;for(;e<i;){const t=e<<1;if(t>=n)break;let i=this._priorities[t],r=this._keys[t],s=t;const a=t+1;if(a<n){const e=this._priorities[a];e<i&&(i=e,r=this._keys[a],s=a)}if(i>=o)break;this._keys[e]=r,this._priorities[e]=i,e=s}this._keys[e]=t,this._priorities[e]=o}push(e,t=0){if(this.length===this.capacity)throw new Error("Heap has reached capacity, can't push new items");const o=this.length+1;this._keys[o]=e,this._priorities[o]=t,this.bubbleUp(o),this.length++}pop(){const e=this._keys[1];return this.length--,this.length>0&&(this._keys[1]=this._keys[this.length+1],this._priorities[1]=this._priorities[this.length+1],this.bubbleDown(1)),e}peekPriority(){return this._priorities[1]}peek(){return this._keys[1]}toString(){if(0===this.length)return"(empty queue)";const e=Array(this.length-1);for(let t=0;t<this.length;t++)e[t]=this._priorities[t+1];return`[${e.join(" ")}]`}get[Symbol.toStringTag](){return"Heapify"}*[Symbol.iterator](){for(let e=0;e<this.length;e++){const t=this._priorities[e+1],o=this._keys[e+1];yield[o,t]}}*keys(){for(let e=0;e<this.length;e++)yield this._keys[e+1]}*priorities(){for(let e=0;e<this.length;e++)yield this._priorities[e+1]}}const Lt=e=>e.toPosition().toString();const Gt=(e,t,o,i,n)=>{const r=new Yt;r.push(e,0);const s={},a={},l=[];let c=!1;if(s[Lt(e)]=Lt(e),a[Lt(e)]=0,e.equals(t))return{path:[]};if(i(t))return{path:[]};for(;r.length>0;){const e=r.pop();if(e.equals(t)){c=!0;break}if(r.length>1e3)throw new Error("No what kinda path are you searching for?!");l.push(e.toPosition().toString());for(const c of e.neighbors(o).filter((e=>!s[Lt(e)])).map((e=>{var t;return null!==(t=o.find((t=>t.equals(e))))&&void 0!==t?t:e}))){if(i(c))continue;l.some((e=>e===Lt(c)))||l.push(Lt(c));const o=a[Lt(e)]+c.cost();n<o||(!a[Lt(c)]||o<a[Lt(c)])&&(a[Lt(c)]=o,r.push(c,o+t.heuristic(c)),s[Lt(c)]=e.toPosition().toString())}}const d=e.toPosition();if(!c)return{path:[],visited:l};let u=t.toPosition();const h=[];do{h.push(u),u=lt.fromString(s[u.toString()])}while(null!==u&&!u.equals(d));return{path:h.reverse(),visited:l}},Wt=fe("action/abort"),Zt=pe("player/update"),Kt=fe("player/request/select"),Vt=pe("player/buildings/item/selected"),qt=pe("player/item/moved"),Xt=pe("player/knights/created"),Ft=pe("player/wagon/created"),Jt=pe("player/assets/loaded"),Qt=pe("player/action/performed"),eo=pe("turn/player/actions/hasLeft"),to=fe("turn/player/actions/none"),oo=fe("map/hexagon/updated",{readOnce:!0}),io=pe("modes/move/activate"),no=pe("modes/move/activated"),ro=pe("modes/move/deactivate"),so=pe("modes/move/hovered-target"),ao=pe("modes/move/end"),lo=pe("modes/build/lumberjack-small"),co=pe("modes/build/lumberjack-small/success"),uo=pe("modes/build/lumberjack-small/failed"),ho=pe("modes/build/mine-small"),vo=pe("modes/build/mine-small/success"),mo=pe("modes/build/mine-small/failed"),go=pe("modes/battle/activate"),fo=pe("modes/battle/active"),po=pe("modes/battle/end"),bo=pe("modes/battle/deactivate"),wo=pe("battle/started"),yo=pe("battle/dice/thrown"),$o=pe("battle/player/attacked"),ko=pe("mill/takeover"),xo=pe("lumberjack/takeover"),Oo=pe("mine/takeover"),jo=pe("modal/battle/open"),_o=pe("modal/dice-result/open"),Eo=pe("turn/world/started"),So=pe("turn/world/accepted"),Ao=pe("turn/player/complete"),To=pe("turn/world/complete"),Mo=pe("resources/generated"),Co=pe("resources/generation/complete"),zo=pe("resources/summary"),Ro=pe("resources/distribute"),Ho=pe("resources/distribute/request"),Uo=pe("resources/distribute/updated"),No=()=>({grain:100,iron:200,hay:0,wood:0,stone:0});function Bo(e,t){if(!e||!e.map)return[];const o=e=>t===e.team,i=[];for(const t of e.map)for(const e of t)i.push(...e.elements.filter(o));return i}function Po(e){var t,o,i,n,r;if(!e)return;return[...null!==(r=null===(n=null===(i=null===(o=null===(t=null===document||void 0===document?void 0:document.querySelector("the-mill"))||void 0===t?void 0:t.shadowRoot)||void 0===o?void 0:o.querySelector("world-map"))||void 0===i?void 0:i.shadowRoot)||void 0===n?void 0:n.querySelectorAll("hexagon-element"))&&void 0!==r?r:[]].find((t=>{var o,i;return null===(i=null===(o=t.shadowRoot)||void 0===o?void 0:o.querySelector("sprite-set"))||void 0===i?void 0:i.querySelector(`[id="${e.id}"]`)}))}document.deepQuerySelector=Po;const Do=()=>({grain:50,iron:0,hay:0,wood:50,stone:0});let Io,Yo={},Lo=[],Go=[],Wo={};const Zo=e=>Object.assign({},Wo[e]),Ko=()=>Wo[Io],Vo=e=>e.actions.current>0,qo=({team:e})=>e===Io;ge.on(Rt,(async e=>{Lo=[],e.map.forEach(((e,t)=>{e.forEach(((e,o)=>{const i=new lt(t,o).toCube();e.terrain.movementCosts&&(i.costs=e.terrain.movementCosts),Lo.push(i)}))})),Yo=e,["green","red"].forEach((e=>{Wo[e]={resources:{hay:100,grain:200,iron:200,wood:100,stone:100}}})),await we(Ht)})),ge.on(Wt,(async e=>{e&&(we(ro),we(bo))})),ge.on([Ht,Ut],(async()=>{await we(Eo)})),ge.on(Eo,(async()=>{Go=[...Yo.teams],Io=Go.pop(),await we(So,Io)})),ge.on(Ro,(async({team:e,resourcesToGenerate:t})=>{var o;if(null===(o=Zo(e))||void 0===o?void 0:o.resources){const o=Object.assign({},Zo(e).resources);Wo[e].resources=function(e,t){let o=Object.assign({},e),i=[...t],n=!0;for(;n;)n=!1,i=i.map((e=>{let t=e;return Object.entries(e.resources).forEach((i=>{var[r,s]=i,{generatedResource:a}=s,l=bt(s,["generatedResource"]);Object.entries(l).every((([e,t])=>o[e]<=t))&&(n=!0,t=void 0,Object.entries(l).forEach((([e,t])=>{o[e]-=t})),o[r]+=a,we(Mo,e))})),t})).filter(Boolean);return console.log(e,"=>",o),o}(Wo[e].resources,t),we(Co,{team:e,before:o,after:Wo[e].resources}),await we(Uo,{team:e,resourcesToGenerate:t})}})),ge.collect(Mo,Co,(e=>{var t;we(zo,null===(t=e[Mo.name])||void 0===t?void 0:t.map((e=>({name:e.name,from:Object.values(e.resources).map((e=>{var t=bt(e,["generatedResource"]);return Object.assign({},t)})),to:Object.keys(e.resources)}))))})),ge.on(So,(async e=>{const t=Bo(Yo,e);await we(Jt,t);const o=null==t?void 0:t.find((e=>e.name===_i));$t(o)&&we(Kt,{item:_i,row:o.row,col:o.col,payload:o}),setTimeout((()=>{var e;null===(e=Po(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2);const i=Tt(Yo,e).reduce(((e,t)=>[...e,...Mt(t)]),[]).filter(((e,t,o)=>o.indexOf(e)===t));await we(Ro,{team:e,resourcesToGenerate:i}),await we(Zt,Zo(e))})),ge.on(Ho,(({team:e})=>{var t;const o=null===(t=Tt(Yo,e))||void 0===t?void 0:t.reduce(((e,t)=>[...e,...Mt(t)]),[]);we(Uo,{team:e,resourcesToGenerate:o})})),ge.on(Kt,(async e=>{await we(Vt,Object.assign(Object.assign({},e),{item:"hexagon"})),await we(Vt,Object.assign({},e)),await we(Vt,Object.assign(Object.assign({},e),{item:"hexagon"}))})),ge.on(Ao,(()=>{Io=Go.pop(),void 0===Io?we(To):we(So,Io)})),ge.on(To,(()=>{Yo.map.forEach((e=>{e.forEach((({elements:e})=>{((...e)=>{e.forEach((e=>{e.actions.current=e.actions.max}))})(...e.filter(xt))}))})),we(Eo)}));[{name:It.knight,hormone:Xt,costs:{grain:100,iron:200,hay:0,wood:0,stone:0},create:({team:e,row:t,col:o})=>({id:dt(),name:ai,team:e,row:t,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10},dices:[Object.assign(Object.assign({},mt(ht.dices.standard)),{sides:[{value:3},{value:3},{value:3},{value:4},{value:5},{value:6}]}),Object.assign(Object.assign({},mt(ht.dices.mightyBlowOfBetrayal)),{sides:[{value:-3},{value:0},{value:0},{value:6},{value:12}]})]})},{name:It.wagon,hormone:Ft,costs:{grain:50,iron:0,hay:0,wood:50,stone:0},create:({team:e,row:t,col:o})=>({id:dt(),name:di,team:e,row:t,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10}})}].forEach((({name:e,hormone:t,costs:o,create:i})=>{ge.on(t,(async({row:t,col:n,team:r,origin:s})=>{if(!qo({team:r}))return;if(!((e,t)=>{const o=Object.assign({},Wo[e].resources);for(const[e,i]of Object.entries(t)){if(o[e]<i)return!1;o[e]-=i}return Wo[e].resources=o,!0})(r,o))return;if(s.actions.current<1)return;const a=i({row:t,col:n,team:r});Yo.map[t][n].elements.push(a),await Promise.all([we(Qt,{item:s}),we(oo,{row:t,col:n,elements:[...Yo.map[t][n].elements]}),we(Jt,Bo(Yo,r)),we(Zt,Ko())]),we(Kt,{item:e,row:t,col:n,payload:a})}))})),ge.on(Qt,(({item:e})=>{Yo.map[e.row][e.col].elements.filter((t=>t.id===e.id)).filter(kt).forEach((e=>e.actions.current--))})),ge.on(eo,(()=>{void 0===((e,t)=>{for(const o of e.map)for(const e of o){const o=e.elements.filter(xt).map((e=>e)).find((e=>e.team===t&&e.actions.current>0));if(o)return o}})(Yo,Io)&&we(to,!0)}));[{name:It.lumberjack.small,hormone:lo,allowedTerrain:"forest",create:({row:e,col:t,team:o})=>({id:dt(),name:"lumberjack-small",team:o,row:e,col:t,occurences:{min:1},resources:{wood:{generatedResource:50}}}),success:co,failed:uo},{name:It.lumberjack.small,hormone:ho,allowedTerrain:"mountain",create:({row:e,col:t,team:o})=>({id:dt(),name:"mine-small",team:o,row:e,col:t,occurences:{min:1},resources:{stone:{generatedResource:50},iron:{generatedResource:50}}}),success:vo,failed:mo}].forEach((({hormone:e,allowedTerrain:t,create:o,success:i,failed:n})=>{ge.on(e,(async({position:e,asset:r})=>{const{elements:s,terrain:a}=Yo.map[e.row][e.col],{team:l}=r,c=s.findIndex((e=>"player-wagon"===e.name));if(qo({team:r.team}))if("player-wagon"!==r.name||c<0)await we(n,{position:e,asset:r,reason:"No wagon on field"});else if(function(e,t){return e.sprite.name===t}(a,t))if(s.some(yt))await we(n,{position:e,asset:r,reason:"There is already a building on the field"});else{const t=o(Object.assign(Object.assign({},e),{team:r.team}));s.splice(c,1),s.unshift(t),await Promise.all([we(oo,Object.assign(Object.assign({},e),{elements:[...s]})),we(Jt,Bo(Yo,r.team)),we(Zt,Ko()),we(i,{position:e,asset:t})]),we(Ho,{team:l})}else await we(n,{position:e,asset:r,reason:`No ${t} on field but ${a.sprite.name}`});else await we(n,{position:e,asset:r,reason:`Not the turn of the team ${r.team}`})}))}));const Xo=e=>Number.parseInt(e.toString(),10),Fo=e=>{const{row:t,col:o}=e.toCoords();return Yo.map[t][o].elements.filter((e=>e.team!==(null==Jo?void 0:Jo.asset.name))).some(jt)};let Jo,Qo;ge.on(io,(async e=>{function t(t){return function(e,t,o,i,n){return Gt(e,t,o,i,n).path.length>0}(new lt(Xo(e.start.row),Xo(e.start.col)).toCube(),new lt(Xo(t.position.row),Xo(t.position.col)).toCube(),Lo,Fo,e.asset.movement.points)}Qo&&await we(bo),qo(e.asset)&&(Jo=Object.assign(Object.assign({},e),{inReach:Yo.map.reduce(((e,o)=>[...e,...o.filter(t).map((e=>e.position))]),[])}),await we(no,e))})),ge.on(ro,(()=>{Jo=void 0})),ge.on(so,(async e=>{var t,o;if(!Jo)return;const i=new lt(Xo(Jo.start.row),Xo(Jo.start.col)).toCube(),n=new lt(Xo(e.row),Xo(e.col)).toCube(),r=Gt(i,n,Lo,Fo,Jo.asset.movement.points).path;let s=e;Fo(n)&&(s=null!==(o=null===(t=[...r].pop())||void 0===t?void 0:t.toCoords())&&void 0!==o?o:Jo.start),await we(io,Object.assign(Object.assign({},Jo),{trail:r,end:s}))})),ge.on(ao,(async e=>{var t,o;if(!Jo)return;if((null!==(o=null===(t=Jo.trail)||void 0===t?void 0:t.length)&&void 0!==o?o:0)<1)return;const{start:i,asset:n}=Jo;if(!qo(n))return;if(void 0===n.actions&&console.error("asset.actions undefined",n),!Vo(n))return;if(at(Jo.start,e))return void we(ro);n.actions.current-=1;const r=[...Yo.map[i.row][i.col].elements];Yo.map[i.row][i.col].elements=[],r.forEach((t=>{t.id!==n.id?Yo.map[i.row][i.col].elements.push(Object.assign(Object.assign({},t),{row:i.row,col:i.col})):Yo.map[e.row][e.col].elements.push(Object.assign(Object.assign({},t),{row:e.row,col:e.col}))})),await we(oo,{row:i.row,col:i.col,elements:[...Yo.map[i.row][i.col].elements]}),await we(oo,{row:e.row,col:e.col,elements:[...Yo.map[e.row][e.col].elements]}),await we(ro),await we(qt,{asset:n,location:e}),await we(eo)})),ge.on(go,(async e=>{qo(e.asset)&&(Jo&&await we(ro),Qo=Object.assign(Object.assign({},e),{range:new lt(e.start.row,e.start.col).toCube().range(1).map((e=>e.toPosition().toCoords()))}),we(fo,Qo))})),ge.on(po,(async e=>{if(!Qo||!qo(Qo.asset))return;if(at(Qo.start,e))return void we(bo);const{row:t,col:o}=e,{asset:i}=Qo,n=[...Yo.map[t][o].elements].filter((e=>Ot(e)&&e.team!==i.team));Vo(i)&&n.length>0&&(i.actions.current-=1,await we(wo,{location:e,attacker:[i],defender:[...n]})),we(Jt,Bo(Yo,i.team)),we(bo),await we(eo)})),ge.on(bo,(()=>Qo=void 0)),ge.on(qt,(async({asset:e,location:t})=>{if(!qo(e))return;const{row:o,col:i}=t,n=[...Yo.map[o][i].elements].filter((t=>t.id!==e.id));for(const{building:o,hormone:i}of[{building:xi,hormone:ko},{building:Ai,hormone:xo},{building:Ci,hormone:Oo}]){const r=n.filter((t=>t.name===o&&t.team!==e.team));if(r.length>0&&Ot(e)){const o={asset:r[0],transfered:{from:r[0].team,to:e.team},location:t,by:e,team:e.team};await we(i,o)}}we(Jt,Bo(Yo,e.team)),await we(eo)})),[ko,xo,Oo].forEach((e=>{ge.on(e,(({location:e,team:t,asset:o})=>{if(!qo({team:t}))return;const{row:i,col:n}=e,r=[...Yo.map[i][n].elements];Yo.map[i][n].elements=[],r.forEach((e=>{e.id!==o.id?Yo.map[i][n].elements.push(e):Yo.map[i][n].elements.push(Object.assign(Object.assign({},e),{team:t}))})),we(Jt,Bo(Yo,t)),we(Ho,{team:t})}))})),ge.on(wo,(e=>{we(jo,e)})),ge.on(yo,(e=>{if(!qo(e.attacker.asset))return;const t=gt(e.attacker.dices);we($o,{attacker:e.attacker.asset,defender:e.defender,damage:t,location:e.location})})),ge.on($o,(e=>{const{defender:t,damage:o,attacker:i}=e,n=Object.assign(Object.assign({},i),{health:Object.assign(Object.assign({},i.health),{current:o<0?i.health.current+o:i.health.current})}),r=Object.assign(Object.assign({},t),{health:Object.assign(Object.assign({},t.health),{current:o>0?t.health.current-o:t.health.current})}),{row:s,col:a}=e.location,l=[...Yo.map[s][a].elements];Yo.map[s][a].elements=[],l.forEach((e=>{e.id===r.id?r.health.current>0&&Yo.map[s][a].elements.push(r):e.id===n.id?n.health.current>0&&Yo.map[s][a].elements.push(n):Yo.map[s][a].elements.push(e)})),we(oo,{row:s,col:a,elements:[...Yo.map[s][a].elements]}),we(jo,void 0),we(_o,{attacker:[i],defender:[t],defender_after:[r],attacker_after:[n],location:e.location,result:o})})),window.location.hash.indexOf("log")>=0&&le(se.INFO),window.location.hash.indexOf("trace")>=0&&le(se.TRACE);const ei=ne`
+function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,i)&&t.indexOf(i)<0&&(o[i]=e[i]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var n=0;for(i=Object.getOwnPropertySymbols(e);n<i.length;n++)t.indexOf(i[n])<0&&Object.prototype.propertyIsEnumerable.call(e,i[n])&&(o[i[n]]=e[i[n]])}return o}const wt=["hay","grain","iron","wood","stone"];function yt(e){var t;return void 0!==e&&void 0!==(null===(t=e)||void 0===t?void 0:t.resources)}function $t(e){var t,o;return void 0!==e&&(null===(t=e)||void 0===t?void 0:t.row)>=0&&(null===(o=e)||void 0===o?void 0:o.col)>=0}function kt(e){var t;return void 0!==e&&void 0!==(null===(t=e)||void 0===t?void 0:t.actions)}function xt(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.actions)||void 0===o?void 0:o.max)>0}function Ot(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.dices)||void 0===o?void 0:o.length)>0}function jt(e){var t,o;return e&&(null===(o=null===(t=e)||void 0===t?void 0:t.dices)||void 0===o?void 0:o.length)>0}const _t={id:"building-mill",name:"Mill",occurences:{min:1},resources:{grain:{hay:100,generatedResource:50},hay:{generatedResource:50}}};function Et(e){return void 0!==e&&e.max>0}const St=[Object.assign(Object.assign({},_t),{min:0,max:2}),Object.assign(Object.assign({},_t),{min:8,max:10})],At=({min:e,max:t},o,i)=>{const n=e=>o*i*(e/10);return Math.floor(Math.random()*(n(t)-n(e))+n(e))},Tt=(e,t)=>{var o;return null===(o=null==e?void 0:e.map)||void 0===o?void 0:o.reduce(((e,o)=>[...e,...o.reduce(((e,o)=>[...e,...o.elements.filter(yt).filter((e=>e.team===t))]),[])]),[])},Mt=(...e)=>e.reduce(((e,t)=>(e.push(...Object.entries(t.resources).map((e=>{var[o,i]=e,{generatedResource:n}=i,r=bt(i,["generatedResource"]);let s={};s[o]=Object.assign(Object.assign({},r),{generatedResource:n});return Object.assign(Object.assign({},t),{resources:s})}))),e)),[]).filter(Boolean),Ct={gras:{sprite:{name:"gras",file:"hexagonTerrain_sheet",x:414,y:1906},movementCosts:1,defense:0},desert:{sprite:{name:"desert",file:"hexagonTerrain_sheet",x:902,y:627},movementCosts:4,defense:0},mud:{sprite:{name:"mud",file:"hexagonTerrain_sheet",x:658,y:912},movementCosts:4,defense:1},muddyHills:{sprite:{name:"muddyHills",file:"hexagonTerrain_sheet",x:780,y:627},movementCosts:8,defense:3},forest:{sprite:{name:"forest",file:"hexagonTerrain_sheet",x:536,y:912},movementCosts:8,defense:3},mountain:{sprite:{name:"mountain",file:"hexagonTerrain_sheet",x:536,y:1195},movementCosts:10,defense:9}},zt=()=>{var e;const t=Object.keys(Ct);return null!==(e=Ct[t[Math.floor(Math.random()*t.length)]])&&void 0!==e?e:Ct.mountain},Rt=pe("game/world/worldLoaded"),Ht=pe("game/start"),Ut=pe("game/load/sidebar"),Nt=({rows:e,cols:t})=>(e=>{const t=new Array(e.rows*e.cols).map((()=>[]));return St.forEach((o=>{var i;let n=o.occurences.factor?Math.max(o.occurences.min,t.length/o.occurences.factor):o.occurences.min;for(;n>0;){const s=Et(o)?At(o,e.rows,e.cols):(r=t.length,Math.round(Math.random()*(r-1)));t[s]=[...null!==(i=t[s])&&void 0!==i?i:[],Object.assign(Object.assign({},o),{name:o.id,id:dt()})],n--}var r})),t})({rows:e,cols:t}),Bt=(e,{rows:t,cols:o})=>((e,t)=>{const o=new Array(t.rows*t.cols).map((()=>[]));return[ft].forEach((t=>{var i;let n=t.occurences.factor?Math.max(t.occurences.min,o.length/t.occurences.factor):t.occurences.min;for(;n>0;){const r=pt[e](o);o[r]=[...null!==(i=o[r])&&void 0!==i?i:[],Object.assign(Object.assign({},t),{name:t.id,team:e,id:dt()})],n--}})),o})(e,{rows:t,cols:o}),Pt=(e,t,o)=>{var i;return(null!==(i=e.pop())&&void 0!==i?i:[]).map((e=>Object.assign(Object.assign({},e),{row:t,col:o})))},Dt=e=>`player-${e}`,It={knight:Dt("knight"),wagon:Dt("wagon"),mine:{small:"mine-small"},lumberjack:{small:"lumberjack-small"}};class Yt{constructor(e=4086,t=Uint32Array){this.capacity=e,this.capacity=e,this._keys=[],this._priorities=new t(e+1),this.length=0}clear(){this.length=0}bubbleUp(e){const t=this._keys[e],o=this._priorities[e];for(;e>1;){const t=e>>>1;if(this._priorities[t]<=o)break;this._keys[e]=this._keys[t],this._priorities[e]=this._priorities[t],e=t}this._keys[e]=t,this._priorities[e]=o}bubbleDown(e){const t=this._keys[e],o=this._priorities[e],i=1+(this.length>>>1),n=this.length+1;for(;e<i;){const t=e<<1;if(t>=n)break;let i=this._priorities[t],r=this._keys[t],s=t;const a=t+1;if(a<n){const e=this._priorities[a];e<i&&(i=e,r=this._keys[a],s=a)}if(i>=o)break;this._keys[e]=r,this._priorities[e]=i,e=s}this._keys[e]=t,this._priorities[e]=o}push(e,t=0){if(this.length===this.capacity)throw new Error("Heap has reached capacity, can't push new items");const o=this.length+1;this._keys[o]=e,this._priorities[o]=t,this.bubbleUp(o),this.length++}pop(){const e=this._keys[1];return this.length--,this.length>0&&(this._keys[1]=this._keys[this.length+1],this._priorities[1]=this._priorities[this.length+1],this.bubbleDown(1)),e}peekPriority(){return this._priorities[1]}peek(){return this._keys[1]}toString(){if(0===this.length)return"(empty queue)";const e=Array(this.length-1);for(let t=0;t<this.length;t++)e[t]=this._priorities[t+1];return`[${e.join(" ")}]`}get[Symbol.toStringTag](){return"Heapify"}*[Symbol.iterator](){for(let e=0;e<this.length;e++){const t=this._priorities[e+1],o=this._keys[e+1];yield[o,t]}}*keys(){for(let e=0;e<this.length;e++)yield this._keys[e+1]}*priorities(){for(let e=0;e<this.length;e++)yield this._priorities[e+1]}}const Lt=e=>e.toPosition().toString();const Gt=(e,t,o,i,n)=>{const r=new Yt;r.push(e,0);const s={},a={},l=[];let c=!1;if(s[Lt(e)]=Lt(e),a[Lt(e)]=0,e.equals(t))return{path:[]};if(i(t))return{path:[]};for(;r.length>0;){const e=r.pop();if(e.equals(t)){c=!0;break}if(r.length>1e3)throw new Error("No what kinda path are you searching for?!");l.push(e.toPosition().toString());for(const c of e.neighbors(o).filter((e=>!s[Lt(e)])).map((e=>{var t;return null!==(t=o.find((t=>t.equals(e))))&&void 0!==t?t:e}))){if(i(c))continue;l.some((e=>e===Lt(c)))||l.push(Lt(c));const o=a[Lt(e)]+c.cost();n<o||(!a[Lt(c)]||o<a[Lt(c)])&&(a[Lt(c)]=o,r.push(c,o+t.heuristic(c)),s[Lt(c)]=e.toPosition().toString())}}const d=e.toPosition();if(!c)return{path:[],visited:l};let u=t.toPosition();const h=[];do{h.push(u),u=lt.fromString(s[u.toString()])}while(null!==u&&!u.equals(d));return{path:h.reverse(),visited:l}},Wt=fe("action/abort"),Zt=pe("player/update"),Kt=fe("player/request/select"),Vt=pe("player/buildings/item/selected"),qt=pe("player/buildings/item/unselected"),Xt=pe("player/item/moved"),Ft=pe("player/knights/created"),Jt=pe("player/wagon/created"),Qt=pe("player/assets/loaded"),eo=pe("player/action/performed"),to=pe("turn/player/actions/hasLeft"),oo=fe("turn/player/actions/none"),io=fe("map/hexagon/updated",{readOnce:!0}),no=pe("modes/move/activate"),ro=pe("modes/move/activated"),so=pe("modes/move/deactivate"),ao=pe("modes/move/hovered-target"),lo=pe("modes/move/end"),co=pe("modes/build/lumberjack-small"),uo=pe("modes/build/lumberjack-small/success"),ho=pe("modes/build/lumberjack-small/failed"),vo=pe("modes/build/mine-small"),mo=pe("modes/build/mine-small/success"),go=pe("modes/build/mine-small/failed"),fo=pe("modes/battle/activate"),po=pe("modes/battle/active"),bo=pe("modes/battle/end"),wo=pe("modes/battle/deactivate"),yo=pe("battle/started"),$o=pe("battle/dice/thrown"),ko=pe("battle/player/attacked"),xo=pe("mill/takeover"),Oo=pe("lumberjack/takeover"),jo=pe("mine/takeover"),_o=pe("modal/battle/open"),Eo=pe("modal/dice-result/open"),So=pe("turn/world/started"),Ao=pe("turn/world/accepted"),To=pe("turn/player/complete"),Mo=pe("turn/world/complete"),Co=pe("resources/generated"),zo=pe("resources/generation/complete"),Ro=pe("resources/summary"),Ho=pe("resources/distribute"),Uo=pe("resources/distribute/request"),No=pe("resources/distribute/updated"),Bo=()=>({grain:100,iron:200,hay:0,wood:0,stone:0});function Po(e,t){if(!e||!e.map)return[];const o=e=>t===e.team,i=[];for(const t of e.map)for(const e of t)i.push(...e.elements.filter(o));return i}function Do(e){var t,o,i,n,r;if(!e)return;return[...null!==(r=null===(n=null===(i=null===(o=null===(t=null===document||void 0===document?void 0:document.querySelector("the-mill"))||void 0===t?void 0:t.shadowRoot)||void 0===o?void 0:o.querySelector("world-map"))||void 0===i?void 0:i.shadowRoot)||void 0===n?void 0:n.querySelectorAll("hexagon-element"))&&void 0!==r?r:[]].find((t=>{var o,i;return null===(i=null===(o=t.shadowRoot)||void 0===o?void 0:o.querySelector("sprite-set"))||void 0===i?void 0:i.querySelector(`[id="${e.id}"]`)}))}document.deepQuerySelector=Do;const Io=()=>({grain:50,iron:0,hay:0,wood:50,stone:0});let Yo,Lo={},Go=[],Wo=[],Zo={};const Ko=e=>Object.assign({},Zo[e]),Vo=()=>Zo[Yo],qo=e=>e.actions.current>0,Xo=({team:e})=>e===Yo;ge.on(Rt,(async e=>{Go=[],e.map.forEach(((e,t)=>{e.forEach(((e,o)=>{const i=new lt(t,o).toCube();e.terrain.movementCosts&&(i.costs=e.terrain.movementCosts),Go.push(i)}))})),Lo=e,["green","red"].forEach((e=>{Zo[e]={resources:{hay:100,grain:200,iron:200,wood:100,stone:100}}})),await we(Ht)})),ge.on(Wt,(async e=>{e&&(we(so),we(wo))})),ge.on([Ht,Ut],(async()=>{await we(So)})),ge.on(So,(async()=>{Wo=[...Lo.teams],Yo=Wo.pop(),await we(Ao,Yo)})),ge.on(Ho,(async({team:e,resourcesToGenerate:t})=>{var o;if(null===(o=Ko(e))||void 0===o?void 0:o.resources){const o=Object.assign({},Ko(e).resources);Zo[e].resources=function(e,t){let o=Object.assign({},e),i=[...t],n=!0;for(;n;)n=!1,i=i.map((e=>{let t=e;return Object.entries(e.resources).forEach((i=>{var[r,s]=i,{generatedResource:a}=s,l=bt(s,["generatedResource"]);Object.entries(l).every((([e,t])=>o[e]<=t))&&(n=!0,t=void 0,Object.entries(l).forEach((([e,t])=>{o[e]-=t})),o[r]+=a,we(Co,e))})),t})).filter(Boolean);return o}(Zo[e].resources,t),we(zo,{team:e,before:o,after:Zo[e].resources}),await we(No,{team:e,resourcesToGenerate:t})}})),ge.collect(Co,zo,(e=>{var t;we(Ro,null===(t=e[Co.name])||void 0===t?void 0:t.map((e=>({name:e.name,from:Object.values(e.resources).map((e=>{var t=bt(e,["generatedResource"]);return Object.assign({},t)})),to:Object.keys(e.resources)}))))})),ge.on(Ao,(async e=>{const t=Po(Lo,e);await we(Qt,t);const o=null==t?void 0:t.find((e=>e.name===Ei));$t(o)&&we(Kt,{item:Ei,row:o.row,col:o.col,payload:o}),setTimeout((()=>{var e;null===(e=Do(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2);const i=Tt(Lo,e).reduce(((e,t)=>[...e,...Mt(t)]),[]).filter(((e,t,o)=>o.indexOf(e)===t));await we(Ho,{team:e,resourcesToGenerate:i}),await we(Zt,Ko(e))})),ge.on(Uo,(({team:e})=>{var t;const o=null===(t=Tt(Lo,e))||void 0===t?void 0:t.reduce(((e,t)=>[...e,...Mt(t)]),[]);we(No,{team:e,resourcesToGenerate:o})})),ge.on(Kt,(async e=>{await we(Vt,Object.assign(Object.assign({},e),{item:"hexagon"})),await we(Vt,Object.assign({},e)),await we(Vt,Object.assign(Object.assign({},e),{item:"hexagon"}))})),ge.on(To,(()=>{Yo=Wo.pop(),void 0===Yo?we(Mo):we(Ao,Yo)})),ge.on(Mo,(()=>{Lo.map.forEach((e=>{e.forEach((({elements:e})=>{((...e)=>{e.forEach((e=>{e.actions.current=e.actions.max}))})(...e.filter(xt))}))})),we(So)}));[{name:It.knight,hormone:Ft,costs:{grain:100,iron:200,hay:0,wood:0,stone:0},create:({team:e,row:t,col:o})=>({id:dt(),name:li,team:e,row:t,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10},dices:[Object.assign(Object.assign({},mt(ht.dices.standard)),{sides:[{value:3},{value:3},{value:3},{value:4},{value:5},{value:6}]}),Object.assign(Object.assign({},mt(ht.dices.mightyBlowOfBetrayal)),{sides:[{value:-3},{value:0},{value:0},{value:6},{value:12}]})]})},{name:It.wagon,hormone:Jt,costs:{grain:50,iron:0,hay:0,wood:50,stone:0},create:({team:e,row:t,col:o})=>({id:dt(),name:ui,team:e,row:t,col:o,movement:{points:10},actions:{current:2,max:2},health:{current:10,max:10}})}].forEach((({name:e,hormone:t,costs:o,create:i})=>{ge.on(t,(async({row:t,col:n,team:r,origin:s})=>{if(!Xo({team:r}))return;if(!((e,t)=>{const o=Object.assign({},Zo[e].resources);for(const[e,i]of Object.entries(t)){if(o[e]<i)return!1;o[e]-=i}return Zo[e].resources=o,!0})(r,o))return;if(s.actions.current<1)return;const a=i({row:t,col:n,team:r});Lo.map[t][n].elements.push(a),await Promise.all([we(eo,{item:s}),we(io,{row:t,col:n,elements:[...Lo.map[t][n].elements]}),we(Qt,Po(Lo,r)),we(Zt,Vo())]),we(Kt,{item:e,row:t,col:n,payload:a})}))})),ge.on(eo,(({item:e})=>{Lo.map[e.row][e.col].elements.filter((t=>t.id===e.id)).filter(kt).forEach((e=>e.actions.current--))})),ge.on(to,(()=>{void 0===((e,t)=>{for(const o of e.map)for(const e of o){const o=e.elements.filter(xt).map((e=>e)).find((e=>e.team===t&&e.actions.current>0));if(o)return o}})(Lo,Yo)&&we(oo,!0)})),[{name:It.lumberjack.small,hormone:co,allowedTerrain:"forest",create:({row:e,col:t,team:o})=>({id:dt(),name:"lumberjack-small",team:o,row:e,col:t,occurences:{min:1},resources:{wood:{generatedResource:50}}}),success:uo,failed:ho},{name:It.lumberjack.small,hormone:vo,allowedTerrain:"mountain",create:({row:e,col:t,team:o})=>({id:dt(),name:"mine-small",team:o,row:e,col:t,occurences:{min:1},resources:{stone:{generatedResource:50},iron:{generatedResource:50}}}),success:mo,failed:go}].forEach((({hormone:e,allowedTerrain:t,create:o,success:i,failed:n})=>{ge.on(e,(async({position:e,asset:r})=>{const{elements:s,terrain:a}=Lo.map[e.row][e.col],{team:l}=r,c=s.findIndex((e=>"player-wagon"===e.name));if(Xo({team:r.team}))if("player-wagon"!==r.name||c<0)await we(n,{position:e,asset:r,reason:"No wagon on field"});else if(function(e,t){return e.sprite.name===t}(a,t))if(s.some(yt))await we(n,{position:e,asset:r,reason:"There is already a building on the field"});else{const t=o(Object.assign(Object.assign({},e),{team:r.team}));s.splice(c,1),s.unshift(t),await Promise.all([we(io,Object.assign(Object.assign({},e),{elements:[...s]})),we(Qt,Po(Lo,r.team)),we(Zt,Vo()),we(i,{position:e,asset:t})]),we(qt,{}),we(Uo,{team:l}),await we(to)}else await we(n,{position:e,asset:r,reason:`No ${t} on field but ${a.sprite.name}`});else await we(n,{position:e,asset:r,reason:`Not the turn of the team ${r.team}`})}))}));const Fo=e=>Number.parseInt(e.toString(),10),Jo=e=>{const{row:t,col:o}=e.toCoords();return Lo.map[t][o].elements.filter((e=>e.team!==(null==Qo?void 0:Qo.asset.name))).some(jt)};let Qo,ei;ge.on(no,(async e=>{function t(t){return function(e,t,o,i,n){return Gt(e,t,o,i,n).path.length>0}(new lt(Fo(e.start.row),Fo(e.start.col)).toCube(),new lt(Fo(t.position.row),Fo(t.position.col)).toCube(),Go,Jo,e.asset.movement.points)}ei&&await we(wo),Xo(e.asset)&&(Qo=Object.assign(Object.assign({},e),{inReach:Lo.map.reduce(((e,o)=>[...e,...o.filter(t).map((e=>e.position))]),[])}),await we(ro,e))})),ge.on(so,(()=>{Qo=void 0})),ge.on(ao,(async e=>{var t,o;if(!Qo)return;const i=new lt(Fo(Qo.start.row),Fo(Qo.start.col)).toCube(),n=new lt(Fo(e.row),Fo(e.col)).toCube(),r=Gt(i,n,Go,Jo,Qo.asset.movement.points).path;let s=e;Jo(n)&&(s=null!==(o=null===(t=[...r].pop())||void 0===t?void 0:t.toCoords())&&void 0!==o?o:Qo.start),await we(no,Object.assign(Object.assign({},Qo),{trail:r,end:s}))})),ge.on(lo,(async e=>{var t,o;if(!Qo)return;if((null!==(o=null===(t=Qo.trail)||void 0===t?void 0:t.length)&&void 0!==o?o:0)<1)return;const{start:i,asset:n}=Qo;if(!Xo(n))return;if(void 0===n.actions&&console.error("asset.actions undefined",n),!qo(n))return;if(at(Qo.start,e))return void we(so);n.actions.current-=1;const r=[...Lo.map[i.row][i.col].elements];Lo.map[i.row][i.col].elements=[],r.forEach((t=>{t.id!==n.id?Lo.map[i.row][i.col].elements.push(Object.assign(Object.assign({},t),{row:i.row,col:i.col})):Lo.map[e.row][e.col].elements.push(Object.assign(Object.assign({},t),{row:e.row,col:e.col}))})),await we(io,{row:i.row,col:i.col,elements:[...Lo.map[i.row][i.col].elements]}),await we(io,{row:e.row,col:e.col,elements:[...Lo.map[e.row][e.col].elements]}),await we(so),await we(Xt,{asset:n,location:e}),await we(to)})),ge.on(fo,(async e=>{Xo(e.asset)&&(Qo&&await we(so),ei=Object.assign(Object.assign({},e),{range:new lt(e.start.row,e.start.col).toCube().range(1).map((e=>e.toPosition().toCoords()))}),we(po,ei))})),ge.on(bo,(async e=>{if(!ei||!Xo(ei.asset))return;if(at(ei.start,e))return void we(wo);const{row:t,col:o}=e,{asset:i}=ei,n=[...Lo.map[t][o].elements].filter((e=>Ot(e)&&e.team!==i.team));qo(i)&&n.length>0&&(i.actions.current-=1,await we(yo,{location:e,attacker:[i],defender:[...n]})),we(Qt,Po(Lo,i.team)),we(wo),await we(to)})),ge.on(wo,(()=>ei=void 0)),ge.on(Xt,(async({asset:e,location:t})=>{if(!Xo(e))return;const{row:o,col:i}=t,n=[...Lo.map[o][i].elements].filter((t=>t.id!==e.id));for(const{building:o,hormone:i}of[{building:Oi,hormone:xo},{building:Ti,hormone:Oo},{building:zi,hormone:jo}]){const r=n.filter((t=>t.name===o&&t.team!==e.team));if(r.length>0&&Ot(e)){const o={asset:r[0],transfered:{from:r[0].team,to:e.team},location:t,by:e,team:e.team};await we(i,o)}}we(Qt,Po(Lo,e.team)),await we(to)})),[xo,Oo,jo].forEach((e=>{ge.on(e,(({location:e,team:t,asset:o})=>{if(!Xo({team:t}))return;const{row:i,col:n}=e,r=[...Lo.map[i][n].elements];Lo.map[i][n].elements=[],r.forEach((e=>{e.id!==o.id?Lo.map[i][n].elements.push(e):Lo.map[i][n].elements.push(Object.assign(Object.assign({},e),{team:t}))})),we(Qt,Po(Lo,t)),we(Uo,{team:t})}))})),ge.on(yo,(e=>{we(_o,e)})),ge.on($o,(e=>{if(!Xo(e.attacker.asset))return;const t=gt(e.attacker.dices);we(ko,{attacker:e.attacker.asset,defender:e.defender,damage:t,location:e.location})})),ge.on(ko,(e=>{const{defender:t,damage:o,attacker:i}=e,n=Object.assign(Object.assign({},i),{health:Object.assign(Object.assign({},i.health),{current:o<0?i.health.current+o:i.health.current})}),r=Object.assign(Object.assign({},t),{health:Object.assign(Object.assign({},t.health),{current:o>0?t.health.current-o:t.health.current})}),{row:s,col:a}=e.location,l=[...Lo.map[s][a].elements];Lo.map[s][a].elements=[],l.forEach((e=>{e.id===r.id?r.health.current>0&&Lo.map[s][a].elements.push(r):e.id===n.id?n.health.current>0&&Lo.map[s][a].elements.push(n):Lo.map[s][a].elements.push(e)})),we(io,{row:s,col:a,elements:[...Lo.map[s][a].elements]}),we(_o,void 0),we(Eo,{attacker:[i],defender:[t],defender_after:[r],attacker_after:[n],location:e.location,result:o})})),window.location.hash.indexOf("log")>=0&&le(se.INFO),window.location.hash.indexOf("trace")>=0&&le(se.TRACE);const ti=ne`
     :host {
         position: absolute;
         width: 120px;
@@ -52,11 +52,11 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         background-repeat: no-repeat;
         background-position: center center;
     }
-`,ti=ne`
+`,oi=ne`
 .inactive {
     opacity: 0.8;
     filter: grayscale(100%);
-}`,oi=ne`
+}`,ii=ne`
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -71,7 +71,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
     ::-webkit-scrollbar-thumb:hover {
       background: #555;
     }
-`,ii=e=>ne`
+`,ni=e=>ne`
      ${e} {
         scrollbar-color:  #888 #f1f1f1;
         scrollbar-width: thin;
@@ -113,7 +113,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         width: 64px;
         height: 64px;
     }
-    `});const ni=a`
+    `});const ri=a`
 #background {
     position: absolute;
     left: 0;
@@ -135,7 +135,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
     opacity: 1;
     z-index: 1001;
 }
-`,ri=a`
+`,si=a`
     header {
         position: relative;
         height: 2rem;
@@ -145,11 +145,11 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         right: 12px;
         font-size: 2rem;
     }
-`,si=(e,t)=>{e.dispatchEvent(new CustomEvent(t))};Ee("modal-window",(e=>e.open?R`
-    <div id="background" @click="${()=>e.preventClose&&si(e,"close")}"></div>
+`,ai=(e,t)=>{e.dispatchEvent(new CustomEvent(t))};Ee("modal-window",(e=>e.open?R`
+    <div id="background" @click="${()=>e.preventClose&&ai(e,"close")}"></div>
     <div id="modal">
         <header>
-            ${e.preventClose?R``:R`<button-pure id="close" @click="${()=>si(e,"close")}"><text-block size="large">X</text-block></button-pure>`}
+            ${e.preventClose?R``:R`<button-pure id="close" @click="${()=>ai(e,"close")}"><text-block size="large">X</text-block></button-pure>`}
             <slot name="header"></slot>
         </header>
         <div>
@@ -157,7 +157,7 @@ function bt(e,t){var o={};for(var i in e)Object.prototype.hasOwnProperty.call(e,
         </div>
         <slot name="footer"></slot>
     </div>
-    `:R``),{styles:[ni,ri],defaults:{open:!1,preventClose:!1}}),Ee("modal-container",(e=>{const{getState:t,publish:o}=ot(e,!1);return R`
+    `:R``),{styles:[ri,si],defaults:{open:!1,preventClose:!1}}),Ee("modal-container",(e=>{const{getState:t,publish:o}=ot(e,!1);return R`
         <button-pure @click="${()=>o(!0)}"><slot></slot></button-pure>
         <modal-window .open=${t()} @close=${()=>o(!1)}>
             <slot slot="header" name="header"></slot>
@@ -282,17 +282,17 @@ span {
 #side6 {
     transform: rotateX(-90deg) translateX(0px) translateY(0px) translateZ(56px);
 }
-`,props:[{result:{type:Number}}]});const ai=It.knight;var li=Ee(ai,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/knight_${e.team}.png'"></div>`}),{styles:[ei,ti,a`
+`,props:[{result:{type:Number}}]});const li=It.knight;var ci=Ee(li,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,Ao,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/knight_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         div {
             background-size: contain;
             opacity: 1;
         }
-        `],defaults:{team:""}}),ci=Object.freeze({__proto__:null,name:ai,default:li});const di=It.wagon;var ui=Ee(di,(e=>{const{getState:t,publish:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/wagon_${e.team}.png'"></div>`}),{styles:[ei,ti,a`
+        `],defaults:{team:""}}),di=Object.freeze({__proto__:null,name:li,default:ci});const ui=It.wagon;var hi=Ee(ui,(e=>{const{getState:t,publish:o}=ot(e,"");return $e(e,Ao,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/wagon_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         div {
             background-size: contain;
             opacity: 1;
         }
-        `],defaults:{team:""}}),hi=Object.freeze({__proto__:null,name:di,default:ui});Ee("dice-selector",(e=>{var t;return R`${null===(t=e.dices)||void 0===t?void 0:t.map((t=>R`<div>
+        `],defaults:{team:""}}),vi=Object.freeze({__proto__:null,name:ui,default:hi});Ee("dice-selector",(e=>{var t;return R`${null===(t=e.dices)||void 0===t?void 0:t.map((t=>R`<div>
         <input type="radio" 
             @click=${()=>e.dispatchEvent(new CustomEvent("select",{detail:t}))}
             id="${t.name}" 
@@ -329,20 +329,20 @@ span {
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const vi=2;
+const mi=2;
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t,o){this._$Ct=e,this._$AM=t,this._$Ci=o}_$AS(e,t){return this.update(e,t)}update(e,t){return this.render(...t)}}{constructor(e){if(super(e),this.it=U,e.type!==vi)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(e){if(e===U||null==e)return this.ft=void 0,this.it=e;if(e===H)return e;if("string"!=typeof e)throw Error(this.constructor.directiveName+"() called with a non-string value");if(e===this.it)return this.ft;this.it=e;const t=[e];return t.raw=t,this.ft={_$litType$:this.constructor.resultType,strings:t,values:[]}}}mi.directiveName="unsafeHTML",mi.resultType=1;const gi=(e=>(...t)=>({_$litDirective$:e,values:t}))(mi);async function fi(e){for(const t of e)await t()}const pi=(e,t)=>{var o,i;return[...null!==(o=t.none)&&void 0!==o?o:[],...null!==(i=t[e])&&void 0!==i?i:[]]};Ee("sprite-set",(e=>{const{getState:t,publish:o}=ot(e,void 0),{getState:i,publish:n}=ot(e,void 0);return $e(e,oo,(t=>e.row.toString()===(null==t?void 0:t.row.toString())&&e.col.toString()===(null==t?void 0:t.col.toString())),o),$e(e,So,n),t()&&fi(pi(i(),e.triggers)).then((()=>we(Vt,{item:"hexagon",row:e.row,col:e.col}))),tt(e,(()=>{e.addEventListener("click",(async()=>{fi(pi(i(),e.triggers))}))})),R`<slot></slot>`}),{defaults:{row:0,col:0,triggers:{}}}),Ee("sprite-player-elements-grid",(()=>R`<slot></slot>`),{styles:a`
+class gi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t,o){this._$Ct=e,this._$AM=t,this._$Ci=o}_$AS(e,t){return this.update(e,t)}update(e,t){return this.render(...t)}}{constructor(e){if(super(e),this.it=U,e.type!==mi)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(e){if(e===U||null==e)return this.ft=void 0,this.it=e;if(e===H)return e;if("string"!=typeof e)throw Error(this.constructor.directiveName+"() called with a non-string value");if(e===this.it)return this.ft;this.it=e;const t=[e];return t.raw=t,this.ft={_$litType$:this.constructor.resultType,strings:t,values:[]}}}gi.directiveName="unsafeHTML",gi.resultType=1;const fi=(e=>(...t)=>({_$litDirective$:e,values:t}))(gi);async function pi(e){for(const t of e)await t()}const bi=(e,t)=>{var o,i;return[...null!==(o=t.none)&&void 0!==o?o:[],...null!==(i=t[e])&&void 0!==i?i:[]]};Ee("sprite-set",(e=>{const{getState:t,publish:o}=ot(e,void 0),{getState:i,publish:n}=ot(e,void 0);return $e(e,io,(t=>e.row.toString()===(null==t?void 0:t.row.toString())&&e.col.toString()===(null==t?void 0:t.col.toString())),o),$e(e,Ao,n),t()&&pi(bi(i(),e.triggers)).then((()=>we(Vt,{item:"hexagon",row:e.row,col:e.col}))),tt(e,(()=>{e.addEventListener("click",(async()=>{pi(bi(i(),e.triggers))}))})),R`<slot></slot>`}),{defaults:{row:0,col:0,triggers:{}}}),Ee("sprite-player-elements-grid",(()=>R`<slot></slot>`),{styles:a`
     slot {
         display: grid;
         align-items: center;
         grid-template-columns: repeat(6, 1fr);
     }
-    `});const bi=(o,i,n)=>{const r={},s=null==o?void 0:o.map((o=>{var s,a,l,c;const d=Object.entries(Object.assign(Object.assign({},t),e)).find((([e,t])=>t.name===o.name)),u=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([e,t])=>void 0!==t)).map((([e,t])=>`${e}="${t}"`)).join(" "),h=null!==(s=o.team)&&void 0!==s?s:"none";return r[h]=null!==(a=r[h])&&void 0!==a?a:[],r[h].push((()=>{var e;return we(Vt,{item:null!==(e=null==d?void 0:d[1].name)&&void 0!==e?e:"",row:i,col:n,payload:Object.assign({},o)})})),R`${gi(`<${null!==(l=null==d?void 0:d[1].name)&&void 0!==l?l:"span"} ${u}></${null!==(c=null==d?void 0:d[1].name)&&void 0!==c?c:"span"}>`)}`}));return R`<sprite-set .triggers=${r} col="${n}" row="${i}">${s}</sprite-set>`};Ee("fighter-info",(({player:e,row:t,col:o})=>R`<div class="sprite ${(null==e?void 0:e.health.current)<1?"dead":"alive"}">
-            ${bi(e?[e]:[],t,o)}
+    `});const wi=(o,i,n)=>{const r={},s=null==o?void 0:o.map((o=>{var s,a,l,c;const d=Object.entries(Object.assign(Object.assign({},t),e)).find((([e,t])=>t.name===o.name)),u=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([e,t])=>void 0!==t)).map((([e,t])=>`${e}="${t}"`)).join(" "),h=null!==(s=o.team)&&void 0!==s?s:"none";return r[h]=null!==(a=r[h])&&void 0!==a?a:[],r[h].push((()=>{var e;return we(Vt,{item:null!==(e=null==d?void 0:d[1].name)&&void 0!==e?e:"",row:i,col:n,payload:Object.assign({},o)})})),R`${fi(`<${null!==(l=null==d?void 0:d[1].name)&&void 0!==l?l:"span"} ${u}></${null!==(c=null==d?void 0:d[1].name)&&void 0!==c?c:"span"}>`)}`}));return R`<sprite-set .triggers=${r} col="${n}" row="${i}">${s}</sprite-set>`};Ee("fighter-info",(({player:e,row:t,col:o})=>R`<div class="sprite ${(null==e?void 0:e.health.current)<1?"dead":"alive"}">
+            ${wi(e?[e]:[],t,o)}
         </div>
         <div class="info">
             <h3>Gesundheit</h3>
@@ -368,7 +368,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             animation: rotation 5s 1;
             animation-fill-mode: forwards;
         }
-        `],props:[{player:{type:Object},row:{type:Number},col:{type:Number}}]});const wi=ne`
+        `],props:[{player:{type:Object},row:{type:Number},col:{type:Number}}]});const yi=ne`
 :host {
   display: inline-block;
 }
@@ -385,7 +385,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
   &:hover {
     background: var(--colorFocus);
   }
-}`,yi=ne`
+}`,$i=ne`
     .inactive {
         opacity: 0.8;
         cursor: not-allowed;
@@ -402,12 +402,12 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     .inactive.unreachable {
       opacity: 0.1;
     }
-`,$i=(e,t,o)=>`${function(e,t){var o,i,n;return t?at(t.start,e)?"active start":t.end&&(null!==(i=null===(o=t.trail)||void 0===o?void 0:o.length)&&void 0!==i?i:0)<1&&at(t.end,e)?"active unreachable":t.end&&at(t.end,e)?"active end":t.trail&&t.trail.some((t=>at(t,e)))?"active trail":(null===(n=t.inReach)||void 0===n?void 0:n.some((t=>at(t,e))))?"inactive":"inactive unreachable":""}(e,t)} ${function(e,t){return t?at(t.start,e)?"active start":t.end&&at(t.end,e)?"active end":t.range&&t.range.some((t=>at(t,e)))?"active trail":"inactive":""}(e,o)}`,ki=(e,t,o)=>{t&&t.end&&at(t.end,e)?function(e,t){t&&we(ao,e)}(e,t):o&&function(e,t){t&&we(po,e)}(e,o)};Ee("hexagon-element",(e=>{var t,o,i;tt(e,(()=>{e.addEventListener("click",(()=>we(Vt,{item:"hexagon",row:e.row,col:e.col})))}));const{row:n,col:r}=e,{get:s,set:a}=ot(e,{elements:e.elements,row:n,col:r}),{get:l,set:c}=ot(e,void 0),{get:d,set:u}=ot(e,void 0);$e(e,oo,(e=>(null==e?void 0:e.row.toString())===n.toString()&&(null==e?void 0:e.col.toString())===r.toString()),a),$e(e,no,c),$e(e,fo,u),$e(e,ao,(()=>c(void 0))),$e(e,ro,(()=>c(void 0))),$e(e,bo,(()=>u(void 0)));const h=s();return R`<div 
-      class="hexagon ${$i(e,l(),d())}" 
-      @mouseover=${()=>{l()&&we(so,{row:n,col:r})}}
-      @click=${()=>(ki(e,l(),d()),document.dispatchEvent(new CustomEvent("hello-world",{detail:{hello:"world"}})))}
+`,ki=(e,t,o)=>`${function(e,t){var o,i,n;return t?at(t.start,e)?"active start":t.end&&(null!==(i=null===(o=t.trail)||void 0===o?void 0:o.length)&&void 0!==i?i:0)<1&&at(t.end,e)?"active unreachable":t.end&&at(t.end,e)?"active end":t.trail&&t.trail.some((t=>at(t,e)))?"active trail":(null===(n=t.inReach)||void 0===n?void 0:n.some((t=>at(t,e))))?"inactive":"inactive unreachable":""}(e,t)} ${function(e,t){return t?at(t.start,e)?"active start":t.end&&at(t.end,e)?"active end":t.range&&t.range.some((t=>at(t,e)))?"active trail":"inactive":""}(e,o)}`,xi=(e,t,o)=>{t&&t.end&&at(t.end,e)?function(e,t){t&&we(lo,e)}(e,t):o&&function(e,t){t&&we(bo,e)}(e,o)};Ee("hexagon-element",(e=>{var t,o,i;tt(e,(()=>{e.addEventListener("click",(()=>we(Vt,{item:"hexagon",row:e.row,col:e.col})))}));const{row:n,col:r}=e,{get:s,set:a}=ot(e,{elements:e.elements,row:n,col:r}),{get:l,set:c}=ot(e,void 0),{get:d,set:u}=ot(e,void 0);$e(e,io,(e=>(null==e?void 0:e.row.toString())===n.toString()&&(null==e?void 0:e.col.toString())===r.toString()),a),$e(e,ro,c),$e(e,po,u),$e(e,lo,(()=>c(void 0))),$e(e,so,(()=>c(void 0))),$e(e,wo,(()=>u(void 0)));const h=s();return R`<div 
+      class="hexagon ${ki(e,l(),d())}" 
+      @mouseover=${()=>{l()&&we(ao,{row:n,col:r})}}
+      @click=${()=>(xi(e,l(),d()),document.dispatchEvent(new CustomEvent("hello-world",{detail:{hello:"world"}})))}
       style="background-image:url(assets/${null===(t=e.background)||void 0===t?void 0:t.file}.png); background-position: ${null===(o=e.background)||void 0===o?void 0:o.x}px ${null===(i=e.background)||void 0===i?void 0:i.y}px;">
-      ${bi(h.elements,e.row,e.col)}</div>`}),{styles:[wi,yi],defaults:{background:void 0,elements:[],col:0,row:0}}),Ee("world-map",(e=>{var t;const{get:o,set:i}=ot(e,void 0);return $e(e,Rt,i),R`<div id="globe">${null===(t=o())||void 0===t?void 0:t.map.map(((e,t)=>R`<div class="row ${t%2==0?"push":""}" style="width: calc(${120*e.length}px + 20rem)">
+      ${wi(h.elements,e.row,e.col)}</div>`}),{styles:[yi,$i],defaults:{background:void 0,elements:[],col:0,row:0}}),Ee("world-map",(e=>{var t;const{get:o,set:i}=ot(e,void 0);return $e(e,Rt,i),R`<div id="globe">${null===(t=o())||void 0===t?void 0:t.map.map(((e,t)=>R`<div class="row ${t%2==0?"push":""}" style="width: calc(${120*e.length}px + 20rem)">
                 ${e.map(((e,o)=>R`<hexagon-element 
                         .background=${e.terrain.sprite} 
                         .elements="${e.elements}" 
@@ -427,24 +427,24 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     }
     .push {
         margin-left: 60px;
-    }`});const xi="building-mill";var Oi=Ee(xi,(({team:e})=>R`<div style="background-image:url('assets/windmill_complete_${null!=e?e:"none"}.png'"></div>`),{styles:[ei,a`
+    }`});const Oi="building-mill";var ji=Ee(Oi,(({team:e})=>R`<div style="background-image:url('assets/windmill_complete_${null!=e?e:"none"}.png'"></div>`),{styles:[ti,a`
         div {
             width: 80%;
             height: 80%;
         }
-        `],defaults:{team:void 0}}),ji=Object.freeze({__proto__:null,name:xi,default:Oi});const _i="building-castle-small";var Ei=Ee(_i,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/castle_small_${e.team}.png'"></div>`}),{styles:[ei,ti,a`
+        `],defaults:{team:void 0}}),_i=Object.freeze({__proto__:null,name:Oi,default:ji});const Ei="building-castle-small";var Si=Ee(Ei,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,Ao,o),R`<div class="${t()===e.team?"active":"inactive"}" style="background-image:url('assets/castle_small_${e.team}.png'"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Si=Object.freeze({__proto__:null,name:_i,default:Ei});const Ai=It.lumberjack.small;var Ti=Ee(Ai,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/lumberjack_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ei,ti,a`
+        `],defaults:{team:"",row:void 0,col:void 0}}),Ai=Object.freeze({__proto__:null,name:Ei,default:Si});const Ti=It.lumberjack.small;var Mi=Ee(Ti,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,Ao,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/lumberjack_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Mi=Object.freeze({__proto__:null,name:Ai,default:Ti});const Ci=It.mine.small;var zi=Ee(Ci,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,So,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/mine_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ei,ti,a`
+        `],defaults:{team:"",row:void 0,col:void 0}}),Ci=Object.freeze({__proto__:null,name:Ti,default:Mi});const zi=It.mine.small;var Ri=Ee(zi,(e=>{const{get:t,set:o}=ot(e,"");return $e(e,Ao,o),R`<div class="${t()===e.team?"active":"inactive"}" style="margin: 0; background-image:url('assets/mine_small_${e.team}.png'); background-size: auto; width: 100%; height: 100%;"></div>`}),{styles:[ti,oi,a`
         :host {
             filter: hue-rotate(0deg);
         }
-        `],defaults:{team:"",row:void 0,col:void 0}}),Ri=Object.freeze({__proto__:null,name:Ci,default:zi});const Hi={hay:0,iron:0,grain:0,wood:0,stone:0};var Ui=Do,Ni=No,Bi=()=>Object.assign(Object.assign({},Hi),{stone:4,wood:2,grain:1}),Pi=()=>Object.assign(Object.assign({},Hi),{wood:500,grain:500,stone:500}),Di=()=>Object.assign(Object.assign({},Hi),{stone:1e3,iron:1e3,grain:1e3});const Ii=a`
+        `],defaults:{team:"",row:void 0,col:void 0}}),Hi=Object.freeze({__proto__:null,name:zi,default:Ri});const Ui={hay:0,iron:0,grain:0,wood:0,stone:0};var Ni=Io,Bi=Bo,Pi=()=>Object.assign(Object.assign({},Ui),{stone:4,wood:2,grain:1}),Di=()=>Object.assign(Object.assign({},Ui),{wood:500,grain:500,stone:500}),Ii=()=>Object.assign(Object.assign({},Ui),{stone:1e3,iron:1e3,grain:1e3});const Yi=a`
   :host {
     display: block;
     background-image: url("assets/sidebar/bg.png");
@@ -469,7 +469,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     h3 {
         color: var(--colorMain)
     }
-  `;Ee("health-bar",(({health:{current:e,max:t}})=>R`<loading-bar id="health" width="${e/t*100}%"></loading-bar>`));const Yi=e=>parseInt(e.toString(),10),Li=ne`
+  `;Ee("health-bar",(({health:{current:e,max:t}})=>R`<loading-bar id="health" width="${e/t*100}%"></loading-bar>`));const Li=e=>parseInt(e.toString(),10),Gi=ne`
   header {
     display: grid;
     grid-template-areas: 
@@ -507,7 +507,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
       color: var(--colorHighlight);
     }
   }
-`,Gi=(e,t)=>R`
+`,Wi=(e,t)=>R`
     ${t.hay>0?R`<resource-counter
           count="${t.hay}"
           class="${e.hay>=t.hay?"enough":"lack"}"
@@ -538,7 +538,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         >
           <resource-iron></resource-iron>
         </resource-counter>`:R``}
-  `;Ee("sidebar-castle",(e=>{var t;const{selected:{payload:o,row:i,col:n}}=e,{team:r,health:s,actions:a}=o,l={row:Yi(i),col:Yi(n)},{get:c,set:d}=ot(e,void 0);$e(e,Zt,d);const{resources:u}=null!==(t=c())&&void 0!==t?t:{resources:{}};return R`
+  `;Ee("sidebar-castle",(e=>{var t;const{selected:{payload:o,row:i,col:n}}=e,{team:r,health:s,actions:a}=o,l={row:Li(i),col:Li(n)},{get:c,set:d}=ot(e,void 0);$e(e,Zt,d);const{resources:u}=null!==(t=c())&&void 0!==t?t:{resources:{}};return R`
       <header>
         <building-castle-small id="castle" team="${r}"></building-castle-small>
         <health-bar id="health" .health="${s}"></health-bar>
@@ -551,43 +551,43 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
           height="35px"
           src="assets/knight_${r}.png"
           title="${vt(ht.properties.actions.build.knight)}"
-          @click=${async()=>await we(Xt,{team:r,row:i,col:n,origin:o})}
+          @click=${async()=>await we(Ft,{team:r,row:i,col:n,origin:o})}
         >
-          ${Gi(u,Ni())}
+          ${Wi(u,Bi())}
         </button-image>
         <button-image
           height="35px"
           src="assets/wagon_${r}.png"
           title="${vt(ht.properties.actions.build.wagon)}"
-          @click=${async()=>await we(Ft,{team:r,row:i,col:n,origin:o})}
+          @click=${async()=>await we(Jt,{team:r,row:i,col:n,origin:o})}
         >
-          ${Gi(u,Ui())}
+          ${Wi(u,Ni())}
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.iron)}"
           src="assets/resources/iron.png">
-          ${Gi(u,Bi())}
+          ${Wi(u,Pi())}
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.castle_medium)}"
           src="assets/castle_medium_${r}.png">
-          ${Gi(u,Pi())}
+          ${Wi(u,Di())}
         </button-image>
         <button-image height="35px" 
           title="${vt(ht.properties.actions.build.castle_large)}"
           src="assets/castle_large_${r}.png">
-          ${Gi(u,Di())}
+          ${Wi(u,Ii())}
         </button-image>
-      </div>`}),{styles:[Ii,Li],defaults:{selected:{payload:{id:"",name:_i,team:"",health:{current:0,max:0},actions:{current:0,max:0}},col:0,row:0}}});Ee("sidebar-knight",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Yi(o),col:Yi(i)};return R`
+      </div>`}),{styles:[Yi,Gi],defaults:{selected:{payload:{id:"",name:Ei,team:"",health:{current:0,max:0},actions:{current:0,max:0}},col:0,row:0}}});Ee("sidebar-knight",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Li(o),col:Li(i)};return R`
     <h3>${vt(ht.knight)}</h3>
     <div class="container">
         <img id="knight" src="assets/knight_${t.team}.png">
         <health-bar id="health" .health="${n}"></health-bar>
         <stats-bar id="stats" .health="${n}" .actions="${r}"></stats-bar>
-        <button ?disabled=${r.current<1} id="move" title="${vt(ht.properties.actions.move)}" @click=${()=>we(io,{asset:Object.assign({},t),start:s})}>🦵</button>
+        <button ?disabled=${r.current<1} id="move" title="${vt(ht.properties.actions.move)}" @click=${()=>we(no,{asset:Object.assign({},t),start:s})}>🦵</button>
         <button-attack id="attack" .actions="${r}" .asset="${t}" .position="${s}"></button-attack>
         <button ?disabled=${r.current<1} id="fortify" title="${vt(ht.properties.actions.fortify)}" >🏰</button>
-    </div>`}),{styles:[Ii,a`
+    </div>`}),{styles:[Yi,a`
     .container {
         grid-template-areas: 
             "knight knight health health health"
@@ -607,17 +607,17 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     #stats {
         grid-area: stats;
     }
-`],props:[{selected:{type:Object}}]});Ee("sidebar-wagon",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Yi(o),col:Yi(i)};return R`
+`],props:[{selected:{type:Object}}]});Ee("sidebar-wagon",(e=>{const{selected:{payload:t,row:o,col:i}}=e,{health:n,actions:r}=t,s={row:Li(o),col:Li(i)};return R`
     <h3>${vt(ht.wagon)}</h3>
     <div class="container">
         <img id="wagon" src="assets/wagon_${t.team}.png">
         <health-bar id="health" .health="${n}"></health-bar>
         <stats-bar id="stats" .health="${n}" .actions="${r}"></stats-bar>
-        <button ?disabled=${r.current<1} id="move"  title="${vt(ht.properties.actions.move)}" @click=${()=>we(io,{asset:Object.assign({},t),start:s})}>🦵</button>
-        <button ?disabled=${r.current<1} id="build_lumberjack" title="${vt(ht.properties.actions.build.lumberjack_small)}" @click=${()=>we(lo,{asset:Object.assign({},t),position:s})}>
+        <button ?disabled=${r.current<1} id="move"  title="${vt(ht.properties.actions.move)}" @click=${()=>we(no,{asset:Object.assign({},t),start:s})}>🦵</button>
+        <button ?disabled=${r.current<1} id="build_lumberjack" title="${vt(ht.properties.actions.build.lumberjack_small)}" @click=${()=>we(co,{asset:Object.assign({},t),position:s})}>
             <img id="build_lumberjack_small" src="assets/lumberjack_small_${t.team}.png">
         </button>
-        <button ?disabled=${r.current<1} id="build_mine" title="${vt(ht.properties.actions.build.mine_small)}" @click=${()=>we(ho,{asset:Object.assign({},t),position:s})}>
+        <button ?disabled=${r.current<1} id="build_mine" title="${vt(ht.properties.actions.build.mine_small)}" @click=${()=>we(vo,{asset:Object.assign({},t),position:s})}>
             <img id="build_mine_small" src="assets/mine_small_${t.team}.png">
         </button>
         <button ?disabled=${r.current<1} id="load"  title="${vt(ht.properties.actions.load)}">📦</button>
@@ -670,16 +670,16 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     h3 {
         color: var(--colorMain)
     }
-`],props:[{selected:{type:Object}}]}),Ee("stats-bar",(({health:e,actions:t})=>R`${gi(vt(ht.properties.life,e.current,e.max))}<br>
-    ${gi(vt(ht.properties.actions,t.current,t.max))}`)),Ee("button-attack",(({actions:e,asset:t,position:o})=>R`<button ?disabled=${e.current<1} id="attack" title="${vt(ht.properties.actions.attack)}" @click=${()=>we(go,{asset:Object.assign({},t),start:o})}>⚔</button>
-    `));const Wi=e=>({position:e?new lt(null==e?void 0:e.row,null==e?void 0:e.col):void 0,elements:e?[{item:e.item,payload:e.payload}]:[],dirty:!1});Ee("controls-sidebar",(async e=>{const{get:t,set:o}=ot(e,void 0);$e(e,Vt,o);const i=t(),{get:n,set:r}=ot(e,Wi(i)),s=n();return!s.dirty&&i&&new lt(i.row,i.col).equals(s.position)?r(Object.assign(Object.assign({},s),{elements:[...s.elements,{item:i.item,payload:i.payload}],dirty:"hexagon"===i.item})):r(Wi(i)),tt(e,(()=>{setTimeout((()=>{we(Ut)}),1)})),R`
-        ${n().elements.map((e=>{var t,o,i,r,s,a;switch(e.item){case _i:return R`<sidebar-castle 
+`],props:[{selected:{type:Object}}]}),Ee("stats-bar",(({health:e,actions:t})=>R`${fi(vt(ht.properties.life,e.current,e.max))}<br>
+    ${fi(vt(ht.properties.actions,t.current,t.max))}`)),Ee("button-attack",(({actions:e,asset:t,position:o})=>R`<button ?disabled=${e.current<1} id="attack" title="${vt(ht.properties.actions.attack)}" @click=${()=>we(fo,{asset:Object.assign({},t),start:o})}>⚔</button>
+    `));const Zi=e=>({position:e?new lt(null==e?void 0:e.row,null==e?void 0:e.col):void 0,elements:e?[{item:e.item,payload:e.payload}]:[],dirty:!1});Ee("controls-sidebar",(async e=>{const{get:t,set:o}=ot(e,void 0);$e(e,Vt,o),$e(e,qt,(()=>r(Zi(void 0))));const i=t(),{get:n,set:r}=ot(e,Zi(i)),s=n();return!s.dirty&&i&&new lt(i.row,i.col).equals(s.position)?r(Object.assign(Object.assign({},s),{elements:[...s.elements,{item:i.item,payload:i.payload}],dirty:"hexagon"===i.item})):r(Zi(i)),tt(e,(()=>{setTimeout((()=>{we(Ut)}),1)})),R`
+        ${n().elements.map((e=>{var t,o,i,r,s,a;switch(e.item){case Ei:return R`<sidebar-castle 
                         .selected="${{row:null===(t=n().position)||void 0===t?void 0:t.row,col:null===(o=n().position)||void 0===o?void 0:o.col,payload:e.payload}}">
-                    </sidebar-castle>`;case ai:return R`<sidebar-knight
+                    </sidebar-castle>`;case li:return R`<sidebar-knight
                         .selected="${{row:null===(i=n().position)||void 0===i?void 0:i.row,col:null===(r=n().position)||void 0===r?void 0:r.col,payload:e.payload}}">
-                    </sidebar-knight>`;case di:return R`<sidebar-wagon
+                    </sidebar-knight>`;case ui:return R`<sidebar-wagon
                         .selected="${{row:null===(s=n().position)||void 0===s?void 0:s.row,col:null===(a=n().position)||void 0===a?void 0:a.col,payload:e.payload}}">
-                    </sidebar-wagon>`;default:case _i:return R``}}))}
+                    </sidebar-wagon>`;default:case Ei:return R``}}))}
     `}),{styles:a`:host { 
         position: absolute;
         display: block;
@@ -688,7 +688,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         right: 20px;
         top: 20px;
         z-index: 2;
-    }`}),Ee("modal-battle",(e=>{var t,o;const{get:i,set:n}=ot(e,void 0),{get:r,set:s}=ot(e,void 0);return $e(e,jo,n),R`
+    }`}),Ee("modal-battle",(e=>{var t,o;const{get:i,set:n}=ot(e,void 0),{get:r,set:s}=ot(e,void 0);return $e(e,_o,n),R`
    <modal-window 
         .open=${!!i()} 
         preventClose>
@@ -717,7 +717,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
                 `))}
         </div>
         <p slot="footer">
-            <button @click="${()=>{var e,t;return we(yo,{attacker:{asset:null===(e=i())||void 0===e?void 0:e.attacker[0],dices:[r()]},defender:null===(t=i())||void 0===t?void 0:t.defender[0],location:{row:i().location.row,col:i().location.col}})}}" ?disabled="${void 0===r()}">Würfeln</button>
+            <button @click="${()=>{var e,t;return we($o,{attacker:{asset:null===(e=i())||void 0===e?void 0:e.attacker[0],dices:[r()]},defender:null===(t=i())||void 0===t?void 0:t.defender[0],location:{row:i().location.row,col:i().location.col}})}}" ?disabled="${void 0===r()}">Würfeln</button>
         </p>
     </modal-window>`}),{styles:[ne`.body {
             display: grid;
@@ -746,7 +746,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
                 height: 15px;
             }
         }
-        `]}),Ee("modal-dice-result",(e=>{const{get:t,set:o}=ot(e,void 0),i=ot(e,[]),n=ot(e,[]);let r=setTimeout((()=>{}),1);return $e(e,_o,(e=>{o(e),i.set(e.attacker),n.set(e.defender),clearTimeout(r),r=setTimeout((()=>{i.set(e.attacker_after),n.set(e.defender_after)}),5e3)})),R`
+        `]}),Ee("modal-dice-result",(e=>{const{get:t,set:o}=ot(e,void 0),i=ot(e,[]),n=ot(e,[]);let r=setTimeout((()=>{}),1);return $e(e,Eo,(e=>{o(e),i.set(e.attacker),n.set(e.defender),clearTimeout(r),r=setTimeout((()=>{i.set(e.attacker_after),n.set(e.defender_after)}),5e3)})),R`
    <modal-window 
         .open=${!!t()} 
         @close=${()=>o(void 0)}>
@@ -793,7 +793,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         .dice {
             grid-area: dice;
         }
-        `]}),Ee("modal-mill-taken",(e=>{var t,o,i,n,r;const{get:s,set:a}=ot(e,void 0);return $e(e,ko,a),R`
+        `]}),Ee("modal-mill-taken",(e=>{var t,o,i,n,r;const{get:s,set:a}=ot(e,void 0);return $e(e,xo,a),R`
     <modal-window 
          .open=${!!s()} 
          @close=${()=>a(void 0)}>
@@ -836,7 +836,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         0%   {	opacity: 1;	}
         100%   {	opacity: 0;	}
     }
-    `}),Ee("modal-no-more-turns",(e=>{const{getState:t,publish:o}=ot(e,void 0);return $e(e,to,o),R`
+    `}),Ee("modal-no-more-turns",(e=>{const{getState:t,publish:o}=ot(e,void 0);return $e(e,oo,o),R`
    <modal-window 
         .open=${!!t()} 
         preventClose>
@@ -845,7 +845,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             Du hast keine Aktionen mehr übrig. Willst du weiter geben, oder noch rum schauen?
         </div>
         <p slot="footer">
-            <button @click="${()=>(we(Ao),o(!1))}">Zug beenden</button>
+            <button @click="${()=>(we(To),o(!1))}">Zug beenden</button>
             <button @click="${()=>o(!1)}">Noch rumschauen</button>
         </p>
     </modal-window>`}),{styles:[a`
@@ -880,21 +880,21 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     <modal-no-more-turns></modal-no-more-turns>
     <modal-battle></modal-battle>
     <modal-dice-result></modal-dice-result>
-    <modal-mill-taken></modal-mill-taken>`)),Ee("footer-element",(o=>{const{get:i,set:n}=ot(o,void 0),{get:r,set:s}=ot(o,[]);return $e(o,So,n),$e(o,Jt,s),R`<footer class="${i()}">
+    <modal-mill-taken></modal-mill-taken>`)),Ee("footer-element",(o=>{const{get:i,set:n}=ot(o,void 0),{get:r,set:s}=ot(o,[]);return $e(o,Ao,n),$e(o,Qt,s),R`<footer class="${i()}">
     <div class="main ">
         ${((o,i="")=>{const n=null==o?void 0:o.map((o=>{var n,r;const s=Object.entries(Object.assign(Object.assign({},t),e)).find((([e,t])=>t.name===o.name)),a=Object.entries(Object.assign(Object.assign({},o),{name:void 0})).filter((([e,t])=>void 0!==t)).map((([e,t])=>`${e}="${t}"`)).join(" "),l=$t(o)?{row:o.row,col:o.col}:{row:0,col:0};return R`<div
-            @click="${()=>{we(Kt,Object.assign(Object.assign({item:o.name},l),{payload:o})),setTimeout((()=>{var e;null===(e=Po(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
-            @mouseover="${()=>{setTimeout((()=>{var e;null===(e=Po(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
+            @click="${()=>{we(Kt,Object.assign(Object.assign({item:o.name},l),{payload:o})),setTimeout((()=>{var e;null===(e=Do(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
+            @mouseover="${()=>{setTimeout((()=>{var e;null===(e=Do(o))||void 0===e||e.scrollIntoView({behavior:"smooth",block:"center",inline:"center"})}),2)}}"
             style="position:relative; cursor: pointer; width: 120px;${i};">
-                ${gi(`<${null!==(n=null==s?void 0:s[1].name)&&void 0!==n?n:"span"} ${a} style="${i};"></${null!==(r=null==s?void 0:s[1].name)&&void 0!==r?r:"span"}>`)}
+                ${fi(`<${null!==(n=null==s?void 0:s[1].name)&&void 0!==n?n:"span"} ${a} style="${i};"></${null!==(r=null==s?void 0:s[1].name)&&void 0!==r?r:"span"}>`)}
         </div>`}));return R`<sprite-player-elements-grid>${n}</sprite-player-elements-grid>`})(r().sort(((e,t)=>e.name.localeCompare(t.name))).filter((e=>xt(e)&&e.actions.current>0)),"width: 10vh; height: 10vh;")}
     </div>
     <div class="action">
-        <button-pure @click="${()=>we(Ao)}">
+        <button-pure @click="${()=>we(To)}">
             <text-block type="paragraph" size="x-large">⌛</text-block> Zug beenden
         </button-pure>
     </div>
-</footer>`}),{styles:[oi,ii("footer .main"),ne`
+</footer>`}),{styles:[ii,ni("footer .main"),ne`
     footer {
         min-height: 10vh;
         max-height: 10vh;
@@ -922,7 +922,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
             grid-area: action;
             place-self: center;
         }
-    }`]});const Zi=a`
+    }`]});const Ki=a`
   :host {
     display: inline-block;
     background-position: center;
@@ -935,27 +935,27 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     width: 100%;
     height: 100%;
   }
-`;var Ki;Ee("resource-grain",(()=>R`<div title="${vt(ut.grain)}"></div>`),{styles:[a`
+`;var Vi;Ee("resource-grain",(()=>R`<div title="${vt(ut.grain)}"></div>`),{styles:[a`
         :host {
           background-image: url("assets/resources/grain.png");
         }
-      `,Zi]}),Ee("resource-stone",(()=>R`<div title="${vt(ut.stone)}"></div>`),{styles:[a`
+      `,Ki]}),Ee("resource-stone",(()=>R`<div title="${vt(ut.stone)}"></div>`),{styles:[a`
         :host {
           background-image: url("assets/resources/stone.png");
         }
-      `,Zi]}),Ee("resource-iron",(()=>R`<div title="${vt(ut.iron)}"></div>`),{styles:[a`
+      `,Ki]}),Ee("resource-iron",(()=>R`<div title="${vt(ut.iron)}"></div>`),{styles:[a`
         :host {
           background-image: url("assets/resources/iron.png");
         }
-      `,Zi]}),Ee("resource-wood",(()=>R`<div title="${vt(ut.log)}"></div>`),{styles:[a`
+      `,Ki]}),Ee("resource-wood",(()=>R`<div title="${vt(ut.log)}"></div>`),{styles:[a`
         :host {
           background-image: url("assets/resources/log.png");
         }
-      `,Zi]}),Ee("resource-hay",(()=>R`<div title="${vt(ut.hay)}"></div>`),{styles:[a`
+      `,Ki]}),Ee("resource-hay",(()=>R`<div title="${vt(ut.hay)}"></div>`),{styles:[a`
         :host {
           background-image: url("assets/resources/hay.png");
         }
-      `,Zi]}),Ee("resource-counter",(({count:e,collect:t})=>R`
+      `,Ki]}),Ee("resource-counter",(({count:e,collect:t})=>R`
         <slot></slot>
         ${e} ${t?R`<span>(+${t})</span>`:""}
     `),{styles:[a`
@@ -965,7 +965,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         span {
             font-size: smaller;
         }
-        `],defaults:{count:0,collect:void 0}}),Ee("header-element",(e=>{var t,o,i,n,r,s,a,l;const{get:c,set:d}=ot(e,void 0),{get:u,set:h}=ot(e,void 0),{get:v,set:m}=ot(e,void 0);$e(e,So,d),$e(e,Zt,h),$e(e,Uo,m);const g=null!==(t=u())&&void 0!==t?t:{resources:{}},f=(e,t,o)=>(e[t]=(e[t]||0)+o,e),p=null!==(i=null===(o=v())||void 0===o?void 0:o.resourcesToGenerate.reduce(((e,t)=>{var o,i;for(const n of wt)e=f(e,n,null!==(i=null===(o=t.resources[n])||void 0===o?void 0:o.generatedResource)&&void 0!==i?i:0);return e}),{}))&&void 0!==i?i:{};return R`<header class="${c()}">
+        `],defaults:{count:0,collect:void 0}}),Ee("header-element",(e=>{var t,o,i,n,r,s,a,l;const{get:c,set:d}=ot(e,void 0),{get:u,set:h}=ot(e,void 0),{get:v,set:m}=ot(e,void 0);$e(e,Ao,d),$e(e,Zt,h),$e(e,No,m);const g=null!==(t=u())&&void 0!==t?t:{resources:{}},f=(e,t,o)=>(e[t]=(e[t]||0)+o,e),p=null!==(i=null===(o=v())||void 0===o?void 0:o.resourcesToGenerate.reduce(((e,t)=>{var o,i;for(const n of wt)e=f(e,n,null!==(i=null===(o=t.resources[n])||void 0===o?void 0:o.generatedResource)&&void 0!==i?i:0);return e}),{}))&&void 0!==i?i:{};return R`<header class="${c()}">
         <resource-counter title="${vt(ut.hay)}" count="${g.resources.hay}" collect=${null!==(n=p.hay)&&void 0!==n?n:0}>
             <resource-hay></resource-hay>
         </resource-counter>
@@ -995,7 +995,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
     }
     .red {
         background-position: 100% 0%;
-    }`}),null===(Ki=document.querySelector("body"))||void 0===Ki||Ki.addEventListener("keyup",(function(e){"Escape"===e.key&&we(Wt,!0)})),Ee("the-mill",(()=>((async({rows:e,cols:t})=>{const o=Nt({rows:e,cols:t}),i=Bt("green",{rows:e,cols:t}),n=Bt("red",{rows:e,cols:t}),r=it(0,e-1).map((e=>it(0,t-1).map((t=>({position:new lt(e,t),terrain:zt(),elements:[...Pt(o,e,t),...Pt(i,e,t),...Pt(n,e,t)]})))));await we(Rt,{map:r,teams:["red","green"]})})({rows:10,cols:10}),R`
+    }`}),null===(Vi=document.querySelector("body"))||void 0===Vi||Vi.addEventListener("keyup",(function(e){"Escape"===e.key&&we(Wt,!0)})),Ee("the-mill",(()=>((async({rows:e,cols:t})=>{const o=Nt({rows:e,cols:t}),i=Bt("green",{rows:e,cols:t}),n=Bt("red",{rows:e,cols:t}),r=it(0,e-1).map((e=>it(0,t-1).map((t=>({position:new lt(e,t),terrain:zt(),elements:[...Pt(o,e,t),...Pt(i,e,t),...Pt(n,e,t)]})))));await we(Rt,{map:r,teams:["red","green"]})})({rows:10,cols:10}),R`
     <controls-sidebar>sidebar</controls-sidebar>
     <map>
         <header-element>header</header-element>
@@ -1005,7 +1005,7 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         <modals-all></modals-all>
     </map>
 
-    `)),{styles:[oi,ii("world-map"),ii("controls-sidebar"),ne`
+    `)),{styles:[ii,ni("world-map"),ni("controls-sidebar"),ne`
     header-element {
         grid-area: header;
     }
@@ -1035,5 +1035,5 @@ class mi extends class{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t
         position: relative;
         display: block;
     }
-    `]});const Vi=window.location.search.substring(1).split("&").reduce(((e,t)=>{const[o,i]=t.split("=");return e[o]=i,e}),{});document.documentElement.lang=Vi.lang||"en";export{t as buildings,ci as knight,e as player,hi as wagon};
+    `]});const qi=window.location.search.substring(1).split("&").reduce(((e,t)=>{const[o,i]=t.split("=");return e[o]=i,e}),{});document.documentElement.lang=qi.lang||"en";export{t as buildings,di as knight,e as player,vi as wagon};
 //# sourceMappingURL=the-mill.js.map

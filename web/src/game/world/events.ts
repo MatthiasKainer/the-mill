@@ -21,6 +21,7 @@ export type SelectedItem<T> = SimpleCoords & {
     payload?: T
 }
 export const ItemSelected = defineHormone<SelectedItem<unknown>>("player/buildings/item/selected")
+export const ItemsUnselected = defineHormone<void>("player/buildings/item/unselected")
 
 export type ItemMovedAsset = {
     asset: MoveableAsset

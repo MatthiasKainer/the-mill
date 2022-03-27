@@ -1,7 +1,7 @@
 import { css, html } from "lit";
 import { releaseHormone, useReceptor } from "organismus";
 import { pureLit, useState, useOnce } from "pure-lit";
-import { ItemSelected, SelectedItem } from "../../game/world/events";
+import { ItemSelected, ItemsUnselected, SelectedItem } from "../../game/world/events";
 
 import "./selectedCastle"
 import "./selectedKnight"
@@ -26,6 +26,7 @@ const newState = (element: { row: number, col: number, item: string, payload?: u
 export default pureLit("controls-sidebar", async  (el) => {
     const { get: getSelectedElement, set: setSelectedElement } = useState<SelectedItem<unknown> | undefined>(el, undefined)
     useReceptor(el, ItemSelected, setSelectedElement)
+    useReceptor(el, ItemsUnselected, () => set(newState(undefined)))
     const selectedElement = getSelectedElement()
     const {get, set} = useState<SelectionState>(el, newState(selectedElement))
     const current = get()
