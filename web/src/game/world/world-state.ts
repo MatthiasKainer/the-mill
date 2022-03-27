@@ -100,6 +100,7 @@ export function allocateResources(initialResources: Resources, resourcesToGenera
             return result;
         }).filter(Boolean)
     }
+    console.log(initialResources, "=>", availableResources)
     return availableResources
 }
 
@@ -108,7 +109,9 @@ hypothalamus.on(DistributeResources, async ({ team, resourcesToGenerate }: Distr
         const before = { ...getPlayer(team).resources };
         players[team].resources = allocateResources(players[team].resources, resourcesToGenerate);
         releaseHormone(ResourceGenerationComplete, { team, before, after: players[team].resources });
+        await releaseHormone(UpdatedResources, { team, resourcesToGenerate });
     }
+    
 })
 
 hypothalamus.collect(ResourcesGenerated, ResourceGenerationComplete, (values) => {
@@ -138,15 +141,15 @@ hypothalamus.on(TurnAccepted, async (team) => {
         deepQuerySelector(playerCastle)?.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
     }, 2)
 
-    releaseHormone(PlayerUpdate, getPlayer(team))
-
     // refill all resources and movements
     const resourceMap: ResourceGeneratingBuilding[] =
         getResourceGeneratingBuildings(world, team)
             .reduce((into, building) => [...into, ...generateResources(building)], [] as ResourceGeneratingBuilding[])
+            .filter((building, index, self) => self.indexOf(building) === index)
     // distribute resources
-    releaseHormone(UpdatedResources, { team, resourcesToGenerate: resourceMap });
     await releaseHormone(DistributeResources, { team, resourcesToGenerate: resourceMap });
+
+    await releaseHormone(PlayerUpdate, getPlayer(team))
 })
 
 
